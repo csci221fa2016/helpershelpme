@@ -200,7 +200,7 @@ main(int /*argc*/,
     cout << styles;
     cout << comment() << style() << endl;
 
-    cout << title() << "GNU cgicc v" << cgi.getVersion() << " Test" 
+    cout << title() << "Helpers Help Me Test" 
 	 << title() << endl;
 
     cout << head() << endl;
