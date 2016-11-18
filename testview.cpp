@@ -208,16 +208,6 @@ main(int /*argc*/,
     // Start the HTML body
     cout << body() << endl;
 
-    sqlite3 *db;
-    int retval = sqlite3_open("/tmp/test.db", &db);
-    if(retval != 0)
-    {
-        cout << p() << "Cannot open test.db: " << sqlite3_errcode(db) << endl;
-    }
-    cout << p() << "Successfully opened." << p() << endl;
-
-
-
     cout << h1() << "GNU cgi" << span("cc").set("class","red")
 	 << " v"<< cgi.getVersion() << " Test" << h1() << endl;
     
