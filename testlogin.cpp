@@ -44,8 +44,13 @@ void showForm(const Cgicc& formData);
 void
 printForm(const Cgicc& cgi)
 {
-   cout << "<form method=\"get\" action=\"" 
+
+   cout << "<form method=\"post\".hash action=\"" 
         << cgi.getEnvironment().getScriptName() << "\">" << endl;
+
+   cout << "<a href=\"helpers-help.me\" "
+      << "<input type=\"submit\" name=\"home\" value=\"Home\" />"
+      << "</p></div>" << endl;
      
    cout << "<table>" << endl;
  
