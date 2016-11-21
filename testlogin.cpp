@@ -32,7 +32,7 @@
 #  include <sys/time.h>
 #endif
 
-#include "styles.h"
+//#include "styles.h"
 
 using namespace std;
 using namespace cgicc;
@@ -48,10 +48,8 @@ printForm(const Cgicc& cgi)
    cout << "<form method=\"post\".hash action=\"" 
         << cgi.getEnvironment().getScriptName() << "\">" << endl;
 
-   cout << "<a href=\"helpers-help.me\" "
-      << "<input type=\"submit\" name=\"home\" value=\"Home\" />"
-      << "</p></div>" << endl;
-     
+   cout << "<a href=\"helpers-help.me\" target=\"_self\">Home</a>" << endl;
+
    cout << "<table>" << endl;
  
    cout << "<tr><td class=\"title\">Your name</td>"
@@ -63,7 +61,7 @@ printForm(const Cgicc& cgi)
         << "<td class=\"form\">"
         << "<input type=\"password\" name=\"password\" "
         /* maxlength=\"\" autocomplete="off" data-validate="{required: true}" */"/>"
-//       << "<a href="/accountresetlink" style="margin-left">Forgot Password</a>"
+//       << "<a href=\"accountresetlink\" style="margin-left">Forgot Password</a>"
         << "</td></tr>" << endl;
  
    cout << "</table>" << endl;
@@ -95,11 +93,6 @@ main(int /*argc*/,
    // I will put in lfs to ease reading of the produced HTML. 
    cout << head() << endl;
   
-   // Output the style sheet portion of the header
-   cout << style() << comment() << endl;
-   cout << styles;
-   cout << comment() << style() << endl;
-   
    cout << title() << "Helpers Help Me Test Log In" 
       << title() << endl;
    
@@ -120,7 +113,10 @@ main(int /*argc*/,
    cout << h4() << "Thanks for using cgi" << span("cc").set("class", "red") 
       << ", " << env.getRemoteHost() 
       << '(' << env.getRemoteAddr() << ")!" << h4() << endl;  
-      
+
+   //put input into vector form entry, send to controller and if not, return 
+   //invalid username/password
+  
     // Print out the form to do it again
     cout << br() << endl;
     printForm(cgi);
@@ -184,16 +180,6 @@ main(int /*argc*/,
     // Set up the page's header and title.
     // I will put in lfs to ease reading of the produced HTML. 
     cout << head() << endl;
-
-    // Output the style sheet portion of the header
-    cout << style() << comment() << endl;
-    cout << "body { color: black; background-color: white; }" << endl;
-    cout << "hr.half { width: 60%; align: center; }" << endl;
-    cout << "span.red, STRONG.red { color: red; }" << endl;
-    cout << "div.notice { border: solid thin; padding: 1em; margin: 1em 0; "
-	 << "background: #ddd; }" << endl;
-
-    cout << comment() << style() << endl;
 
     cout << title("GNU cgicc exception") << endl;
     cout << head() << endl;
