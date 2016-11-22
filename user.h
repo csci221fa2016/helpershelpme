@@ -3,7 +3,7 @@
 using namespace std;
 
 class Event;
-class VolunteerPosition;
+class EventPosition;
 
 class User {
      private:
@@ -13,13 +13,15 @@ class User {
 	User(int _userid);
 	string getName();
 	string getPhoneNumber();
-	vector<VolunteerPosition*> getEventsWorked();
-	vector<Event*> getOrganizedEvents();
+	EventPosition*[] getEventsWorked();
+	EventPosition*[] getOrganizedEvents();
 	bool setName(string _name);
 	bool setPhoneNumber(string _phoneNumber);
-	void addEvent(Event _event);
-	void addOrganizedEvent(Event _event);
-	bool leaveEvent(Event _event);
-	vector<Event*> listUserEvents();
+	void addEvent(Event* _event);
+	void addOrganizedEvent(Event* _event);
+	bool leaveEvent(Event* _event);
+	Event*[] listUserEvents();
 	int getUserId();
+	void setPassword(string _pass);
+	bool checkPassword(string _pass);
 };
