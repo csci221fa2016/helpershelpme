@@ -34,15 +34,11 @@ main: main.o
 test.cgi: test.o sqlite3.o
 	g++ -ldl -lpthread -lcgicc -o test.cgi test.o sqlite3.o
 
-testview.o: testview.cpp
-	g++ -c testview.cpp
+testlogin.cgi: testlogin.o
+	g++ -ldl -lpthread -lcgicc -o testlogin.cgi testlogin.o
 
-test.o: test.cpp sqlite3.h
-	g++ -c test.cpp
-
-# Use gcc to compile this C code
-sqlite3.o: sqlite3.h sqlite3.c
-	gcc -c sqlite3.c
+testlogin.o: testlogin.cpp
+	g++ -c testlogin.cpp
 
 home.cgi: home.o
 	g++ -ldl -lpthread -lcgicc -o home.cgi home.o
@@ -50,5 +46,6 @@ home.cgi: home.o
 home.o: home.cpp
 	g++ -c home.cpp
 
+.PHONY: clean
 clean:
-	rm -f *.o testll gtest.a gtest_main.a
+	rm -f *.o *.cgi
