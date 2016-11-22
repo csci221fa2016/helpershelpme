@@ -14,15 +14,15 @@ class Event {
 	string getStartDate();
 	string getEndDate();
 	User* getOrganizer();
-	EventPosition*[] getVolunteers();
+	vector<EventPosition*> getVolunteers();
 	string getDescription();
 	string getLocation();
 	void setStartTime(string _date);
 	void setEndTime(string _date);
-	void addVolunteer(EventPosition* _volunteer);
+	void addVolunteer(vector<EventPosition*> _volunteer);
 	void setDescription(string _description);
 	void setLocation(string _location);
-	void removeVolunteer(EventPosition* _volunteer);
+	void removeVolunteer(vector<EventPosition*> _volunteer);
 	int getEventId();
 	void setName(string _name);
 	void setOrganizer(int _userid)

@@ -13,8 +13,8 @@ class User {
 	User(int _userid);
 	string getName();
 	string getPhoneNumber();
-	EventPosition*[] getEventsWorked();
-	EventPosition*[] getOrganizedEvents();
+	vector<EventPosition*> getEventsWorked();
+	vector<EventPosition*> getOrganizedEvents();
 	bool setName(string _name);
 	bool setPhoneNumber(string _phoneNumber);
 	void addEvent(Event* _event);
