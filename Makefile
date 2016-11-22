@@ -4,7 +4,7 @@ CXXFLAGS = -ansi -Wall -ggdb3 -isystem $(GTEST_DIR)/include -Wextra -lpthread
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
-all: test.cgi
+all: test.cgi login.cgi home.cgi
 
 testviet-all.o: $(GTEST_SRCS)
 	$(CXX) $(CXXFLAGS) -I$(GTEST_DIR) -c $(GTEST_DIR)/src/gtest-all.cc
@@ -39,6 +39,12 @@ testlogin.cgi: testlogin.o
 
 testlogin.o: testlogin.cpp
 	g++ -c testlogin.cpp
+
+login.cgi: login.o
+	$(CXX) -ldl -lpthread -lcgicc -o login.cgi login.o
+
+login.o: login.cpp controller.h
+	$(CXX) -c login.cpp
 
 home.cgi: home.o
 	g++ -ldl -lpthread -lcgicc -o home.cgi home.o

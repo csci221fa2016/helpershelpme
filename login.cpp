@@ -7,6 +7,8 @@
 #include "cgicc/HTTPHTMLHeader.h"
 #include "cgicc/HTMLClasses.h"
 #include "styles.h"
+#include "controller.h"
+
 using namespace std;
 using namespace cgicc;
 void showForm(const Cgicc& formData);
@@ -22,9 +24,9 @@ printForm(const Cgicc& cgi)
 
    cout << "<table>" << endl;
 
-   cout << "<tr><td class=\"title\">Your name</td>"
+   cout << "<tr><td class=\"title\">Phone Number</td>"
         << "<td class=\"form\">"
-        << "<input type=\"text\" name=\"name\" value=\"user1\" id=\"1\"/>"
+        << "<input type=\"text\" name=\"pnumber\" value=\"8889990000\" id=\"1\"/>"
         << "</td></tr>" << endl;
 
    cout << "<tr><td class=\"title\">Password</td>"
@@ -93,6 +95,17 @@ int main(int argc, char **argv){
                 cout << title("Home") <<endl;
                 cout << head() << endl;
                 cout << body() << endl;
+
+                vector<string>loginfo;
+                Controller control;
+                const_form_iterator phoneNum = cgi.getElement("pnumber");
+                if(phoneNum != (*cgi).end() && !phoneNum->isEmpty())
+                    loginfo.push_back((*phoneNum).getStrippedValue());
+                const_form_iterator pw = cgi.getElement("password");
+                if(pw != (*cgi).end() && !pw->isEmpty())
+                    loginfo.push_back((*pw).getStrippedValue());
+                 control.signIn(loginfo);
+
 		//HEADER
 		 cout << "<div class=\"wrapper row1\">" << endl;
                         cout << "<header id=\"header\" class=\"clear\">" << endl;
