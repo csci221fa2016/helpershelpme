@@ -8,15 +8,16 @@ class EventPosition
 	private:
 		int eposid;
 		int eventid;
+		int userId;
 	
 	public:
-		EventPosition(int eposid, int eventid);
+		EventPosition(int eposid, int eventid, int userId);
 		User* getVolunteer();
 		Event* getEvent();
 		string getDescription();
 		string getStartTime();
 		string getEndTime();
-		void setVolunteer(User* _user);
+		void setVolunteer(int _userId);
 		void setDescription(string _description);
 		void setStartTime(string _start);
 		void setEndTime(string _end);
