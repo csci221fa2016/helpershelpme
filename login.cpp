@@ -7,7 +7,7 @@
 #include "cgicc/HTTPHTMLHeader.h"
 #include "cgicc/HTMLClasses.h"
 #include "styles.h"
-#include "controller.h"
+//#include "controller.h"
 
 using namespace std;
 using namespace cgicc;
@@ -43,20 +43,20 @@ printForm(const Cgicc& cgi)
 }
 
 int main(int argc, char **argv){
-        try{
-                Cgicc cgi;
-                cout << HTTPHTMLHeader() << endl;
-                cout << html().set("lang","en").set("dir","ltr") <<endl;
-                cout << html() << endl;
-                cout << head() << endl;
-                cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" << endl;
-                cout << style() << comment() << endl;
-                cout << styles;
-                cout << comment() << style() <<endl;
-                cout << "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js\"></script>" << endl;
-                cout << "<script>" << endl;
-		cout << "jQuery.noConflict()(function ($) {\
-                $(\"<form id='mobilemenu'><select /></form>\").appendTo(\"#topnav\");\
+   try{
+      Cgicc cgi;
+      cout << HTTPHTMLHeader() << endl;
+      cout << html().set("lang","en").set("dir","ltr") <<endl;
+      cout << html() << endl;
+      cout << head() << endl;
+      cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" << endl;
+      cout << style() << comment() << endl;
+      cout << styles;
+      cout << comment() << style() <<endl;
+      cout << "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js\"></script>" << endl;
+      cout << "<script>" << endl;
+      cout << "jQuery.noConflict()(function ($) {\
+               $(\"<form id='mobilemenu'><select /></form>\").appendTo(\"#topnav\");\
                         $(\"<option />\", {\
                         \"selected\": \"selected\",\
                         \"value\": \"\",\
@@ -91,29 +91,29 @@ int main(int argc, char **argv){
                         });\
                 });\
                 });"<< endl;
-                cout << "</script>" << endl;
-                cout << title("Home") <<endl;
-                cout << head() << endl;
-                cout << body() << endl;
+      cout << "</script>" << endl;
+      cout << title("Home") <<endl;
+      cout << head() << endl;
+      cout << body() << endl;
 
-                vector<string>loginfo;
-                Controller control;
-                const_form_iterator phoneNum = cgi.getElement("pnumber");
-                if(phoneNum != (*cgi).end() && !phoneNum->isEmpty())
-                    loginfo.push_back((*phoneNum).getStrippedValue());
-                const_form_iterator pw = cgi.getElement("password");
-                if(pw != (*cgi).end() && !pw->isEmpty())
-                    loginfo.push_back((*pw).getStrippedValue());
-                 control.signIn(loginfo);
+      vector<string>loginfo;
+//      Controller control;
+      const_form_iterator phoneNum = cgi.getElement("pnumber");
+      if(phoneNum != (*cgi).end() && !phoneNum->isEmpty())
+         loginfo.push_back((*phoneNum).getStrippedValue());
+      const_form_iterator pw = cgi.getElement("password");
+      if(pw != (*cgi).end() && !pw->isEmpty())
+         loginfo.push_back((*pw).getStrippedValue());
+//      control.signIn(loginfo);
 
-		//HEADER
-		 cout << "<div class=\"wrapper row1\">" << endl;
-                        cout << "<header id=\"header\" class=\"clear\">" << endl;
-                                cout << "<div id=\"hgroup\">" << endl;
-                                        cout << "<h1><a href=\"#\">Helpers Help Me</a></h1>" << endl;
-                                        cout << "<h2>Testing home</h2>" << endl;
-                                cout << "</div>" << endl;
-                        cout << "</header>" << endl;
+      //HEADER
+	  cout << "<div class=\"wrapper row1\">" << endl;
+      cout << "<header id=\"header\" class=\"clear\">" << endl;
+              cout << "<div id=\"hgroup\">" << endl;
+                      cout << "<h1><a href=\"#\">Helpers Help Me</a></h1>" << endl;
+                      cout << "<h2>Testing home</h2>" << endl;
+              cout << "</div>" << endl;
+      cout << "</header>" << endl;
                 cout << "</div>" <<endl;
                 cout << "<div class=\"wrapper row2\">" << endl;
                         cout << "<nav id=\"topnav\">" << endl;
