@@ -243,49 +243,49 @@ main(int /*argc*/,
     }
 
     // If the user wants to restore from the last submission, do it
-    if(cgi.queryCheckbox("restore")) {
+   if(cgi.queryCheckbox("restore")) {
       cgi.restore("/tmp/save.txt");
       cout << p(h2("Data Restored")) << endl;
       
       cout << cgicc::div().set("class", "notice") << endl;
       cout << "The data displayed has been restored from a file on disk."
-	   << endl << cgicc::div() << p() << endl;
-    }
-    
-    // If the user requested a dump of the environment,
-    // create a simple table showing the values of the 
-    // environment variables
-    if(cgi.queryCheckbox("showEnv"))
-      dumpEnvironment(env);
-    
-    // If the user requested, print out the raw form data from 
-    // the vector of FormEntries.  This will contain every 
-    // element in the list.
-    // This is one of two ways to get at form data, the other
-    // being the use of Cgicc's getElement() methods.  
-    if(cgi.queryCheckbox("showFE"))
-      dumpList(cgi);
-    
-    // If the user requested data via Cgicc's getElement() methods, do it.
-    // This is different than the use of the list of FormEntries 
-    // because it requires prior knowledge of the name of form elements.
-    // Usually they will be known, but you never know.
-    if(cgi.queryCheckbox("showForm"))
-      showForm(cgi);
+      << endl << cgicc::div() << p() << endl;
+   }
+   
+   // If the user requested a dump of the environment,
+   // create a simple table showing the values of the 
+   // environment variables
+   if(cgi.queryCheckbox("showEnv"))
+     dumpEnvironment(env);
+   
+   // If the user requested, print out the raw form data from 
+   // the vector of FormEntries.  This will contain every 
+   // element in the list.
+   // This is one of two ways to get at form data, the other
+   // being the use of Cgicc's getElement() methods.  
+   if(cgi.queryCheckbox("showFE"))
+     dumpList(cgi);
+   
+   // If the user requested data via Cgicc's getElement() methods, do it.
+   // This is different than the use of the list of FormEntries 
+   // because it requires prior knowledge of the name of form elements.
+   // Usually they will be known, but you never know.
+   if(cgi.queryCheckbox("showForm"))
+     showForm(cgi);
 
-    // Print out the form to do it again
-    cout << br() << endl;
-    printForm(cgi);
-    cout << hr().set("class", "half") << endl;
-    
-    // Information on cgicc
-    cout << cgicc::div().set("align","center").set("class","smaller") << endl;
-    cout << "GNU cgi" << span("cc").set("class","red") << " v";
-    cout << cgi.getVersion() << br() << endl;
-    cout << "Compiled at " << cgi.getCompileTime();
-    cout << " on " << cgi.getCompileDate() << br() << endl;
+   // Print out the form to do it again
+   cout << br() << endl;
+   printForm(cgi);
+   cout << hr().set("class", "half") << endl;
+   
+   // Information on cgicc
+   cout << cgicc::div().set("align","center").set("class","smaller") << endl;
+   cout << "GNU cgi" << span("cc").set("class","red") << " v";
+   cout << cgi.getVersion() << br() << endl;
+   cout << "Compiled at " << cgi.getCompileTime();
+   cout << " on " << cgi.getCompileDate() << br() << endl;
 
-    cout << "Configured for " << cgi.getHost();  
+   cout << "Configured for " << cgi.getHost();  
 #if HAVE_UNAME
     struct utsname info;
     if(uname(&info) != -1) {
@@ -501,7 +501,7 @@ showForm(const Cgicc& formData)
 
   // getElement and getStrippedValue
   const_form_iterator thoughts = formData.getElement("thoughts");
-  if(thoughts != (*formData).end() && ! (*thoughts).isEmpty()) {
+  if(thoughts != (*formData).end() && ! (*tor<FormEntry>).isEmpty()) {
     std::string temp = (*thoughts).getStrippedValue();
     cout << "Your thoughts: " << temp << br() << endl;
   }
