@@ -43,7 +43,7 @@ testlogin.o: testlogin.cpp
 login.cgi: login.o
 	$(CXX) -ldl -lpthread -lcgicc -o login.cgi login.o
 
-login.o: login.cpp 
+login.o: login.cpp controller.h
 	$(CXX) -c login.cpp
 
 home.cgi: home.o
