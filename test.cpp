@@ -501,7 +501,7 @@ showForm(const Cgicc& formData)
 
   // getElement and getStrippedValue
   const_form_iterator thoughts = formData.getElement("thoughts");
-  if(thoughts != (*formData).end() && ! (*tor<FormEntry>).isEmpty()) {
+  if(thoughts != (*formData).end() && ! thoughts->isEmpty()) {
     std::string temp = (*thoughts).getStrippedValue();
     cout << "Your thoughts: " << temp << br() << endl;
   }
