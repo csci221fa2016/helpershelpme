@@ -1,23 +1,25 @@
 #include "user.h"
-#include "string"
+#include <string>
+#include "string.h"
 using namespace std;
 
-user::user(int _userid) {
+User::User(int _userid) {
 	userid = _userid;
-	sqlite3 *db;
+	char *errmsg;
 	retval=sqlite3_open("csci221_dmcmahon.db", &db);
-	retval = sqlite3_exec(db, "create table if not exists users (id integer primary key, name text, phone text);");
+	retval = sqlite3_exec(db, "create table if not exists users (id integer primary key, name text, phone text);", NULL, NULL, &errmsg);
 	
 }
 
-user::getName() {
-	string x = "select name from users where id = " +to_string(id);	
+string User::getName() {	
 	sqlite3_stmt *s;
-	const char *sql = "select name from users where id = " +to_string(id);
+	string name;
+	const char *sql = "select name from users where id = " + (char)userid;
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
-	
-	string = sqlite3_column_string(s, 0);
-	return s;
+	while(sqlite3_step(s)==SQLITE_ROW) {
+		name = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
+	}
+	return name;
 
 }
 
