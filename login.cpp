@@ -11,8 +11,6 @@
 
 using namespace std;
 using namespace cgicc;
-void showForm(const Cgicc& formData);
-
 
 void
 printForm(const Cgicc& cgi)
@@ -42,7 +40,7 @@ printForm(const Cgicc& cgi)
         << "</p></div></form>" << endl;
 }
 
-int main(int argc, char **argv){
+int main(int argc, char **argv) {
    try{
       Cgicc cgi;
       cout << HTTPHTMLHeader() << endl;
@@ -97,7 +95,7 @@ int main(int argc, char **argv){
       cout << head() << endl;
       cout << body() << endl;
       
-      vector<string>loginfo;
+      vector<string> loginfo;
       Controller control;
       const_form_iterator phoneNum = cgi.getElement("pnumber");
       if(phoneNum != (*cgi).end() && !phoneNum->isEmpty())
@@ -105,7 +103,7 @@ int main(int argc, char **argv){
       const_form_iterator pw = cgi.getElement("password");
       if(pw != (*cgi).end() && !pw->isEmpty())
          loginfo.push_back((*pw).getStrippedValue());
-      control.signIn(loginfo);
+      control.signIn(&loginfo);
 
    	  //HEADER
 	  cout << "<div class=\"wrapper row1\">" << endl;
