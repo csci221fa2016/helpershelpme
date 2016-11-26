@@ -3,7 +3,7 @@
 using namespace std;
 
 class User;
-class VolunteerPosition;
+class EventPosition;;
 
 class Event {
      private:
