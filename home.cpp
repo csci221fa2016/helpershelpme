@@ -1,14 +1,17 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "controller.h"
 
 #include "cgicc/CgiDefs.h"
 #include "cgicc/Cgicc.h"
 #include "cgicc/HTTPHTMLHeader.h"
 #include "cgicc/HTMLClasses.h"
 #include "styles.h"
+
 using namespace std;
 using namespace cgicc;
+
 int main(int argc, char **argv){
 	try{
 		Cgicc cgi;
@@ -115,7 +118,8 @@ int main(int argc, char **argv){
  			cout << " </nav>" << endl;
 		cout << "</div>" << endl;
 
-   
+   Controller control;
+   vector<string> event
 
 		//FOOTER
 		cout <<"<div class=\"wrapper row4\">"<< endl;
