@@ -58,6 +58,32 @@ vector<string> Controller::showUserInfo(int id) {
   return v;
 }
 
+vector<string> Controller::showEventInfo(int id) {
+  vector<string> v;
+  Event* e = new Event(id);
+  v.push_back(e->getName());
+  v.push_back(e->getDescription());
+  v.push_back(e->getStartDate());
+  v.push_back(e->getEndDate());
+
+  // convert array of EventPositions to array of strings
+  // then add them to a new array a[]
+
+  EventPosition arr[] = getEventPositions();
+  string a[];
+  for (int i = 0; i < (sizeof(arr)/sizeof(*arr)); i++ ) {
+    string s = to_string(arr[i]);
+    a[i] = s;
+  }
+
+  // convert a[] to a vector
+  vector<string> vec(a, a + (sizeof(a)/sizeof(*a)));
+
+  // append the new vector vec to the original vector v
+  v.insert(v.end(), vec.begin(), vec.end());
+  return v;
+}
+
 void Controller::updateProfile(vector<string> v, int id) {
   User* u = new User(id);
 

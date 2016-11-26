@@ -20,6 +20,7 @@ class Controller {
 		showEventTitle(int id);
 		showEventDate(int id);
 		vector<string> showUserInfo(int id);
+		vector<string> showEventInfo(int id);
 		checkUserAccess();
 
 };
