@@ -118,8 +118,19 @@ int main(int argc, char **argv){
  			cout << " </nav>" << endl;
 		cout << "</div>" << endl;
 
+   //print out the event info and event positions within event
    Controller control;
-   vector<string> event
+   vector<string> evinfo;
+   evinfo = control.showEventInfo(1);
+   cout << "<dl> <dt><b>" <<  evinfo[0] << "</b><dt>"
+        << "<p><dd>Date(s): " << evinfo[2] << " to " << evinfo[3] << "</dd></p>"
+        << "<p><dd> " << evinfo[1] << "</dd></p>
+        << "<dt> Event Positions:</dt>\n";
+        << "<dd>"
+        for (int x = 4; x < evinfo.end() || x < 7; ++x) {
+            cout << "<p>" evinfo[x] << "</p>\n";
+        }
+   cout << "</dd></dl>"
 
 		//FOOTER
 		cout <<"<div class=\"wrapper row4\">"<< endl;

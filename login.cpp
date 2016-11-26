@@ -94,7 +94,8 @@ int main(int argc, char **argv) {
       cout << title("Home") <<endl;
       cout << head() << endl;
       cout << body() << endl;
-      
+     
+      //retrieves form information and sends it to controller
       vector<string> loginfo;
       Controller control;
       const_form_iterator phoneNum = cgi.getElement("pnumber");
