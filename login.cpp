@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
                 });"<< endl;
 
       cout << "</script>" << endl;
-      cout << title("Home") <<endl;
+      cout << title("Log In") <<endl;
       cout << head() << endl;
       cout << body() << endl;
      
