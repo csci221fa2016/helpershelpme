@@ -11,7 +11,7 @@ class EventPosition
 		int userId;
 	
 	public:
-		EventPosition(int eposid, int eventid, int userId);
+		EventPosition(int _eposid, int _eventid, int _userid);
 		User* getVolunteer();
 		Event* getEvent();
 		string getDescription();
