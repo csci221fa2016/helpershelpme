@@ -1,5 +1,6 @@
 #include <string>
-#include <vector.h>
+#include <vector>
+#include "sqlite3.h"
 using namespace std;
 
 class Event;
@@ -8,6 +9,8 @@ class EventPosition;
 class User {
      private:
 	int userid;
+	int retval;
+	sqlite3 *db;
     
      public:
 	User(int _userid);
@@ -20,7 +23,7 @@ class User {
 	void addEvent(Event* _event);
 	void addOrganizedEvent(Event* _event);
 	bool leaveEvent(Event* _event);
-	Event*[] listUserEvents();
+	vector <Event*> listUserEvents();
 	int getUserId();
 	void setPassword(string _pass);
 	bool checkPassword(string _pass);

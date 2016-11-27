@@ -4,23 +4,26 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 class Controller {
 
 	public:
 
 		Controller();
-		sendUser(vector<string> v, int id);
-		sendEvent(vector<string> v, int eventId, int userId);
-		updateProfile(vector<string> v, int id);
-		updateEvent(vector<string> v, int id);
-		signIn(vector<string> v);
-		addVolunteer(vector<string> v, int eventId, int userId);
-		showStats(int id);
-		showEvent(int id);
-		showEventTitle(int id);
-		showEventDate(int id);
+		void sendUser(vector<string> v, int id);
+		void sendEvent(vector<string> v, int eventId, int userId);
 		vector<string> showUserInfo(int id);
-		checkUserAccess();
+		vector<string> showEventInfo(int id);
+		void updateProfile(vector<string> v, int id);
+		void updateEvent(vector<string> v, int id);
+		void signIn(vector<string> *v);
+		void addVolunteer(vector<string> v, int eventId, int userId);
+		void showStats(int id);
+		void showEvent(int id);
+		void showEventTitle(int id);
+		void showEventDate(int id);
+		void checkUserAccess();
 
 };
 
