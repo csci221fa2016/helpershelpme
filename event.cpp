@@ -1,7 +1,7 @@
 
 #include "event.h"
 #include "user.h"
-#include "EventPosition.h"
+#include "eventposition.h"
 
 Event::Event(int _eventid) : eventid(_eventid) {}
 
