@@ -1,5 +1,7 @@
 #include "controller.h"
-//#include "database.h"
+#include "event.h"
+#include "eventposition.h"
+#include "user.h"
 
 #include <vector>
 #include <exception>
@@ -59,30 +61,40 @@ vector<string> Controller::showUserInfo(int id) {
   return v;
 }
 
-vector<string> Controller::showEventInfo(int id) {
-  vector<string> v;
+string** Controller::showEventInfo(int id) {
   Event* e = new Event(id);
-  v.push_back(e->getName());
-  v.push_back(e->getDescription());
-  v.push_back(e->getStartDate());
-  v.push_back(e->getEndDate());
 
   // convert array of EventPositions to array of strings
   // then add them to a new array a[]
 
-  EventPosition arr[] = getEventPositions();
-  string a[];
-  for (int i = 0; i < (sizeof(arr)/sizeof(*arr)); i++ ) {
-    string s = to_string(arr[i]);
-    a[i] = s;
+  vector<EventPosition*> arr = e->getVolunteers();
+  string a** = new string[arr.size() + 1][6];
+  a[0][0] = e->getName();
+  a[0][1] = e->getOrganizer()->getName();
+  a[0][2] = e->getStartDate();
+  a[0][3] = e->getEndDate();
+  a[0][4] = e->getDescription();
+  a[0][5] = e->getLocation();
+  for (int i = 1; i < arr.size(); ++i ) {
+    for (int j = 0; j < 4; ++j) {
+      // string s = to_string(arr[i]->getVolunteer());
+      // a[i][j] = s;
+      switch(j){
+        case 0: a[i][j] = arr[i]->getVolunteer()->getName();
+                break;
+        case 1: a[i][j] = arr[i]->getDescription();
+                break;
+        case 2: a[i][j] = arr[i]->getStartTime();
+                break;
+        case 3: a[i][j] = arr[i]->getEndTime();
+                break;
+        default: a[i][j] = "Error in inputting";
+                break;
+      }
+    }
   }
 
-  // convert a[] to a vector
-  vector<string> vec(a, a + (sizeof(a)/sizeof(*a)));
-
-  // append the new vector vec to the original vector v
-  v.insert(v.end(), vec.begin(), vec.end());
-  return v;
+  return a;
 }
 
 void Controller::updateProfile(vector<string> v, int id) {
