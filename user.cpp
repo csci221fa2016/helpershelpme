@@ -45,14 +45,18 @@ vector<EventPosition*> User::getEventsWorked() {
 	return events;
 }
 bool User::setPhoneNumber(string _phoneNumber) {
-	retval = sqlite3_exec(db, "insert into users "+_phoneNumber+" where id ="+ char(userid);
+	const char * phone = _phoneNumber.c_str();
+	const char *sql = "insert into users phone ("+phone+") where id = "+ (char)userid+";";
+	retval = sqlite3_exec(db, sql, NULL, NULL, &errmsg);
 if(retval != SQLITE_OK)
 {
 	return false;
 }
 return true;			
 }
-
+void User::setPassword(const size_t _pass) {
+	retval = sqlite3_exec(db, "insert into users "+_pass+" where id = "+(char)userid+";", NULL, NULL, &errmsg);
+}
 
 
 #endif
