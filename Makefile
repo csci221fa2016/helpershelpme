@@ -4,7 +4,7 @@ CXXFLAGS = -ansi -Wall -ggdb3 -isystem $(GTEST_DIR)/include -Wextra -lpthread
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
-all: controller test.cgi home.cgi
+all: user event eventposition controller test.cgi login.cgi home.cgi
 
 testviet-all.o: $(GTEST_SRCS)
 	$(CXX) $(CXXFLAGS) -I$(GTEST_DIR) -c $(GTEST_DIR)/src/gtest-all.cc
@@ -18,24 +18,35 @@ gtest.a : gtest-all.o
 gtest_main.a : gtest-all.o gtest_main.o
 	$(AR) $(ARFLAGS) $@ $^
 
-testll.o: testll.cpp controller.h event.h eventposition.h user.h login.cgi home.cgi $(GTEST_HEADERS)
-	$(CXX) $(CXXFLAGS) -c testll.cpp
+event_test.o: event_test.cpp event.h $(GTEST_HEADERS)
+	$(CXX) $(CXXFLAGS) -c event_test.cpp
 
-testll: testll.o gtest_main.a
-	$(CXX) $(CXXFLAGS) -o testll testll.o gtest_main.a.cgi: testview.o
-	g++ -ldl -lpthread -lcgicc -o testview.cgi testview.o
+event_test: event_test.o gtest_main.a
+	$(CXX) $(CXXFLAGS) -o event_test event_test.o gtest_main.a
 
-main.o: main.cpp
-	$(CXX) $(CXXFLAGS) -c main.cpp
+controller: controller.o event.o user.o eventposition.o
+	g++ -g -Wall -o controller controller.o
 
-main: main.o
-	$(CXX) $(CXXFLAGS) -o main main.o
+controller.o: controller.h controller.cpp event.h user.h eventposition.h
+	g++ -g -Wall -c controller.cpp
 
-controller: controller.o
-	g++  -o controller.o
+user: user.o sqlite3.o event.o eventposition.o
+	g++ -o user user.o sqlite3.o
 
-controller.o: controller.h
-	g++ -g -c controller.cpp
+user.o: user.h user.cpp sqlite3.h event.h eventposition.h
+	g++ -c user.cpp
+
+event: event.o sqlite3.o user.o eventposition.o 
+	g++ -o event event.o sqlite3.o
+
+event.o: event.h user.h eventposition.h sqlite3.h event.cpp
+	g++ -c event.cpp
+
+eventposition: eventposition.o sqlite3.o user.o event.o
+	g++ -o eventposition eventposition.o sqlite.o
+
+eventposition.o: user.h event.h eventposition.h sqlite3.h eventposition.cpp
+	g++ -c eventposition.cpp
 
 login.cgi: login.o controller.o
 	$(CXX) -ldl -lpthread -lcgicc -o login.cgi login.o
@@ -48,6 +59,9 @@ home.cgi: home.o controller.o
 
 home.o: home.cpp controller.cpp
 	g++ -c home.cpp
+
+sqlite3.o: sqlite3.h sqlite3.c
+	gcc -c sqlite3.c
 
 .PHONY: clean
 clean:

@@ -3,6 +3,9 @@
 
 #include <string>
 #include <vector>
+#include "event.h"
+#include "eventposition.h"
+#include "user.h"
 
 using namespace std;
 

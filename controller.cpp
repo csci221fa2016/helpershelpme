@@ -1,7 +1,4 @@
 #include "controller.h"
-#include "event.h"
-#include "eventposition.h"
-#include "user.h"
 
 #include <vector>
 #include <exception>
