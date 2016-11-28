@@ -1,6 +1,7 @@
 #ifndef EVENTPOSITIONH
 #define EVENTPOSITIONH
 #include <string>
+#include "sqlite3.h"
 using namespace std;
 
 class EventPosition
@@ -9,7 +10,9 @@ class EventPosition
 		int eposid;
 		int eventid;
 		int userId;
-	
+		int retval;
+		sqlite3 *db;
+			
 	public:
 		EventPosition(int _eposid, int _eventid, int _userid);
 		User* getVolunteer();
