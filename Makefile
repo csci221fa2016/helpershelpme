@@ -18,7 +18,7 @@ gtest.a : gtest-all.o
 gtest_main.a : gtest-all.o gtest_main.o
 	$(AR) $(ARFLAGS) $@ $^
 
-testll.o: testll.cpp linkedlist.h node.h $(GTEST_HEADERS)
+testll.o: testll.cpp controller.h event.h eventposition.h user.h login.cgi home.cgi $(GTEST_HEADERS)
 	$(CXX) $(CXXFLAGS) -c testll.cpp
 
 testll: testll.o gtest_main.a
@@ -31,15 +31,6 @@ main.o: main.cpp
 main: main.o
 	$(CXX) $(CXXFLAGS) -o main main.o
 
-test.cgi: test.o sqlite3.o
-	g++ -ldl -lpthread -lcgicc -o test.cgi test.o sqlite3.o
-
-testlogin.cgi: testlogin.o
-	g++ -ldl -lpthread -lcgicc -o testlogin.cgi testlogin.o
-
-testlogin.o: testlogin.cpp
-	g++ -c testlogin.cpp
-
 controller: controller.o
 	g++  -o controller.o
 
@@ -49,13 +40,13 @@ controller.o: controller.h
 login.cgi: login.o controller.o
 	$(CXX) -ldl -lpthread -lcgicc -o login.cgi login.o
 
-login.o: login.cpp controller.h
+login.o: login.cpp controller.cpp
 	$(CXX) -c login.cpp
 
-home.cgi: home.o
+home.cgi: home.o controller.o
 	g++ -ldl -lpthread -lcgicc -o home.cgi home.o
 
-home.o: home.cpp
+home.o: home.cpp controller.cpp
 	g++ -c home.cpp
 
 .PHONY: clean
