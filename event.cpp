@@ -53,3 +53,9 @@ void Event::setLocation(string _loc) {
 	// location = _loc;
 }
 
+vector<EventPosition*> Event::getVolunteers() {
+    vector<EventPosition*> volunteers;
+    return volunteers;
+}
+
+

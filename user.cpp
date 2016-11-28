@@ -2,7 +2,8 @@
 #include "event.h"
 #include "eventposition.h"
 #include <string>
-#include "string.h"
+#include <cstring>
+#include "sqlite3.h"
 #include <vector>
 using namespace std;
 
@@ -25,6 +26,11 @@ string User::getName() {
 	return name;
 
 }
+
+bool User::setName(string _name) {
+    return 1;
+}
+
 string User::getPhoneNumber() {	
 	sqlite3_stmt *s;
 	string number;
