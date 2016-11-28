@@ -31,22 +31,22 @@ controller.o: controller.h controller.cpp event.h user.h eventposition.h
 	g++ -g -Wall -c controller.cpp
 
 user: user.o sqlite3.o event.o eventposition.o
-	g++ -o user user.o sqlite3.o
+	g++ -pthread -o user user.o sqlite3.o 
 
 user.o: user.h user.cpp sqlite3.h event.h eventposition.h
-	g++ -c user.cpp
+	g++ -pthread -c user.cpp
 
 event: event.o sqlite3.o user.o eventposition.o 
-	g++ -o event event.o sqlite3.o
+	g++ -o -pthread event event.o sqlite3.o
 
 event.o: event.h user.h eventposition.h sqlite3.h event.cpp
-	g++ -c event.cpp
+	g++ -c -pthread event.cpp
 
 eventposition: eventposition.o sqlite3.o user.o event.o
-	g++ -o eventposition eventposition.o sqlite.o
+	g++ -pthread -o eventposition eventposition.o sqlite.o
 
 eventposition.o: user.h event.h eventposition.h sqlite3.h eventposition.cpp
-	g++ -c eventposition.cpp
+	g++  -pthread -c eventposition.cpp
 
 login.cgi: login.o controller.o
 	$(CXX) -ldl -lpthread -lcgicc -o login.cgi login.o

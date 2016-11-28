@@ -53,7 +53,6 @@ if(retval != SQLITE_OK)
 	return false;
 }
 return true;			
->>>>>>> 2e174f29c9d1dbabfd426e195da55abd0a4f8cfb
 }
 void User::setPassword(const size_t _pass) {
 	retval = sqlite3_exec(db, "insert into users password where id = "+(char)userid, NULL, NULL, NULL); //Fix the null
