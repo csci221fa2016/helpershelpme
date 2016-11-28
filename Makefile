@@ -18,18 +18,11 @@ gtest.a : gtest-all.o
 gtest_main.a : gtest-all.o gtest_main.o
 	$(AR) $(ARFLAGS) $@ $^
 
-testll.o: testll.cpp controller.h event.h eventposition.h user.h login.cgi home.cgi $(GTEST_HEADERS)
-	$(CXX) $(CXXFLAGS) -c testll.cpp
+event_test.o: event_test.cpp event.h $(GTEST_HEADERS)
+	$(CXX) $(CXXFLAGS) -c event_test.cpp
 
-testll: testll.o gtest_main.a
-	$(CXX) $(CXXFLAGS) -o testll testll.o gtest_main.a.cgi: testview.o
-	g++ -ldl -lpthread -lcgicc -o testview.cgi testview.o
-
-main.o: main.cpp
-	$(CXX) $(CXXFLAGS) -c main.cpp
-
-main: main.o
-	$(CXX) $(CXXFLAGS) -o main main.o
+event_test: event_test.o gtest_main.a
+	$(CXX) $(CXXFLAGS) -o event_test event_test.o gtest_main.a
 
 controller: controller.o
 	g++  -o controller.o
