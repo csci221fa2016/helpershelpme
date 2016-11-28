@@ -13,8 +13,10 @@ TEST(event, getName)
 
 TEST(event, getStartDate)
 {
+    Event e = new Event(0);
 
-
+     ASSERT_EQ(true, e->getStartDate() == "2016-11-22 15:33:00");
 }
+
 
     
