@@ -7,6 +7,9 @@
 #include <exception>
 #include <stdexcept>
 #include <string>
+#include <functional>
+#include <cstddef>
+
 using namespace std;
 
 Controller::Controller() {}
@@ -115,10 +118,12 @@ void updateEvent(vector<string> v, int id) {
 
 }
 
-void Controller::signIn(vector<string> *v) {
-  // Hash dbPass = searchDatabase(v[0]);
-  // Hash v[1], check v[1] with dbPass.
-
+bool Controller::signIn(vector<string> *v) {
+  hash<string> pw_hash;
+  const size_t dbPass = pw_hash(v[1]);
+  //send to database to verify
+  //if(whatanot) return true; else return false;
+  return true;
 }
 
 void Controller::addVolunteer(vector<string> v, int eventId, int userId) {
