@@ -25,6 +25,6 @@ class User {
 	bool leaveEvent(Event* _event);
 	vector <Event*> listUserEvents();
 	int getUserId();
-	void setPassword(string _pass);
+	void setPassword(const size_t _pass);
 	bool checkPassword(string _pass);
 };
