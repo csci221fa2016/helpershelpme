@@ -41,7 +41,6 @@ string User::getPhoneNumber() {
 vector<EventPosition*> User::getEventsWorked() {
 	sqlite3_stmt *s;
 	vector <EventPosition*> events;
-	events.push_back(new EventPosition(1,1,1));
 	return events;
 }	
 bool User::setPhoneNumber(string _phoneNumber) {
