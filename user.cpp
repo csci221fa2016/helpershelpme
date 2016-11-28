@@ -43,10 +43,21 @@ vector<EventPosition*> User::getEventsWorked() {
 	vector <EventPosition*> events;
 	events.push_back(new EventPosition(1,1,1));
 	return events;
+}	
+bool User::setPhoneNumber(string _phoneNumber) {
+	const char *phone = _phoneNumber.c_str();
+	const char *sql = "insert into users phone 8889990000 where id = "+ (char)userid;
+	retval = sqlite3_exec(db, sql, NULL, NULL, NULL); //Need to fix the null lol
+if(retval != SQLITE_OK)
+{
+	return false;
 }
-bool User::setPhoneNumber(string _phoneNumber) {	
+return true;			
+>>>>>>> 2e174f29c9d1dbabfd426e195da55abd0a4f8cfb
 }
-
+void User::setPassword(const size_t _pass) {
+	retval = sqlite3_exec(db, "insert into users password where id = "+(char)userid, NULL, NULL, NULL); //Fix the null
+}
 
 
 #endif

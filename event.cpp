@@ -30,26 +30,26 @@ string Event::getLocation() {
 // UPDATE WITH SQLITE!!!!!!!!!
 
 void Event::setName(string _name) {
-	name = _name;
+//	name = _name;
 }
 
 void Event::setStartDate(string _date) {
-	date = _date;
+//	date = _date;
 }
 
 void Event::setEndDate(string _date) {
-	date = _date;
+//	date = _date;
 }
 
 void Event::setOrganizer(int _id) {
-	userId = _id;
+//	userId = _id;
 }
 
 void Event::setDescription(string _desc) {
-	description = _desc;
+//	description = _desc;
 }
 
 void Event::setLocation(string _loc) {
-	location = _loc;
+	// location = _loc;
 }
 
