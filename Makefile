@@ -34,22 +34,22 @@ controller.o: controller.h controller.cpp event.h user.h eventposition.h
 	g++ -ldl -g -Wall -c controller.cpp
 
 user: user.o sqlite3.o event.o eventposition.o main.o
-	g++ -ldl -pthread -o user user.o sqlite3.o event.o eventposition.o  main.o
+	g++ -ldl -pthread -lsqlite3 -o user user.o sqlite3.o event.o eventposition.o  main.o
 
 user.o: user.h user.cpp sqlite3.h event.h eventposition.h
-	g++ -ldl -pthread -c user.cpp
+	g++ -ldl -pthread -lsqlite3 -c user.cpp
 
 event: event.o sqlite3.o user.o eventposition.o main.o
-	g++ -ldl -pthread -o event event.o sqlite3.o main.o user.o eventposition.o
+	g++ -ldl -pthread -lsqlite3 -o event event.o sqlite3.o main.o user.o eventposition.o
 
 event.o: event.h user.h eventposition.h sqlite3.h event.cpp
-	g++ -ldl -pthread -c event.cpp
+	g++ -ldl -pthread -lsqlite3 -c event.cpp
 
 eventposition: eventposition.o sqlite3.o user.o event.o main.o
-	g++ -ldl -pthread -o eventposition eventposition.o sqlite3.o main.o user.o event.o
+	g++ -ldl -pthread -lsqlite3 -o eventposition eventposition.o sqlite3.o main.o user.o event.o
 
 eventposition.o: user.h event.h eventposition.h sqlite3.h eventposition.cpp
-	g++ -ldl -pthread -c eventposition.cpp
+	g++ -ldl -pthread -lsqlite3 -c eventposition.cpp
 
 login.cgi: login.o controller.o
 	$(CXX) -ldl -lpthread -lcgicc -o login.cgi login.o

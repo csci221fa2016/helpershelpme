@@ -1,5 +1,3 @@
-#ifndef EVENTPOSITION
-#define EVENTPOSITION
 #include "user.h"
 #include "event.h"
 #include "eventposition.h"
@@ -74,4 +72,3 @@ void EventPosition::setEndTime(string _end){
 
 }
 
-#endif

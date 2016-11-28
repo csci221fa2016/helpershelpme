@@ -102,19 +102,19 @@ string** Controller::showEventInfo(int id) {
   return a;
 }
 
-void Controller::updateProfile(vector<string> v, int id) {
-  User* u = new User(id);
+//void Controller::updateProfile(vector<string> v, int id) {
+ // User* u = new User(id);
 
-  if (!v[0].empty() && !v[1].empty() && !v[2].empty())
-  {
-    u->setName(v[0]);
-    u->setPhoneNumber(v[1]);
-    u->setPassword(v[2]);
-  }
-  else {
-    throw runtime_error("Empty update.");
-  }
-}
+ // if (!v[0].empty() && !v[1].empty() && !v[2].empty())
+ // {
+   // u->setName(v[0]);
+   // u->setPhoneNumber(v[1]);
+  // u->setPassword(v[2]);
+ // }
+ // else {
+   // throw runtime_error("Empty update.");
+//  }
+//}
 
 void updateEvent(vector<string> v, int id) {
 
