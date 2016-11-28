@@ -1,4 +1,4 @@
-
+#include <string>
 #include "event.h"
 #include "user.h"
 #include "eventposition.h"
@@ -25,5 +25,31 @@ string Event::getDescription() {
 
 string Event::getLocation() {
 	return "Stetson U";
+}
+
+// UPDATE WITH SQLITE!!!!!!!!!
+
+void Event::setName(string _name) {
+	name = _name;
+}
+
+void Event::setStartDate(string _date) {
+	date = _date;
+}
+
+void Event::setEndDate(string _date) {
+	date = _date;
+}
+
+void Event::setOrganizer(int _id) {
+	userId = _id;
+}
+
+void Event::setDescription(string _desc) {
+	description = _desc;
+}
+
+void Event::setLocation(string _loc) {
+	location = _loc;
 }
 

@@ -7,6 +7,9 @@
 #include <exception>
 #include <stdexcept>
 #include <string>
+#include <functional>
+#include <cstddef>
+
 using namespace std;
 
 Controller::Controller() {}
@@ -37,8 +40,8 @@ void Controller::sendEvent(vector<string> v, int eventId, int userId) {
       // make a new event
       Event* e = new Event(1);
       e->setName(v[0]);
-      e->setStartDate(v[1]); // Need to convert to DateTime.
-      e->setEndDate(v[2]); // Need to convert to DateTime.
+      e->setStartTime(v[1]); // Need to convert to DateTime.
+      e->setEndTime(v[2]); // Need to convert to DateTime.
       e->setDescription(v[3]);
       e->setLocation(v[4]);
     
@@ -68,7 +71,7 @@ string** Controller::showEventInfo(int id) {
   // then add them to a new array a[]
 
   vector<EventPosition*> arr = e->getVolunteers();
-  string a** = new string[arr.size() + 1][6];
+  string** a = new string[arr.size() + 1][6];
   a[0][0] = e->getName();
   a[0][1] = e->getOrganizer()->getName();
   a[0][2] = e->getStartDate();
@@ -115,10 +118,12 @@ void updateEvent(vector<string> v, int id) {
 
 }
 
-void Controller::signIn(vector<string> *v) {
-  // Hash dbPass = searchDatabase(v[0]);
-  // Hash v[1], check v[1] with dbPass.
-
+bool Controller::signIn(vector<string> *v) {
+  hash<string> pw_hash;
+  const size_t dbPass = pw_hash(v[1]);
+  //send to database to verify
+  //if(whatanot) return true; else return false;
+  return true;
 }
 
 void Controller::addVolunteer(vector<string> v, int eventId, int userId) {

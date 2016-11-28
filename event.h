@@ -17,8 +17,8 @@ class Event {
 	vector<EventPosition*> getVolunteers();
 	string getDescription();
 	string getLocation();
-	void setStartTime(string _date);
-	void setEndTime(string _date);
+	void setStartDate(string _date);
+	void setEndDate(string _date);
 	void addVolunteer(vector<EventPosition*> _volunteer);
 	void setDescription(string _description);
 	void setLocation(string _location);
