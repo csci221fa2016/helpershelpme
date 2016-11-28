@@ -25,28 +25,28 @@ event_test: event_test.o gtest_main.a
 	$(CXX) $(CXXFLAGS) -o event_test event_test.o gtest_main.a
 
 controller: controller.o event.o user.o eventposition.o
-	g++ -g -Wall -o controller controller.o
+	g++ -ldl -g -Wall -o controller controller.o
 
 controller.o: controller.h controller.cpp event.h user.h eventposition.h
-	g++ -g -Wall -c controller.cpp
+	g++ -ldl -g -Wall -c controller.cpp
 
 user: user.o sqlite3.o event.o eventposition.o
-	g++ -pthread -o user user.o sqlite3.o 
+	g++ -ldl -pthread -o user user.o sqlite3.o 
 
 user.o: user.h user.cpp sqlite3.h event.h eventposition.h
-	g++ -pthread -c user.cpp
+	g++ -ldl -pthread -c user.cpp
 
 event: event.o sqlite3.o user.o eventposition.o 
-	g++ -o -pthread event event.o sqlite3.o
+	g++ -ldl -pthread -o event event.o sqlite3.o
 
 event.o: event.h user.h eventposition.h sqlite3.h event.cpp
-	g++ -c -pthread event.cpp
+	g++ -ldl -pthread -c event.cpp
 
 eventposition: eventposition.o sqlite3.o user.o event.o
-	g++ -pthread -o eventposition eventposition.o sqlite.o
+	g++ -ldl -pthread -o eventposition eventposition.o sqlite.o
 
 eventposition.o: user.h event.h eventposition.h sqlite3.h eventposition.cpp
-	g++  -pthread -c eventposition.cpp
+	g++ -ldl -pthread -c eventposition.cpp
 
 login.cgi: login.o controller.o
 	$(CXX) -ldl -lpthread -lcgicc -o login.cgi login.o
