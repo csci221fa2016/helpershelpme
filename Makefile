@@ -46,7 +46,7 @@ event.o: event.h user.h eventposition.h sqlite3.h event.cpp
 	g++ -ldl -pthread -c event.cpp
 
 eventposition: eventposition.o sqlite3.o user.o event.o main.o
-	g++ -ldl -pthread -o eventposition eventposition.o sqlite.o main.o user.o event.o
+	g++ -ldl -pthread -o eventposition eventposition.o sqlite3.o main.o user.o event.o
 
 eventposition.o: user.h event.h eventposition.h sqlite3.h eventposition.cpp
 	g++ -ldl -pthread -c eventposition.cpp
