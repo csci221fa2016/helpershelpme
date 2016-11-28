@@ -1,5 +1,3 @@
-#ifndef USER
-#define USER
 #include "user.h"
 #include "event.h"
 #include "eventposition.h"
@@ -57,5 +55,3 @@ void User::setPassword(const size_t _pass) {
 	retval = sqlite3_exec(db, "insert into users password where id = "+(char)userid, NULL, NULL, NULL); //Fix the null
 }
 
-
-#endif
