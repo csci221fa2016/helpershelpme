@@ -29,7 +29,7 @@ printForm(const Cgicc& cgi)
 
    cout << "<tr><td class=\"title\">Password</td>"
         << "<td class=\"form\">"
-        << "<input type=\"password\" name=\"password\" "
+        << "<input type=\"password\" name=\"password\" value=\"password\""
         << " maxlength=\"\" autocomplete=\"off\" data-validate=\"{required: true}\"/>"
         << "</td></tr>" << endl;
 

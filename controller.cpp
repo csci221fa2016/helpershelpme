@@ -40,8 +40,8 @@ void Controller::sendEvent(vector<string> v, int eventId, int userId) {
       // make a new event
       Event* e = new Event(1);
       e->setName(v[0]);
-      e->setStartTime(v[1]); // Need to convert to DateTime.
-      e->setEndTime(v[2]); // Need to convert to DateTime.
+      e->setStartDate(v[1]); // Need to convert to DateTime.
+      e->setEndDate(v[2]); // Need to convert to DateTime.
       e->setDescription(v[3]);
       e->setLocation(v[4]);
     
@@ -71,7 +71,12 @@ string** Controller::showEventInfo(int id) {
   // then add them to a new array a[]
 
   vector<EventPosition*> arr = e->getVolunteers();
-  string** a = new string[arr.size() + 1][6];
+  string** a;
+  a = new string*[arr.size()+1];
+  for (int i = 0; i < arr.size()+1; ++i) {
+	a[i] = new string[6];
+  }
+
   a[0][0] = e->getName();
   a[0][1] = e->getOrganizer()->getName();
   a[0][2] = e->getStartDate();
@@ -119,8 +124,8 @@ void updateEvent(vector<string> v, int id) {
 }
 
 bool Controller::signIn(vector<string> *v) {
-  hash<string> pw_hash;
-  const size_t dbPass = pw_hash(v[1]);
+//  hash<string> pw_hash;
+//  const size_t dbPass = pw_hash(v[1]);
   //send to database to verify
   //if(whatanot) return true; else return false;
   return true;
