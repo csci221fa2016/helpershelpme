@@ -3,7 +3,7 @@
 using namespace std;
 
 class User;
-class EventPosition;;
+class EventPosition;
 
 class Event {
      private:
@@ -25,5 +25,5 @@ class Event {
 	void removeVolunteer(vector<EventPosition*> _volunteer);
 	int getEventId();
 	void setName(string _name);
-	void setOrganizer(int _userid)
+	void setOrganizer(int _userid);
 };
