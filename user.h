@@ -1,3 +1,5 @@
+#ifndef USER
+#define USER
 #include <string>
 #include <vector>
 #include "sqlite3.h"
@@ -29,3 +31,4 @@ class User {
 	void setPassword(const size_t _pass);
 	bool checkPassword(string _pass);
 };
+#endif

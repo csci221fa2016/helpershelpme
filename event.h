@@ -1,3 +1,5 @@
+#ifndef EVENT
+#define EVENT
 #include <string>
 #include <vector>
 using namespace std;
@@ -27,3 +29,5 @@ class Event {
 	void setName(string _name);
 	void setOrganizer(int _userid);
 };
+
+#endif
