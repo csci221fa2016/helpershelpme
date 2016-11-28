@@ -24,26 +24,29 @@ event_test.o: event_test.cpp event.h $(GTEST_HEADERS)
 event_test: event_test.o gtest_main.a
 	$(CXX) $(CXXFLAGS) -o event_test event_test.o gtest_main.a
 
-controller: controller.o event.o user.o eventposition.o
-	g++ -ldl -g -Wall -o controller controller.o
+main.o: main.cpp controller.h user.h event.h eventposition.h
+	g++ -ldl -g -Wall -c main.cpp
+
+controller: controller.o event.o user.o eventposition.o main.o
+	g++ -ldl -g -Wall -o controller controller.o event.o user.o eventposition.o main.o
 
 controller.o: controller.h controller.cpp event.h user.h eventposition.h
 	g++ -ldl -g -Wall -c controller.cpp
 
-user: user.o sqlite3.o event.o eventposition.o
-	g++ -ldl -pthread -o user user.o sqlite3.o 
+user: user.o sqlite3.o event.o eventposition.o main.o
+	g++ -ldl -pthread -o user user.o sqlite3.o event.o eventposition.o  main.o
 
 user.o: user.h user.cpp sqlite3.h event.h eventposition.h
 	g++ -ldl -pthread -c user.cpp
 
-event: event.o sqlite3.o user.o eventposition.o 
-	g++ -ldl -pthread -o event event.o sqlite3.o
+event: event.o sqlite3.o user.o eventposition.o main.o
+	g++ -ldl -pthread -o event event.o sqlite3.o main.o user.o eventposition.o
 
 event.o: event.h user.h eventposition.h sqlite3.h event.cpp
 	g++ -ldl -pthread -c event.cpp
 
-eventposition: eventposition.o sqlite3.o user.o event.o
-	g++ -ldl -pthread -o eventposition eventposition.o sqlite.o
+eventposition: eventposition.o sqlite3.o user.o event.o main.o
+	g++ -ldl -pthread -o eventposition eventposition.o sqlite.o main.o user.o event.o
 
 eventposition.o: user.h event.h eventposition.h sqlite3.h eventposition.cpp
 	g++ -ldl -pthread -c eventposition.cpp
