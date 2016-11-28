@@ -44,13 +44,7 @@ vector<EventPosition*> User::getEventsWorked() {
 	events.push_back(new EventPosition(1,1,1));
 	return events;
 }
-bool User::setPhoneNumber(string _phoneNumber) {
-	retval = sqlite3_exec(db, "insert into users "+_phoneNumber+" where id ="+ char(userid);
-if(retval != SQLITE_OK)
-{
-	return false;
-}
-return true;			
+bool User::setPhoneNumber(string _phoneNumber) {	
 }
 
 

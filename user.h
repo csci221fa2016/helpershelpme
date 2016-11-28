@@ -11,6 +11,7 @@ class User {
 	int userid;
 	int retval;
 	sqlite3 *db;
+	char *errmsg;
     
      public:
 	User(int _userid);
@@ -25,6 +26,6 @@ class User {
 	bool leaveEvent(Event* _event);
 	vector <Event*> listUserEvents();
 	int getUserId();
-	void setPassword(string _pass);
+	void setPassword(const size_t _pass);
 	bool checkPassword(string _pass);
 };
