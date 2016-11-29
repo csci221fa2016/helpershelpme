@@ -17,7 +17,7 @@ class Controller {
 		void sendUser(vector<string> v, int id);
 		void sendEvent(vector<string> v, int eventId, int userId);
 		vector<string> showUserInfo(int id);
-		string** showEventInfo(int id);
+		vector<vector<string> > showEventInfo(int id);
 		void updateProfile(vector<string> v, int id);
 		void updateEvent(vector<string> v, int id);
 		bool signIn(vector<string> *v);

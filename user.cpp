@@ -1,10 +1,9 @@
-#ifndef USER
-#define USER
 #include "user.h"
 #include "event.h"
 #include "eventposition.h"
 #include <string>
-#include "string.h"
+#include <cstring>
+#include "sqlite3.h"
 #include <vector>
 using namespace std;
 
@@ -27,6 +26,11 @@ string User::getName() {
 	return name;
 
 }
+
+bool User::setName(string _name) {
+    return 1;
+}
+
 string User::getPhoneNumber() {	
 	sqlite3_stmt *s;
 	string number;
@@ -41,9 +45,8 @@ string User::getPhoneNumber() {
 vector<EventPosition*> User::getEventsWorked() {
 	sqlite3_stmt *s;
 	vector <EventPosition*> events;
-	events.push_back(new EventPosition(1,1,1));
 	return events;
-}
+}	
 bool User::setPhoneNumber(string _phoneNumber) {
 	const char *phone = _phoneNumber.c_str();
 	const char *sql = "insert into users phone 8889990000 where id = "+ (char)userid;
@@ -54,9 +57,9 @@ if(retval != SQLITE_OK)
 }
 return true;			
 }
-void User::setPassword(const size_t _pass) {
+
+//make it a const size_t
+void User::setPassword(string _pass) {
 	retval = sqlite3_exec(db, "insert into users password where id = "+(char)userid, NULL, NULL, NULL); //Fix the null
 }
 
-
-#endif
