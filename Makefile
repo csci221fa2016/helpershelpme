@@ -68,4 +68,4 @@ sqlite3.o: sqlite3.h sqlite3.c
 
 .PHONY: clean
 clean:
-	rm -f *.o *.cgi
+	rm -f *.o *.cgi controller.o controller event.o event eventposition eventposition.o login.cgi login.o home.cgi home.o
