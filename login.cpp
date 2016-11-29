@@ -20,7 +20,7 @@ printForm(const Cgicc& cgi)
         << cgi.getEnvironment().getScriptName() << "\">" << endl;
 
 
-   cout << "<table>" << endl;
+   cout << "<table align=\"center\">" << endl;
 
    cout << "<tr><td class=\"title\">Phone Number</td>"
         << "<td class=\"form\">"

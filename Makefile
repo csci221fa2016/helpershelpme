@@ -4,7 +4,7 @@ CXXFLAGS = -ansi -Wall -ggdb3 -isystem $(GTEST_DIR)/include -Wextra -lpthread
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
-all: user event eventposition controller login.cgi home.cgi
+all: user event eventposition controller website.o eventpage.cgi login.cgi home.cgi
 
 testviet-all.o: $(GTEST_SRCS)
 	$(CXX) $(CXXFLAGS) -I$(GTEST_DIR) -c $(GTEST_DIR)/src/gtest-all.cc
@@ -51,16 +51,22 @@ eventposition: eventposition.o sqlite3.o user.o event.o main.o
 eventposition.o: user.h event.h eventposition.h sqlite3.h eventposition.cpp
 	$(CXX) -c eventposition.cpp
 
+eventpage.cgi: eventpage.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o eventpage.cgi eventpage.o
+
+eventpage.o: eventpage.cpp styles.h
+	$(CXX) -c eventpage.cpp
+
 login.cgi: login.o controller.o user.o event.o sqlite3.o eventposition.o
 	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o login.cgi login.o controller.o user.o event.o eventposition.o
 
-login.o: login.cpp controller.cpp
+login.o: login.cpp controller.h styles.h
 	$(CXX) -c login.cpp
 
 home.cgi: home.o controller.o user.o event.o eventposition.o sqlite3.o
 	g++ -ldl -lpthread -lsqlite3 -lcgicc -o home.cgi home.o controller.o user.o event.o eventposition.o sqlite3.o
 
-home.o: home.cpp controller.cpp
+home.o: home.cpp controller.h styles.h
 	$(CXX) -c home.cpp
 
 sqlite3.o: sqlite3.h sqlite3.c

@@ -1,24 +1,25 @@
 #include <iostream>
-#include <vector>
 #include <string>
-#include "controller.h"
+#include <vector>
 
-#include "cgicc/CgiDefs.h"
 #include "cgicc/Cgicc.h"
+#include "cgicc/CgiDefs.h"
 #include "cgicc/HTTPHTMLHeader.h"
 #include "cgicc/HTMLClasses.h"
+
 #include "styles.h"
+#include "controller.h"
 
 using namespace std;
 using namespace cgicc;
 
-int main(int /*argc*/, char** /*argv*/){
-	try{
-		Cgicc cgi;
-		cout << HTTPHTMLHeader() << endl;
-		cout << html().set("lang","en").set("dir","ltr") <<endl;
-		cout << html() << endl;
-		cout << head() << endl;
+int main(int /*argc*/, char** /*argv*/) {
+    try {
+        Cgicc cgi;
+
+        cout << HTTPHTMLHeader() << endl;
+        cout << html().set("lang", "en").set("dir", "ltr") << endl;
+        cout << html() << head() << endl;
 		cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" << endl;
 		cout << style() << comment() << endl;
 		cout << styles;
@@ -118,22 +119,22 @@ int main(int /*argc*/, char** /*argv*/){
  		cout << " </nav>" << endl;
         cout << "</div>" << endl;
 
-        //print out the event info and event positions within event
-        Controller control;
+        //print out the everything related to the event
+        // description, time, location, volunteer positions
         vector<vector<string> > evinfo;
-        evinfo = control.showEventInfo(1);
-        cout << "<dl> <dt><b>" <<  evinfo[0][0] << " organizer: " << evinfo[0][1] << "</b><dt>"
-             << "<p><dd>Date(s): " << evinfo[0][2] << " to " << evinfo[0][3] << "</dd></p>"
-             << "<p><dd> " << evinfo[0][4] << " at " << evinfo[0][5] << "</dd></p>"
-             << "<dt> Event Positions:</dt>\n"
-             << "<dd>";
-             for (int x = 1; x < evinfo.size() || x < 3; ++x) {
+        cout << "<dl><dt><b>" << evinfo[0][0] << " Organizer: "
+            << evinfo[0][1] << "</b><dt>"
+            << "<p><dd>Date(s): " << evinfo[0][2] 
+            << " to " << evinfo[0][3] << "</dd></p>"
+            << "<dt> Event Positions: </dt>\n"
+            << "<dd>";
+            for (int x =1; x < evinfo.size(); ++x) {
                 cout << "<p>" << evinfo[x][0] << "</p>\n";
-                cout << "<p>" << evinfo[x][1];
-                cout << " from " << evinfo[x][2];
-                cout << " to " << evinfo[x][3] << "</p>\n";
-             }
-        cout << "</dd></dl>";
+                cout << "<p>" << evinfo[x][1]
+                    << " from " << evinfo[x][2] << " to " 
+                    << evinfo[x][3] << "</p>\n";
+            }
+        cout << "</dd></dl>" << endl;;
 
 		//FOOTER
 		cout <<"<div class=\"wrapper row4\">"<< endl;
@@ -144,8 +145,8 @@ int main(int /*argc*/, char** /*argv*/){
 		cout << "</div>" << endl;
 		cout << body() << endl;
         return EXIT_SUCCESS;
-	} catch(exception& e) {
+    } catch(exception& e) {
         cout << "<pre>" << e.what() << "</pre>";
         return EXIT_SUCCESS;
-	}
+    }
 }
