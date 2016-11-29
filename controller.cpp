@@ -61,42 +61,29 @@ vector<string> Controller::showUserInfo(int id) {
   return v;
 }
 
-string** Controller::showEventInfo(int id) {
+vector<vector<string> > Controller::showEventInfo(int id) {
   Event* e = new Event(id);
 
   // convert array of EventPositions to array of strings
   // then add them to a new array a[]
 
-  vector<EventPosition*> arr = e->getVolunteers();
-  string** a;
-  a = new string*[arr.size()+1];
-  for (int i = 0; i < arr.size()+1; ++i) {
-	a[i] = new string[6];
+  vector<EventPosition*> ep_arr = e->getVolunteers();
+  vector<vector<string> > a;
+  for (int i = 0; i < ep_arr.size()+1; ++i) {
+	a.push_back(vector<string>());
   }
 
-  a[0][0] = e->getName();
-  a[0][1] = e->getOrganizer()->getName();
-  a[0][2] = e->getStartDate();
-  a[0][3] = e->getEndDate();
-  a[0][4] = e->getDescription();
-  a[0][5] = e->getLocation();
-  for (int i = 1; i < arr.size(); ++i ) {
-    for (int j = 0; j < 4; ++j) {
-      // string s = to_string(arr[i]->getVolunteer());
-      // a[i][j] = s;
-      switch(j){
-        case 0: a[i][j] = arr[i]->getVolunteer()->getName();
-                break;
-        case 1: a[i][j] = arr[i]->getDescription();
-                break;
-        case 2: a[i][j] = arr[i]->getStartTime();
-                break;
-        case 3: a[i][j] = arr[i]->getEndTime();
-                break;
-        default: a[i][j] = "Error in inputting";
-                break;
-      }
-    }
+  a[0].push_back(e->getName());
+  a[0].push_back(e->getOrganizer()->getName());
+  a[0].push_back(e->getStartDate());
+  a[0].push_back(e->getEndDate());
+  a[0].push_back(e->getDescription());
+  a[0].push_back(e->getLocation());
+  for (int i = 0; i < ep_arr.size(); ++i ) {
+        a[i+1].push_back(ep_arr[i]->getVolunteer()->getName());
+        a[i+1].push_back(ep_arr[i]->getDescription());
+        a[i+1].push_back(ep_arr[i]->getStartTime());
+        a[i+1].push_back(ep_arr[i]->getEndTime());
   }
 
   return a;

@@ -55,6 +55,9 @@ void Event::setLocation(string _loc) {
 
 vector<EventPosition*> Event::getVolunteers() {
     vector<EventPosition*> volunteers;
+    EventPosition *ep = new EventPosition(1, 1, 1);
+    ep->setDescription("foo bar!"); // just for demo purposes
+    volunteers.push_back(ep);
     return volunteers;
 }
 
