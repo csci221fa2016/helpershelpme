@@ -7,8 +7,9 @@
 #include <iostream>
 using namespace std;
 
-EventPosition::EventPosition(int _eposid, int _eventid, int _userid) {
+EventPosition::EventPosition(int _eposid, int _eventid, int _userid, int _posid) {
 	eposid = _eposid;
+	posid = _posid;
 	eventid = _eventid;
 	userId = _userid;
 	char *errmsg;
@@ -18,7 +19,7 @@ EventPosition::EventPosition(int _eposid, int _eventid, int _userid) {
         cout << "Cannot open test.db: " << sqlite3_errcode(db) << endl;
         return;
     }
-	retval = sqlite3_exec(db, "create table if not exists eventpositions (eposid integer primary key, eventid integer, userid integer, description text, start text, end text);", NULL, NULL, &errmsg);
+	retval = sqlite3_exec(db, "create table if not exists eventpositions (eposid integer primary key, eventid integer, userid integer, posid integer);", NULL, NULL, &errmsg);
     if(retval != SQLITE_OK)
     {
         cout << "Error in previous command: " << errmsg << endl;
@@ -45,7 +46,7 @@ EventPosition::EventPosition(int _eposid, int _eventid, int _userid) {
     sqlite3_reset(s);
     if(!exists) {
         sqlite3_stmt *s;
-        const char *sql = "insert into eventpositions (eposid, eventid, userid) values (?, ?, ?)";
+        const char *sql = "insert into eventpositions (eposid, eventid, userid, posid) values (?, ?, ?, ?)";
         retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
         if(retval != SQLITE_OK) {
             cout << "Error in SQL statement " << sql << ": " << sqlite3_errcode(db);
@@ -66,6 +67,11 @@ EventPosition::EventPosition(int _eposid, int _eventid, int _userid) {
             cout << "Error in binding SQL statement " << sql;
             return;
         }
+		retval = sqlite3_bind_int(s, 4, posid);
+		if(retval != SQLITE_OK){
+			cout << "Error in binding SQL statement " << sql;
+			return;
+		}
         if(sqlite3_step(s) != SQLITE_DONE) {
             cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
             return;
@@ -167,4 +173,3 @@ void EventPosition::setStartTime(string _start){
 void EventPosition::setEndTime(string _end){
 
 }
-
