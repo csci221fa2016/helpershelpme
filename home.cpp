@@ -120,25 +120,25 @@ int main(int argc, char **argv){
 
    //print out the event info and event positions within event
    Controller control;
-   string** evinfo;
+   vector<vector<string> > evinfo;
    evinfo = control.showEventInfo(1);
    cout << "<dl> <dt><b>" <<  evinfo[0][0] << " Organizer: " << evinfo[0][1] << "</b><dt>"
         << "<p><dd>Date(s): " << evinfo[0][2] << " to " << evinfo[0][3] << "</dd></p>"
-        << "<p><dd> " << evinfo[0][4] << " at " << evinfo[0][5] << "</dd></p>";
-        << "<dt> Event Positions:</dt>\n";
-        << "<dd>"
+        << "<p><dd> " << evinfo[0][4] << " at " << evinfo[0][5] << "</dd></p>"
+        << "<dt> Event Positions:</dt>\n"
+        << "<dd>";
         for (int x = 1; x < evinfo.size(); ++x) {
-            for (int y = 0; y < 4; ++y) {
+            for (int y = 0; y < evinfo[x].size(); ++y) {
                switch(y){
-                  case 0: cout << "<p>" evinfo[x][y] << "</p>\n"; break;
-                  case 1: cout << "<p>" evinfo[x][y] << " "; break;
-                  case 2: cout << "from " evinfo[x][y] << " "; break;
-                  case 3: cout << "to " evinfo[x][y] << "</p>\n"; break;
-                  default: cout << "<p>evinfo[x][y]</p>\n";
+                  case 0: cout << "<p>" << evinfo[x][y] << "</p>\n"; break;
+                  case 1: cout << "<p>" << evinfo[x][y] << " "; break;
+                  case 2: cout << "from " << evinfo[x][y] << " "; break;
+                  case 3: cout << "to " << evinfo[x][y] << "</p>\n"; break;
+                  default: cout << "<p>" << evinfo[x][y] << "</p>\n";
                }
             }
         }
-   cout << "</dd></dl>"
+   cout << "</dd></dl>";
 
 		//FOOTER
 		cout <<"<div class=\"wrapper row4\">"<< endl;
@@ -149,5 +149,6 @@ int main(int argc, char **argv){
 		cout << "</div>" << endl;
 		cout << body() << endl;
 	} catch(exception& e) {
+        cout << "<pre>" << e.what() << "</pre>";
 	}
 }
