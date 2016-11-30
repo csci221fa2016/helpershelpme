@@ -5,6 +5,7 @@
 #include <cstring>
 #include "sqlite3.h"
 #include <vector>
+#include <iostream>
 using namespace std;
 
 User::User(int _userid) {
@@ -18,8 +19,17 @@ User::User(int _userid) {
 string User::getName() {	
 	sqlite3_stmt *s;
 	string name;
-	const char *sql = "select name from users where id = " + (char)userid;
+	const char *sql = "select name from users where id = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	if (retval != SQLITE_OK) {
+		count << "error in sql statement " << sql;
+		return;
+	}
+	retval = sqlite3_bind_int(s, 1, userid);
+	if (retval != SQLITE_OK) {
+		count << "Error in binding sql stmnt " << sql;
+		return;
+	} 
 	while(sqlite3_step(s)==SQLITE_ROW) {
 		name = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
 	}
