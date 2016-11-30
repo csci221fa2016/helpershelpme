@@ -63,7 +63,7 @@ vector<string> Controller::showUserInfo(int id) {
 
 vector<vector<string> > Controller::showEventInfo(int id) {
 		Event* e = new Event(id);
-
+		// for Event info page
 		// convert array of EventPositions to array of strings
 		// then add them to a new array a[]
 
@@ -151,7 +151,11 @@ void Controller::showStats(int id) {
 		// show the user profile to the view. (hours, etc.)
 
 }
+//Combine all these functions -useraccess. for home page showing upcoming events need vector<vector<string>>
 
+vector<vector<string>> Controller::showAllUpcoming(string currentDate){
+
+}
 void Controller::showEvent(int id) {
 		// show event info to the view
 
