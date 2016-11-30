@@ -25,7 +25,8 @@
 using namespace std;
 using namespace cgicc;
 
-void printform(const Cgicc& cgi) {
+void printform(const Cgicc& cgi, Controller& c) {
+   
    cout   << "<table>\n"
           << "<tr><th>User E-Mail</th>\n"
           << "<td>anon@ymous.global</td></tr>\n"
@@ -33,16 +34,16 @@ void printform(const Cgicc& cgi) {
           << "<td>1-800-888-888</td></tr>\n"
           << "<tr><th>Hours Volunteered</th>\n"
           << "<td>0</td></tr>\n"
-          << "</table>\n"
+          << "</table>\n";
    
    cout   << "<hr>\n""<form action=\"helpers-help.me/createEvent.cgi\">\n"
           << "<form action=\"helpers-help.me/createEvent.cgi\">\n"
           << "<input type=\"submit\" value=\"Create Event\"/>\n"
-          << " </form>\n"
+          << " </form>\n";
            
    cout   << "<!--<form name=\"delete event\">\n"
           << "<input type=\"submit\" value=\"Delete Event\"/>\n"
-          << "</form>-->\n"
+          << "</form>-->\n";
    
    cout   << "<!-- Will recieve events/positions related to user one at a time, in vector of strings\n"
           << "i.e. a vector with event/position title, desc., etc as string val in vector-->\n"
@@ -61,13 +62,13 @@ void printform(const Cgicc& cgi) {
 }
 
 int main(int /*argc*/, char** /**/) {
+   try{
        Cgicc cgi;
   
-       cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::html) << endl;
+       cout << HTTPHTMLHeader() << endl;
        cout << html().set("lang", "en").set("dir", "ltr") << endl;
-       cout << html() <<endl;
-       cout << head 
-       cout   <<d() << endl;
+       cout << html() << endl;
+       cout << head() << endl;
        cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" << endl;
        cout << style() << comment() << endl;
        cout << styles;
@@ -111,9 +112,9 @@ int main(int /*argc*/, char** /**/) {
            });\
        });"<< endl;
        cout << "</script>" << endl;
-       cout << title("Home") <<endl;
+       cout << title("Profile") <<endl;
        cout << head() << endl;
-       cout << body() << endl 
+       cout << body() << endl; 
        //header
        cout << "<div class=\"wrapper row1\">" << endl;
        cout << "<header id=\"header\" class=\"clear\">" << endl;
@@ -166,43 +167,10 @@ int main(int /*argc*/, char** /**/) {
        cout <<"</ul>"<< endl;
        cout << " </nav>" << endl;
        cout << "</div>" << endl;
- 
-       cout   << "<table>\n"
-              << "<tr><th>User E-Mail</th>\n"
-              << "<td>anon@ymous.global</td></tr>\n"
-              << "<tr><th>Phone Number</th>\n"
-              << "<td>1-800-888-888</td></tr>\n"
-              << "<tr><th>Hours Volunteered</th>\n"
-              << "<td>0</td></tr>\n"
-              << "</table>\n"
-       
-       cout   << "<hr>\n""<form action=\"helpers-help.me/createEvent.cgi\">\n"
-              << "<form action=\"helpers-help.me/createEvent.cgi\">\n"
-              << "<input type=\"submit\" value=\"Create Event\"/>\n"
-              << " </form>\n"
-               
-       cout   << "<!--<form name=\"delete event\">\n"
-              << "<input type=\"submit\" value=\"Delete Event\"/>\n"
-              << "</form>-->\n"
-       
-       cout   << "<!-- Will recieve events/positions related to user one at a time, in vector of strings\n"
-              << "i.e. a vector with event/position title, desc., etc as string val in vector-->\n"
-              << " <p><h3>Events 'User' created</h3></p>\n"
-              << " <dl>\n"
-              << "<dt>Event1</dt>\n"
-              << "<dd>Event1 desc, date, times, loc</dd>\n"
-              << "<dt>Event2</dt>\n"
-              << "<dd>Event2 desc, date, times, loc</dd>\n"
-              << "</dl>\n"
-              << "<p><h3>Previous Positions</h3></p>\n"
-              << "<dl>\n"
-              << "<dt>Position1</dt>\n"
-              << "<dd>Event date, time worked, loc</dd>\n"
-              << "</dl>" << endl;
+     
  
        //Footer
-       cout << "<div class=
-aass=\"wrapper row4\">"<< endl;
+       cout << "<div class=\"wrapper row4\">"<< endl;
        cout << "<footer id=\"footer\" class=\"clear\">" <<  endl;
        cout << "<p class=\"fl_left\">Copyright &copy; 2013 - All Rights Reserved - <a href=\"#\">Domain Name</a></p>" <<endl;
        cout << "<p class=\"fl_right\">Template by <a href=\"http://www.os-templates.com/\" title=\"Free Website Templates\">OS Templates</a></p>"<<endl;
@@ -211,7 +179,7 @@ aass=\"wrapper row4\">"<< endl;
        cout << body() << endl;
        return EXIT_SUCCESS;
    } catch(exception& e) {
-
+      cout << "<pre>" << e.what << "</pre>";
       return EXIT_SUCCESS;
    }
 }

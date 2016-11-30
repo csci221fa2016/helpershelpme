@@ -12,13 +12,11 @@
 using namespace std;
 using namespace cgicc;
 
-void
-printForm(const Cgicc& cgi)
+void printForm(const Cgicc& cgi)
 {
 
    cout << "<form method=\"post\".hash action=\""
         << cgi.getEnvironment().getScriptName() << "\">" << endl;
-
 
    cout << "<table align=\"center\">" << endl;
 
@@ -109,56 +107,56 @@ int main(int argc, char **argv) {
    	  //HEADER
 	  cout << "<div class=\"wrapper row1\">" << endl;
       cout << "<header id=\"header\" class=\"clear\">" << endl;
-         cout << "<div id=\"hgroup\">" << endl;
-            cout << "<h1><a href=\"#\">Helpers Help Me</a></h1>" << endl;
-            cout << "<h2>Testing home</h2>" << endl;
-         cout << "</div>" << endl;
+      cout << "<div id=\"hgroup\">" << endl;
+      cout << "<h1><a href=\"#\">Helpers Help Me</a></h1>" << endl;
+      cout << "<h2>Testing home</h2>" << endl;
+      cout << "</div>" << endl;
       cout << "</header>" << endl;
 
       cout << "</div>" <<endl;
       cout << "<div class=\"wrapper row2\">" << endl;
-          cout << "<nav id=\"topnav\">" << endl;
-             cout << "<ul class=\"clear\">" << endl;
-                cout << "<li class=\"active first\"><a href=\"home.cgi\">Homepage</a></li>" << endl;
-                cout << "<li><a class=\"drop\" href=\"#\">Event</a>" << endl;
-                   cout << "<ul>" << endl;
-                      cout << "<li><a href=\"#\">List Open Events</a></li>" << endl;
-                      cout << "<li><a href=\"#\">List Available Positions</a></li>" << endl;
-                      cout << "<li><a class=\"drop\" href=\"#\">Level 2 + Drop</a>" << endl;
-                          cout<< "<ul>" << endl;
-                             cout << "<li><a href=\"#\">Level 3</a></li>" << endl;
-                             cout << "<li><a class=\"drop\" href=\"#\">Level 3 + Drop</a>" << endl;
-                                cout << "<ul>" << endl;
-                                   cout << "<li><a href=\"#\">Level 4</a></li>" <<endl;
-                                   cout << "<li><a href=\"#\">Level 4</a></li>" <<endl;
-                                cout << "</ul>" <<endl;
-                             cout << "</li>" << endl;
-                             cout << "<li><a href=\"#\">Level 3</a></li>" <<endl;
-                          cout<< "</ul>" <<endl;
-                      cout << "</li>" <<endl;
-                   cout << "</ul>" <<endl;
-                cout << "</li>" << endl;
-                cout << "<li><a href=\"#\">Profile</a></li>" << endl;
-                cout << "<li><a href=\"#\">Full Width</a></li>" << endl;
-                cout << "<li><a href=\"#\">Gallery</a></li>" <<endl;
-                cout << "<li><a href=\"#\">Portfolio</a></li>" << endl;
-                cout << "<li><a href=\"#\">A Long Link Text Here</a></li>" <<endl;
-                cout << "<li class=\"last-child\"><a class=\"drop\" href=\"#\">User</a>" <<endl;
-                   cout << "<ul>" << endl;
-                      cout << "<li><a href=\"login.cgi\">Log In</a></li>" << endl;
-                      cout << "<li><a href=\"#\">Sign up</a></li>" << endl;
-                      cout << "<li><a class=\"drop\" href=\"#\">Level 2 + Drop</a>" << endl;
-                         cout << "<ul class=\"negative\">" << endl;
-                            cout <<"<li><a href=\"#\">Level 3</a></li>" <<endl;
-                            cout <<"<li><a href=\"#\">Level 3</a></li>" << endl;
-                            cout <<"<li><a href=\"#\">Level 3</a></li>" << endl;
-                         cout << "</ul>" << endl;
-                      cout << "</li>" << endl;
-                   cout << "</ul>" << endl;
-                cout <<"</li>"<< endl;
-             cout <<"</ul>"<< endl;
-          cout << " </nav>" << endl;
-          cout << "</div>" << endl;
+      cout << "<nav id=\"topnav\">" << endl;
+      cout << "<ul class=\"clear\">" << endl;
+      cout << "<li class=\"active first\"><a href=\"home.cgi\">Homepage</a></li>" << endl;
+      cout << "<li><a class=\"drop\" href=\"#\">Event</a>" << endl;
+      cout << "<ul>" << endl;
+      cout << "<li><a href=\"#\">List Open Events</a></li>" << endl;
+      cout << "<li><a href=\"#\">List Available Positions</a></li>" << endl;
+      cout << "<li><a class=\"drop\" href=\"#\">Level 2 + Drop</a>" << endl;
+      cout<< "<ul>" << endl;
+      cout << "<li><a href=\"#\">Level 3</a></li>" << endl;
+      cout << "<li><a class=\"drop\" href=\"#\">Level 3 + Drop</a>" << endl;
+      cout << "<ul>" << endl;
+      cout << "<li><a href=\"#\">Level 4</a></li>" <<endl;
+      cout << "<li><a href=\"#\">Level 4</a></li>" <<endl;
+      cout << "</ul>" <<endl;
+      cout << "</li>" << endl;
+      cout << "<li><a href=\"#\">Level 3</a></li>" <<endl;
+      cout<< "</ul>" <<endl;
+      cout << "</li>" <<endl;
+      cout << "</ul>" <<endl;
+      cout << "</li>" << endl;
+      cout << "<li><a href=\"#\">Profile</a></li>" << endl;
+      cout << "<li><a href=\"#\">Full Width</a></li>" << endl;
+      cout << "<li><a href=\"#\">Gallery</a></li>" <<endl;
+      cout << "<li><a href=\"#\">Portfolio</a></li>" << endl;
+      cout << "<li><a href=\"#\">A Long Link Text Here</a></li>" <<endl;
+      cout << "<li class=\"last-child\"><a class=\"drop\" href=\"#\">User</a>" <<endl;
+      cout << "<ul>" << endl;
+      cout << "<li><a href=\"login.cgi\">Log In</a></li>" << endl;
+      cout << "<li><a href=\"#\">Sign up</a></li>" << endl;
+      cout << "<li><a class=\"drop\" href=\"#\">Level 2 + Drop</a>" << endl;
+      cout << "<ul class=\"negative\">" << endl;
+      cout <<"<li><a href=\"#\">Level 3</a></li>" <<endl;
+      cout <<"<li><a href=\"#\">Level 3</a></li>" << endl;
+      cout <<"<li><a href=\"#\">Level 3</a></li>" << endl;
+      cout << "</ul>" << endl;
+      cout << "</li>" << endl;
+      cout << "</ul>" << endl;
+      cout <<"</li>"<< endl;
+      cout <<"</ul>"<< endl;
+      cout << " </nav>" << endl;
+      cout << "</div>" << endl;
 	  cout << br() << endl;
 	  printForm(cgi);
    	  cout << hr().set("class", "half") << endl;
@@ -182,15 +180,18 @@ int main(int argc, char **argv) {
       	cout << " (" << static_cast<double>(us/1000000.0) << " s)";
 	  #endif
 
-	  //FOOTER
+	   //FOOTER
 	   cout <<"<div class=\"wrapper row4\">"<< endl;
-          cout << "<footer id=\"footer\" class=\"clear\">" <<  endl;
-             cout << "<p class=\"fl_left\">Copyright &copy; 2013 - All Rights Reserved - <a href=\"#\">Domain Name</a></p>" <<endl;
-              cout << "<p class=\"fl_right\">Template by <a href=\"http://www.os-templates.com/\" title=\"Free Website Templates\">OS Templates</a></p>"<<endl;
-               cout << "</footer>" <<endl;
-               cout << "</div>" << endl;
-               cout << body() << endl;
+       cout << "<footer id=\"footer\" class=\"clear\">" <<  endl;
+       cout << "<p class=\"fl_left\">Copyright &copy; 2013 - All Rights Reserved - <a href=\"#\">Domain Name</a></p>" <<endl;
+       cout << "<p class=\"fl_right\">Template by <a href=\"http://www.os-templates.com/\" title=\"Free Website Templates\">OS Templates</a></p>"<<endl;
+       cout << "</footer>" <<endl;
+       cout << "</div>" << endl;
+       cout << body() << endl;
+       return EXIT_SUCCESS;
     } catch(exception& e) {
+       cout << "<pre>" << e.what() << "</pre>";
+       return EXIT_SUCCESS;
     }
 }
 
