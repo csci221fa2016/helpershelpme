@@ -280,10 +280,30 @@ void Event::setLocation(string _loc) {
 }
 
 vector<EventPosition*> Event::getVolunteers() {
+	sqlite3_stmt *s;
+	int _eposid;
+	int _userid;
+	int _posid;
     vector<EventPosition*> volunteers;
-    EventPosition *ep = new EventPosition(1, 1, 1);
-    ep->setDescription("foo bar!"); // just for demo purposes
-    volunteers.push_back(ep);
+	const char *sql = "select eposid, userid, posid from eventpositions where eventid = ?";
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
+		return NULL; //is this right?
+	}
+	retval = sqlite3_bind_int(s, 1, eventid);
+	if(retval != SQLITE_OK) {
+		cout << "Error in binding SQL statement " << sql;
+		return NULL;
+	}
+	while(sqlite3_step(s) == SQLITE_ROW) {
+		_eposid = sqlite3_column_int(s, 0);
+		_userid = sqlite3_column_int(s, 1);
+		_posid = sqlite3_column_int(s, 2);
+    	EventPosition *ep = new EventPosition(_eposid, eventid, _userid, _posid );
+    	volunteers.push_back(ep);
+	}
+	sqlite3_reset(s);
     return volunteers;
 }
 
