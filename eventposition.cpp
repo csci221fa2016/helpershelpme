@@ -20,7 +20,7 @@ User* EventPosition::getVolunteer(){
 	return new User(userid);
 }
 
-Event* EventPostion::getEvent(){
+Event* EventPosition::getEvent(){
 	return new Event(eventid);
 }
 
