@@ -38,13 +38,31 @@ name text, description text, start text, end text, organizer integer, location t
 	}
     sqlite3_reset(s);
 	if(!exists) {
-		sqlite3_stmt *s;
-		//TODO const char *sql = "insert into 
+		cout << "No such event. Bad eventid?" << sql;
+		return;
 	}
+
 }
 
 string Event::getName() {
-    return "Joe Blow";
+	sqlite3_stmt *s;
+	string name;
+	const char *sql = "select name from events where eventid = ?";
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
+		return "";
+	}
+	retval = sqlite3_bind_int(s, 1, eventid);
+	if(retval != SQLITE_OK) {
+		cout << "Error in binding SQL statement " << sql;
+		return "";
+	}
+	if(sqlite3_step(s) == SQLITE_ROW) {
+		if(sqlite3_column_text(s, 0) != NULL) {
+			name = string(reinterpret_cast<const char*>(sqlite3_column_text(s,0)));
+		} else {
+			name = "NULL";
 }
 
 string Event::getStartDate() {
