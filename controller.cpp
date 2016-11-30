@@ -1,5 +1,5 @@
 #include "controller.h"
-
+#include "creation.h"
 #include <vector>
 #include <exception>
 #include <stdexcept>
@@ -106,9 +106,9 @@ void Controller::updateProfile(vector<string> v, int id) {
 void updateEvent(vector<string> v, int id) {
 	Event* e = new Event(id);
 	
-	if(!v[0].empty() && !v[1].empty() && !v[2].empty() ...){
+//	if(!v[0].empty() && !v[1].empty() && !v[2].empty() ...){
 
-	}
+//	}
 }
 
 vector<string> Controller::signIn(vector<string> v) {
@@ -160,7 +160,7 @@ void Controller::showStats(int id) {//convert to datetime for calculations
 }
 //Combine all these functions -useraccess. for home page showing upcoming events need vector<vector<string>>
 
-vector<vector<string>> Controller::showAllUpcoming(string currentDate){
+vector<vector<string> > Controller::showAllUpcoming(string currentDate){
 
 }
 void Controller::showEvent(int id) {

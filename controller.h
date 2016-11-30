@@ -23,7 +23,7 @@ class Controller {
 		vector<string> signIn(vector<string> v);
 		void addVolunteer(vector<string> v, int eventId, int userId);
 		void showStats(int id);
-		vector<vector<string>> showAllUpcoming(string currentDate);
+		vector<vector<string> > showAllUpcoming(string currentDate);
 		void showEvent(int id);
 		void showEventTitle(int id);
 		void showEventDate(int id);
