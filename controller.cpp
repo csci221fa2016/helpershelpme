@@ -1,5 +1,5 @@
 #include "controller.h"
-
+#include "creation.h"
 #include <vector>
 #include <exception>
 #include <stdexcept>
@@ -106,12 +106,12 @@ void Controller::updateProfile(vector<string> v, int id) {
 void updateEvent(vector<string> v, int id) {
 	Event* e = new Event(id);
 	
-	if(!v[0].empty() && !v[1].empty() && !v[2].empty() ...){
+//	if(!v[0].empty() && !v[1].empty() && !v[2].empty() ...){
 
-	}
+//	}
 }
 
-bool Controller::signIn(vector<string> v) {
+vector<string> Controller::signIn(vector<string> v) {
 		//  hash<string> pw_hash;
 		//  const size_t dbPass = pw_hash(v[1]);
 		//send to database to verify
@@ -120,14 +120,20 @@ bool Controller::signIn(vector<string> v) {
 	Creation c = new Creation();
 	size_t dbpass = c->login(v[0]);
 	hash<string> str_hash;
+	vector<string> ret;
 	if(str_hash(v[1]) == dbpass){
-		return true;
+		int uId = c->searchUser(v[0]);
+		ret.push_back("true");
+		ret.push_back(to_string(uId));
+		return ret;
 	}else{
+		ret.push_back("false");
 		throw runtime_error("Invalid Login");
-		return false;
+		return ret;
 	}
+		ret.push_back("false");
 		throw runtime_error("Sign in Error");
-		return false;
+		return ret;
 }
 
 void Controller::addVolunteer(vector<string> v, int eventId, int userId, int eposId) {
@@ -147,13 +153,14 @@ void Controller::addVolunteer(vector<string> v, int eventId, int userId, int epo
 
 }
 
-void Controller::showStats(int id) {
+void Controller::showStats(int id) {//convert to datetime for calculations
 		// show the user profile to the view. (hours, etc.)
+
 
 }
 //Combine all these functions -useraccess. for home page showing upcoming events need vector<vector<string>>
 
-vector<vector<string>> Controller::showAllUpcoming(string currentDate){
+vector<vector<string> > Controller::showAllUpcoming(string currentDate){
 
 }
 void Controller::showEvent(int id) {
