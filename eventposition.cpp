@@ -166,10 +166,52 @@ void EventPosition::setDescription(string _description){
     sqlite3_reset(s);
 }
 
-void EventPosition::setStartTime(string _start){
-
+void EventPosition::setStartTime(string _start) {
+	sqlite3_stmt *s;
+	const char *sql = "update events set start = ? where eventid = ?";
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+    if(retval != SQLITE_OK) {
+	cout << "Error in SQL statement " << sql;
+	return;
+    }
+    retval = sqlite3_bind_int(s, 2, eventid);
+    if(retval != SQLITE_OK) {
+	cout << "Error in binding SQL statement " << sql;
+	return;
+    }
+    retval = sqlite3_bind_text(s, 1, _start.c_str(), _start.size(), SQLITE_STATIC);
+    if(retval != SQLITE_OK) {
+	cout << "Error in binding SQL statement " << sql;
+	return;
+    }
+    if (sqlite3_step(s) != SQLITE_DONE) {
+	cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
+	return;
+    }
+    sqlite3_reset(s);
 }
 
 void EventPosition::setEndTime(string _end){
-
+    sqlite3_stmt *s;
+    const char *sql = "update events set end = ? where eventid = ?";
+    retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+    if (retval != SQLITE_OK) {
+	cout << "Error in SQL statement " << sql << ": " << sqlite3_errcode(db);
+	return;
+    }
+    retval = sqlite3_bind_int(s, 2, eventid);
+    if (retval != SQLITE_OK) {
+	cout << "Error in binding SQL statement " << sql;
+	return;
+    }
+    retval = sqlite3_bind_text(s, 1, _end.c_str(), _end.size(), SQLITE_STATIC);
+    if (retval != SQLITE_OK) {
+	cout << "Error in binding SQL statement " << sql;
+	return;
+    }
+    if (sqlite3_step(s) != SQLITE_DONE) {
+	cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
+	return;
+    }
+    sqlite3_reset(s);
 }
