@@ -35,10 +35,6 @@ string User::getName() {
 
 }
 
-bool User::setName(string _name) {
-    return 1;
-}
-
 string User::getPhoneNumber() {	
 	sqlite3_stmt *s;
 	string phone;
@@ -83,12 +79,79 @@ vector<EventPosition*> User::getEventsWorked() {
 	
 }	
 bool User::setPhoneNumber(string _phoneNumber) {
-	
-return true;			
+	sqlite3_stmt *s;
+	const char *sql = "update users set phone = ? where id = ?";
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval = sqlite3_bind_int(s, 2, userid);
+	retval = sqlite3_bind_text(s,1,_phoneNumber);
+	if(sqlite3_step(s) != SQLITE_DONE) {
+		cout <<"error";
+		return false;	
+	}
+	return true;			
 }
 
 //make it a const size_t
 void User::setPassword(string _pass) {
-	retval = sqlite3_exec(db, "insert into users password where id = "+(char)userid, NULL, NULL, NULL); //Fix the null
+	sqlite3_stmt *s;
+	const char *sql = "update users set password = ? where id = ?";
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval = sqlite3_bind_int(s, 2, userid);
+	retval = sqlite3_bind_text(s,1,_pass);
+	if(sqlite3_step(s) != SQLITE_DONE) {
+		cout <<"error";
+		return false;	
+	}
+	return true;}
+bool User::setName(string _name) {
+	sqlite3_stmt *s;
+	const char *sql = "update users set name = ? where id = ?";
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval = sqlite3_bind_int(s, 2, userid);
+	retval = sqlite3_bind_text(s,1,_name);
+	if(sqlite3_step(s) != SQLITE_DONE) {
+		cout <<"error";
+		return false;	
+	}
+	return true;
+}
+
+Event* User::getOrganizedEvents() {
+	sqlite3_stmt *s;
+	int event;
+	const char *sql = "select eventid from eventpositions where userid = ? and posid = 0";
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	if (retval != SQLITE_OK) {
+		count << "error in sql statement " << sql;
+		return;
+	}
+	retval = sqlite3_bind_int(s, 1, userid);
+	if (retval != SQLITE_OK) {
+		count << "Error in binding sql stmnt " << sql;
+		return;
+	} 
+	while(sqlite3_step(s)==SQLITE_ROW) {
+		event = sqlite3_column_int(s, 0);
+	}
+	return new Event(event);
+}
+
+bool User::leaveEvent(Event* _event) {
+	Event* e = _event;
+	sqlite3_stmt *s;
+	const char *sql = "delete from eventpositions where userid = ? and eventid = ?";
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval = sqlite3_bind_int(s, 1, userid);
+	retval = sqlite3_bind_int(s,2,e->getEventId());
+	if(sqlite3_step(s) != SQLITE_DONE) {
+		cout <<"error";
+		return false;	
+	}
+	return true;
+}
+
+
+int User::getUserId() {
+	return userid;
 }
 
