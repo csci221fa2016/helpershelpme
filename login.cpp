@@ -6,6 +6,8 @@
 #include "cgicc/Cgicc.h"
 #include "cgicc/HTTPHTMLHeader.h"
 #include "cgicc/HTMLClasses.h"
+#include <cgicc/HTTPRedirectHeader.h>
+
 #include "styles.h"
 #include "controller.h"
 
@@ -14,20 +16,18 @@ using namespace cgicc;
 
 void printForm(const Cgicc& cgi)
 {
-
-   cout << "<form method=\"post\".hash action=\""
+   cout << "<form method=\"post\" action=\""
         << cgi.getEnvironment().getScriptName() << "\">" << endl;
 
    cout << "<table align=\"center\">" << endl;
 
    cout << "<tr><td class=\"title\">Phone Number</td>"
-        << "<td class=\"form\">"
-        << "<input type=\"text\" name=\"pnumber\" value=\"8889990000\" id=\"1\"/>"
+        << "<td class=\"phone\">"
+        << "<input type=\"text\" name=\"pnumber\" value=\"8889990000\"/>"
         << "</td></tr>" << endl;
 
    cout << "<tr><td class=\"title\">Password</td>"
-        << "<td class=\"form\">"
-        << "<input type=\"password\" name=\"password\" value=\"password\""
+        << "<td><input type=\"password\" name=\"password\" value=\"password\""
         << " maxlength=\"\" autocomplete=\"off\" data-validate=\"{required: true}\"/>"
         << "</td></tr>" << endl;
 
@@ -41,7 +41,29 @@ void printForm(const Cgicc& cgi)
 int main(int argc, char **argv) {
    try{
       Cgicc cgi;
-      cout << HTTPHTMLHeader() << endl;
+     
+      //retrieves form information and sends it to controller
+      vector<string> loginfo;
+      Controller control;
+      const_form_iterator phoneNum = cgi.getElement("pnumber");
+      if(phoneNum != (*cgi).end() && !phoneNum->isEmpty())
+          loginfo.push_back((*phoneNum).getStrippedValue());
+      const_form_iterator pw = cgi.getElement("password");
+      if(pw != (*cgi).end() && !pw->isEmpty())
+         loginfo.push_back((*pw).getStrippedValue());
+      vector<string> success = control.signIn(&loginfo);
+      if(success[0] == "true") {
+         cout << "<p align=\"center\"> Sign In Successful! </p>" << endl;
+//         cout << HTTPRedirectHeader(string("helpers-help.me/userprofile.cgi?id=").append(success[1])) << endl;
+         cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/lulu/userprofile.cgi?id=" << success[1] << "\">" << endl;
+//         cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/isarmien/userprofile.cgi?id=" << success[1] << "\\">" << endl;
+//         cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/jtoledo/userprofile.cgi?id=" << success[1] << "\\">" << endl;
+      } else {
+         cout << "<p> Username or Password Invalid </p>" << endl;
+         printForm(cgi);
+      }
+
+      cout << HTTPHTMLHeader().setCookie << endl;
       cout << html().set("lang","en").set("dir","ltr") <<endl;
       cout << html() << endl;
       cout << head() << endl;
@@ -92,27 +114,6 @@ int main(int argc, char **argv) {
       cout << title("Log In") <<endl;
       cout << head() << endl;
       cout << body() << endl;
-     
-      //retrieves form information and sends it to controller
-      vector<string> loginfo;
-      Controller control;
-      const_form_iterator phoneNum = cgi.getElement("pnumber");
-      if(phoneNum != (*cgi).end() && !phoneNum->isEmpty())
-          loginfo.push_back((*phoneNum).getStrippedValue());
-      const_form_iterator pw = cgi.getElement("password");
-      if(pw != (*cgi).end() && !pw->isEmpty())
-         loginfo.push_back((*pw).getStrippedValue());
-      vector<string> success = control.signIn(&loginfo);
-      if(success[0] == "true") {
-         cout << "<p align=\"center\"> Sign In Successful! </p>" << endl;
-//         cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/userprofile.cgi?id=" << success[1] << "\\">" << endl;
-         cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/lulu/userprofile.cgi?id=" << success[1] << "\">" << endl;
-//         cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/isarmien/userprofile.cgi?id=" << success[1] << "\\">" << endl;
-//         cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/jtoledo/userprofile.cgi?id=" << success[1] << "\\">" << endl;
-      } else {
-         cout << "<p> Username or Password Invalid </p>" << endl;
-         printForm(cgi);
-      }
 
    	  //HEADER
 	  cout << "<div class=\"wrapper row1\">" << endl;
