@@ -102,7 +102,17 @@ int main(int argc, char **argv) {
       const_form_iterator pw = cgi.getElement("password");
       if(pw != (*cgi).end() && !pw->isEmpty())
          loginfo.push_back((*pw).getStrippedValue());
-      control.signIn(&loginfo);
+      vector<string> success = control.signIn(&loginfo);
+      if(success[0] == "true") {
+         cout << "<p align=\"center\"> Sign In Successful! </p>" << endl;
+//         cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/userprofile.cgi?id=" << success[1] << "\\">" << endl;
+         cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/lulu/userprofile.cgi?id=" << success[1] << "\">" << endl;
+//         cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/isarmien/userprofile.cgi?id=" << success[1] << "\\">" << endl;
+//         cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/jtoledo/userprofile.cgi?id=" << success[1] << "\\">" << endl;
+      } else {
+         cout << "<p> Username or Password Invalid </p>" << endl;
+         printForm(cgi);
+      }
 
    	  //HEADER
 	  cout << "<div class=\"wrapper row1\">" << endl;
@@ -157,28 +167,6 @@ int main(int argc, char **argv) {
       cout <<"</ul>"<< endl;
       cout << " </nav>" << endl;
       cout << "</div>" << endl;
-	  cout << br() << endl;
-	  printForm(cgi);
-   	  cout << hr().set("class", "half") << endl;
-	  #if HAVE_UNAME
-   	  struct utsname info;
-   	  if(uname(&info) != -1) {
-         cout << ". Running on " << info.sysname;
-         cout << ' ' << info.release << " (";
-         cout << info.nodename << ")." << endl;
-   	  }
-	  #else
-      	cout << "." << endl;
-	  #endif
-
-	  #if HAVE_GETTIMEOFDAY
-      	timeval end;
-   		gettimeofday(&end, NULL);
-      	long us = ((end.tv_sec - start.tv_sec) * 1000000)
-      	+ (end.tv_usec - start.tv_usec);
-      	cout << br() << "Total time for request = " << us << " us";
-      	cout << " (" << static_cast<double>(us/1000000.0) << " s)";
-	  #endif
 
 	   //FOOTER
 	   cout <<"<div class=\"wrapper row4\">"<< endl;

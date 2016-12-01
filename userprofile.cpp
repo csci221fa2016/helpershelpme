@@ -26,10 +26,11 @@ using namespace std;
 using namespace cgicc;
 
 void printform(const Cgicc& cgi, Controller& c) {
-   
+   string userid = cgi.getElement("id");
+   vector<string> userinfo = c.showUserInfo(userid);
    cout   << "<table>\n"
           << "<tr><th>User E-Mail</th>\n"
-          << "<td>anon@ymous.global</td></tr>\n"
+          << "<td>" << << "</td></tr>\n"
           << "<tr><th>Phone Number</th>\n"
           << "<td>1-800-888-888</td></tr>\n"
           << "<tr><th>Hours Volunteered</th>\n"
