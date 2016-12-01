@@ -1,6 +1,7 @@
 #ifndef EVENT
 #define EVENT
 #include <string>
+#include "sqlite3.h"
 #include <vector>
 using namespace std;
 
@@ -10,6 +11,8 @@ class EventPosition;
 class Event {
      private:
 	int eventid;
+	int retval;
+	sqlite3 *db;
      public:
 	Event(int _eventid);
 	string getName();
@@ -19,6 +22,7 @@ class Event {
 	vector<EventPosition*> getVolunteers();
 	string getDescription();
 	string getLocation();
+	vector<string> getVacancies();
 	void setStartDate(string _date);
 	void setEndDate(string _date);
 	void addVolunteer(vector<EventPosition*> _volunteer);
