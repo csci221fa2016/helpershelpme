@@ -91,7 +91,7 @@ Event* EventPosition::getEvent(){
 string EventPosition::getDescription(){
 	sqlite3_stmt *s;
 	string desc;
-	const char *sql = "select description from eventpositions where eposid = ?";
+	const char *sql = "select description from vacancies where eposid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
     if(retval != SQLITE_OK) {
         cout << "Error in SQL statement " << sql;
@@ -118,7 +118,7 @@ string EventPosition::getDescription(){
 string EventPosition::getStartTime(){
 	sqlite3_stmt *s;
 	string start;
-	const char *sql = "select start from eventpositions where id = " + (char)eposid;
+	const char *sql = "select start from events where id = " + (char)eposid;
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	while(sqlite3_step(s)==SQLITE_ROW) {
 		start = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
@@ -129,7 +129,7 @@ string EventPosition::getStartTime(){
 string EventPosition::getEndTime(){
 	sqlite3_stmt *s;
 	string end;
-	const char *sql = "select start from eventpositions where id = " + (char)eposid;
+	const char *sql = "select start from events where id = " + (char)eposid;
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	while(sqlite3_step(s)==SQLITE_ROW) {
 		end = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
@@ -143,7 +143,7 @@ void EventPosition::setVolunteer(int _userId){
 
 void EventPosition::setDescription(string _description){
 	sqlite3_stmt *s;
-	const char *sql = "update eventpositions set description = ? where eposid = ?";
+	const char *sql = "update vacancies set description = ? where eposid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
     if(retval != SQLITE_OK) {
         cout << "Error in SQL statement " << sql << ": " << sqlite3_errcode(db);
