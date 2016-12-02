@@ -21,8 +21,11 @@ class EventPosition
 		string getDescription();
 		string getStartTime();
 		string getEndTime();
+		void setDescription(string _description);
 		void setVolunteer(int _userId);
 		void setPosType(int _posid);
+		void setStartTime(string _start);
+		void setEndTime(string _end);
 };
 
 #endif
