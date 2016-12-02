@@ -7,7 +7,7 @@
 #include "cgicc/HTTPHTMLHeader.h"
 #include "cgicc/HTMLClasses.h"
 #include "styles.h"
-#include "controller.h"
+//#include "controller.h"
 
 using namespace std;
 using namespace cgicc;
@@ -94,15 +94,15 @@ int main(int argc, char **argv) {
       cout << body() << endl;
      
       //retrieves form information and sends it to controller
-      vector<string> loginfo;
-      Controller control;
-      const_form_iterator phoneNum = cgi.getElement("pnumber");
-      if(phoneNum != (*cgi).end() && !phoneNum->isEmpty())
-          loginfo.push_back((*phoneNum).getStrippedValue());
-      const_form_iterator pw = cgi.getElement("password");
-      if(pw != (*cgi).end() && !pw->isEmpty())
-         loginfo.push_back((*pw).getStrippedValue());
-      control.signIn(&loginfo);
+     // vector<string> loginfo;
+      //Controller control;
+      //const_form_iterator phoneNum = cgi.getElement("pnumber");
+      //if(phoneNum != (*cgi).end() && !phoneNum->isEmpty())
+         // loginfo.push_back((*phoneNum).getStrippedValue());
+      //const_form_iterator pw = cgi.getElement("password");
+      //if(pw != (*cgi).end() && !pw->isEmpty())
+        // loginfo.push_back((*pw).getStrippedValue());
+      //control.signIn(&loginfo);
 
    	  //HEADER
 	  cout << "<div class=\"wrapper row1\">" << endl;
@@ -120,18 +120,12 @@ int main(int argc, char **argv) {
       cout << "<li class=\"active first\"><a href=\"home.cgi\">Homepage</a></li>" << endl;
       cout << "<li><a class=\"drop\" href=\"#\">Event</a>" << endl;
       cout << "<ul>" << endl;
-      cout << "<li><a href=\"#\">List Open Events</a></li>" << endl;
+      cout << "<li><a href=\"#\">List Events</a></li>" << endl;
       cout << "<li><a href=\"#\">List Available Positions</a></li>" << endl;
-      cout << "<li><a class=\"drop\" href=\"#\">Level 2 + Drop</a>" << endl;
+      cout << "<li><a class=\"drop\" href=\"#\">Old Events</a>" << endl;
       cout<< "<ul>" << endl;
-      cout << "<li><a href=\"#\">Level 3</a></li>" << endl;
-      cout << "<li><a class=\"drop\" href=\"#\">Level 3 + Drop</a>" << endl;
-      cout << "<ul>" << endl;
-      cout << "<li><a href=\"#\">Level 4</a></li>" <<endl;
-      cout << "<li><a href=\"#\">Level 4</a></li>" <<endl;
-      cout << "</ul>" <<endl;
-      cout << "</li>" << endl;
-      cout << "<li><a href=\"#\">Level 3</a></li>" <<endl;
+      cout << "<li><a href=\"#\">2015</a></li>" << endl;
+      cout << "<li><a href=\"#\">2016</a></li>" <<endl;
       cout<< "</ul>" <<endl;
       cout << "</li>" <<endl;
       cout << "</ul>" <<endl;
@@ -160,25 +154,25 @@ int main(int argc, char **argv) {
 	  cout << br() << endl;
 	  printForm(cgi);
    	  cout << hr().set("class", "half") << endl;
-	  #if HAVE_UNAME
-   	  struct utsname info;
-   	  if(uname(&info) != -1) {
-         cout << ". Running on " << info.sysname;
-         cout << ' ' << info.release << " (";
-         cout << info.nodename << ")." << endl;
-   	  }
-	  #else
-      	cout << "." << endl;
-	  #endif
+	 // #if HAVE_UNAME
+   	  //struct utsname info;
+   	  //if(uname(&info) != -1) {
+         //cout << ". Running on " << info.sysname;
+         //cout << ' ' << info.release << " (";
+         //cout << info.nodename << ")." << endl;
+   	  //}
+	  //#else
+      	//cout << "." << endl;
+	 // #endif
 
-	  #if HAVE_GETTIMEOFDAY
-      	timeval end;
-   		gettimeofday(&end, NULL);
-      	long us = ((end.tv_sec - start.tv_sec) * 1000000)
-      	+ (end.tv_usec - start.tv_usec);
-      	cout << br() << "Total time for request = " << us << " us";
-      	cout << " (" << static_cast<double>(us/1000000.0) << " s)";
-	  #endif
+	 // #if HAVE_GETTIMEOFDAY
+      //	timeval end;
+   	//	gettimeofday(&end, NULL);
+      //	long us = ((end.tv_sec - start.tv_sec) * 1000000)
+      //	+ (end.tv_usec - start.tv_usec);
+      //	cout << br() << "Total time for request = " << us << " us";
+      //	cout << " (" << static_cast<double>(us/1000000.0) << " s)";
+	//  #endif
 
 	   //FOOTER
 	   cout <<"<div class=\"wrapper row4\">"<< endl;
