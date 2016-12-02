@@ -4,52 +4,49 @@
 #include <exception>
 #include <stdexcept>
 #include <string>
-#include <functional>
+#include <tr1/functional>
 #include <cstddef>
 
 using namespace std;
+using tr1::hash;
 
 Controller::Controller() {}
 
-void Controller::sendUser(vector<string> v, int id) {
+int Controller::sendUser(vector<string> v, int id) {
 		if (id == 0) {
 				// make a new user
-				User* u = new User(1);
-
+				Creation* c = new Creation();
+				// 0 -name, 1 - phone#, 2-pass
 				if (!v[0].empty() && !v[1].empty() && !v[2].empty())
 				{
-						u->setName(v[0]);
-						u->setPhoneNumber(v[1]);
-						u->setPassword(v[2]);
+					tr1::hash<string> str_hash;
+					int newUserId =  c->createUser(v[0], v[1], str_hash(v[2]));
+					return newUserId;
+			
 				}
 				else {
 						throw runtime_error("Empty field.");
+						return 0;
 				}
 		}
 		else {
 				// runtime error
 				throw runtime_error("User attempted invalid signup.");
+				return 0;
 		}
 }
 
-void Controller::sendEvent(vector<string> v, int eventId, int userId) {
-		if (userId == 0) {
-				// make a new event
-				Event* e = new Event(1);
-				e->setName(v[0]);
-				e->setStartDate(v[1]); // Need to convert to DateTime.
-				e->setEndDate(v[2]); // Need to convert to DateTime.
-				e->setDescription(v[3]);
-				e->setLocation(v[4]);
-
-				// add EventPosition later.
-
-				e->setOrganizer(userId);
-		}
-
-		else {
+int Controller::sendEvent(vector<vector<string> > v, int userId) {
+		if (userId == -1) {
 				// runtime error. no one is making an event.
 				throw runtime_error("No active user is making the event.");
+		}else{
+			
+			Creation* c = new Creation();
+			c->createEvent(v[0][0], v[0][1], v[0][2], v[0][3], userId, v[0][4]);
+			for(int i = 0; i < (v.size()-1); ++i){
+			//	c->createEventPosition
+			}
 		}
 }
 
@@ -103,7 +100,7 @@ void Controller::updateProfile(vector<string> v, int id) {
 		}
 }
 
-void updateEvent(vector<string> v, int id) {
+void Controller::updateEvent(vector<string> v, int id){
 	Event* e = new Event(id);
 	
 //	if(!v[0].empty() && !v[1].empty() && !v[2].empty() ...){
@@ -119,7 +116,7 @@ vector<string> Controller::signIn(vector<string> v) {
 	//Hash only given to database to check
 	Creation* c = new Creation();
 	size_t dbpass = c->login(v[0]);
-	hash<string> str_hash;
+	tr1::hash<string> str_hash;
 	vector<string> ret;
 	if(str_hash(v[1]) == dbpass){
 		int uId = c->searchUser(v[0]);
