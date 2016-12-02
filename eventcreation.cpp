@@ -16,33 +16,70 @@ void
 printForm(const Cgicc& cgi)
 {
 
-   cout << "<form method=\"post\".hash action=\""
-        << cgi.getEnvironment().getScriptName() << "\">" << endl;
+	const CgiEnvironment& env = cgi.CgiEnvironment();
+	const_cookie_iterator iter;
 
+   for(iter= env.getCookieList().begin(); iter!= env.getCookierList().end(); ++iter){
+   
+   if(iter->getName()=="Authenticated"){
+	string namedCookie = iter->getName();
+	
+	if(iter->getValue().find("true")){
 
    cout << "<table>" << endl;
 
-   cout << "<tr><td class=\"title\">Phone Number</td>"
+   cout << "<tr><td class=\"title\">Event Name</td>"
         << "<td class=\"form\">"
-        << "<input type=\"text\" name=\"pnumber\" value=\"8889990000\" id=\"1\"/>"
+        << "<input type=\"text\" name=\"ename\" value=\"fundraiser\""
         << "</td></tr>" << endl;
 
-   cout << "<tr><td class=\"title\">Password</td>"
+   cout << "<tr><td class=\"title\">Event Description</td>"
         << "<td class=\"form\">"
-        << "<input type=\"password\" name=\"password\" value=\"password\""
-        << " maxlength=\"\" autocomplete=\"off\" data-validate=\"{required: true}\"/>"
+        << "<input type=\"text\" name=\"edescription\" value=\"What is it about? What will people do at it?\""
         << "</td></tr>" << endl;
 
-   cout << "</table>" << endl;
+   cout << "<tr><td class=\"title\">Event Location</td>"
+        << "<td class=\"form\">"
+        << "<input type=\"text\" name=\"elocation\" value=\"Where will it be at?\""
+        << "</td></tr>" << endl;
+
+   cout << "<tr><td class=\"title\">Event Date Start</td>"
+        << "<td class=\"form\">"
+        << "<input type=\"text\" name=\"estart\" value=\"When does it start? (DD/MM/YYYY)\""
+        << "</td></tr>" 
+ 
+   cout << "<tr><td class=\"title\">Event Date End</td>"
+        << "<td class=\"form\">"
+        << "<input type=\"text\" name=\"efinish\" value=\"When does it end? (DD/MM/YYYY)\""
+        << "</td></tr>"
+
+   << endl;  cout << "</table>" << endl;
+
+   cout << "<div class=\"center\"><p>"
+        << "<input type=\"button\" name=\"epos\"  value=\"Add Event Position\" />"
+        << "</p></div></form>" << endl;
 
    cout << "<div class=\"center\"><p>"
         << "<input type=\"submit\" name=\"login\"  value=\"Log In\" />"
         << "</p></div></form>" << endl;
+	
+	}
+	else
+	{
+//	cout << HTTPRedirectHeader(string("helpers-help.me/userprofile.cgi?id=").append(success[1])) << endl;
+//	cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/lulu/userprofile.cgi?id=" << namedCookie << "\">" << endl;
+	cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/isarmien/userprofile.cgi?id=" << namedCookie << "\">" << endl;
+//	cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/jtoledo/userprofile.cgi?id=" << namedCookie << "\">" << endl;
+	}
+	break;
+   }
+   }
 }
 
 int main(int argc, char **argv) {
    try{
       Cgicc cgi;
+
       cout << HTTPHTMLHeader() << endl;
       cout << html().set("lang","en").set("dir","ltr") <<endl;
       cout << html() << endl;
@@ -153,26 +190,8 @@ int main(int argc, char **argv) {
 	  cout << br() << endl;
 	  printForm(cgi);
    	  cout << hr().set("class", "half") << endl;
-	  #if HAVE_UNAME
-   	  struct utsname info;
-   	  if(uname(&info) != -1) {
-         cout << ". Running on " << info.sysname;
-         cout << ' ' << info.release << " (";
-         cout << info.nodename << ")." << endl;
-   	  }
-	  #else
-      	cout << "." << endl;
-	  #endif
-
-	  #if HAVE_GETTIMEOFDAY
-      	timeval end;
-   		gettimeofday(&end, NULL);
-      	long us = ((end.tv_sec - start.tv_sec) * 1000000)
-      	+ (end.tv_usec - start.tv_usec);
-      	cout << br() << "Total time for request = " << us << " us";
-      	cout << " (" << static_cast<double>(us/1000000.0) << " s)";
-	  #endif
-
+	 
+	 //EventCreation Code
 	
 
 	  //FOOTER

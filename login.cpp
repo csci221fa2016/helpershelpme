@@ -6,6 +6,8 @@
 #include "cgicc/Cgicc.h"
 #include "cgicc/HTTPHTMLHeader.h"
 #include "cgicc/HTMLClasses.h"
+#include <cgicc/HTTPRedirectHeader.h>
+
 #include "styles.h"
 //#include "controller.h"
 
@@ -14,38 +16,94 @@ using namespace cgicc;
 
 void printForm(const Cgicc& cgi)
 {
+   if(evaluate(cgi)) {
+       cout << "<form method=\"post\" action=\""
+            << cgi.getEnvironment().getScriptName() << "\">" << endl;
+  
+       cout << "<table align=\"center\">" << endl;
+  
+       cout << "<tr><td class=\"title\">Phone Number</td>"
+            << "<td class=\"phone\">"
+            << "<input type=\"text\" name=\"pnumber\" value=\"8889990000\"/>"
+            << "</td></tr>" << endl;
+  
+       cout << "<tr><td class=\"title\">Password</td>"
+            << "<td><input type=\"password\" name=\"password\" value=\"password\""
+            << " maxlength=\"\" autocomplete=\"off\" data-validate=\"{required: true}\"/>"
+            << "</td></tr>" << endl;
+  
+       cout << "</table>" << endl;
+  
+       cout << "<div class=\"center\"><p>"
+            << "<input type=\"submit\" name=\"login\"  value=\"Log In\" />"
+            << "</p></div></form>" << endl;
+   }
+   else{
+        string to = it->getValue();
+        int x = to.find(";");
+        to = to.substr(x);
+        x = to.find(";");
+        to = to.substr(0, x);
+//         cout << httpredirectheader(string("helpers-help.me/userprofile.cgi?id=").append(to)) << endl;
+         cout << httpredirectheader(string("helpers-help.me/view/lulu/userprofile.cgi?id=").append(to)) << endl;
+//         cout << httpredirectheader(string("helpers-help.me/view/isarmien/userprofile.cgi?id=").append(to)) << endl;
+//         cout << httpredirectheader(string("helpers-help.me/view/jtoledo/userprofile.cgi?id=").append(to)) << endl;
+   }
+}
 
-   cout << "<form method=\"post\".hash action=\""
-        << cgi.getEnvironment().getScriptName() << "\">" << endl;
+bool evaluate(const Cgicc& cgi) {
+   const CgiEnvironment& env = cgi.getEnvironment();
 
-   cout << "<table align=\"center\">" << endl;
-
-   cout << "<tr><td class=\"title\">Phone Number</td>"
-        << "<td class=\"form\">"
-        << "<input type=\"text\" name=\"pnumber\" value=\"8889990000\" id=\"1\"/>"
-        << "</td></tr>" << endl;
-
-   cout << "<tr><td class=\"title\">Password</td>"
-        << "<td class=\"form\">"
-        << "<input type=\"password\" name=\"password\" value=\"password\""
-        << " maxlength=\"\" autocomplete=\"off\" data-validate=\"{required: true}\"/>"
-        << "</td></tr>" << endl;
-
-   cout << "</table>" << endl;
-
-   cout << "<div class=\"center\"><p>"
-        << "<input type=\"submit\" name=\"login\"  value=\"Log In\" />"
-        << "</p></div></form>" << endl;
+   if(!env.getCookieList().empty()) {
+       const_cookie_iterator it = env.getCookieList();
+       for (it = env.getCookieList().begin(); it != env.getCookieList().end(); ++it) {
+           if(it->getName() == "Authenticated") {
+               if(it->getValue().find("true") {
+                  return true;
+               }
+               break;
+           }
+       }
+   }
+   return false;
 }
 
 int main(int argc, char **argv) {
    try{
       Cgicc cgi;
-      cout << HTTPHTMLHeader() << endl;
+      HTTPCookie c;
+      c.setName("Authenticated");
+      c.setValue("false");
+      cout << HTTPHTMLHeader().setCookie(c) << endl;
+
+      //retrieves form information and sends it to controller
+      vector<string> loginfo;
+      Controller control;
+      const_form_iterator phoneNum = cgi.getElement("pnumber");
+      if(phoneNum != (*cgi).end() && !phoneNum->isEmpty())
+          loginfo.push_back((*phoneNum).getStrippedValue());
+      const_form_iterator pw = cgi.getElement("password");
+      if(pw != (*cgi).end() && !pw->isEmpty())
+         loginfo.push_back((*pw).getStrippedValue());
+      vector<string> success = control.signIn(&loginfo);
+      if(success[0] == "true") {
+         string val;
+         val.append(success[0]).append(";").append(success[0]);
+         c.setValue(val);
+         cout << p().set("align", "center") << "Sign In Successful!" << p() << endl;
+//         cout << HTTPRedirectHeader(string("helpers-help.me/userprofile.cgi?id=").append(success[1])) << endl;
+         cout << HTTPRedirectHeader(string("helpers-help.me/view/lulu/userprofile.cgi?id=").append(success[1])) << endl;
+//         cout << HTTPRedirectHeader(string("helpers-help.me/view/isarmien/userprofile.cgi?id=").append(success[1])) << endl;
+//         cout << HTTPRedirectHeader(string("helpers-help.me/view/jtoledo/userprofile.cgi?id=").append(success[1])) << endl;
+      } else {
+         cout << "<p> Username or Password Invalid </p>" << endl;
+         printForm(cgi);
+      }
+
       cout << html().set("lang","en").set("dir","ltr") <<endl;
       cout << html() << endl;
       cout << head() << endl;
-      cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" << endl;
+      cout << meta().set("name", "viewport").set("content", "width=device-width, initial-scale=1.0") << endl;
       cout << style() << comment() << endl;
       cout << styles;
       cout << comment() << style() <<endl;
@@ -92,17 +150,6 @@ int main(int argc, char **argv) {
       cout << title("Log In") <<endl;
       cout << head() << endl;
       cout << body() << endl;
-     
-      //retrieves form information and sends it to controller
-     // vector<string> loginfo;
-      //Controller control;
-      //const_form_iterator phoneNum = cgi.getElement("pnumber");
-      //if(phoneNum != (*cgi).end() && !phoneNum->isEmpty())
-         // loginfo.push_back((*phoneNum).getStrippedValue());
-      //const_form_iterator pw = cgi.getElement("password");
-      //if(pw != (*cgi).end() && !pw->isEmpty())
-        // loginfo.push_back((*pw).getStrippedValue());
-      //control.signIn(&loginfo);
 
    	  //HEADER
 	  cout << "<div class=\"wrapper row1\">" << endl;
@@ -151,28 +198,6 @@ int main(int argc, char **argv) {
       cout <<"</ul>"<< endl;
       cout << " </nav>" << endl;
       cout << "</div>" << endl;
-	  cout << br() << endl;
-	  printForm(cgi);
-   	  cout << hr().set("class", "half") << endl;
-	 // #if HAVE_UNAME
-   	  //struct utsname info;
-   	  //if(uname(&info) != -1) {
-         //cout << ". Running on " << info.sysname;
-         //cout << ' ' << info.release << " (";
-         //cout << info.nodename << ")." << endl;
-   	  //}
-	  //#else
-      	//cout << "." << endl;
-	 // #endif
-
-	 // #if HAVE_GETTIMEOFDAY
-      //	timeval end;
-   	//	gettimeofday(&end, NULL);
-      //	long us = ((end.tv_sec - start.tv_sec) * 1000000)
-      //	+ (end.tv_usec - start.tv_usec);
-      //	cout << br() << "Total time for request = " << us << " us";
-      //	cout << " (" << static_cast<double>(us/1000000.0) << " s)";
-	//  #endif
 
 	   //FOOTER
 	   cout <<"<div class=\"wrapper row4\">"<< endl;

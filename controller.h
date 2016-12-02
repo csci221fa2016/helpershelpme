@@ -20,9 +20,10 @@ class Controller {
 		vector<vector<string> > showEventInfo(int id);
 		void updateProfile(vector<string> v, int id);
 		void updateEvent(vector<string> v, int id);
-		bool signIn(vector<string> *v);
+		vector<string> signIn(vector<string> v);
 		void addVolunteer(vector<string> v, int eventId, int userId);
 		void showStats(int id);
+		vector<vector<string> > showAllUpcoming(string currentDate);
 		void showEvent(int id);
 		void showEventTitle(int id);
 		void showEventDate(int id);
