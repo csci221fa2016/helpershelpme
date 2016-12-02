@@ -25,41 +25,74 @@
 using namespace std;
 using namespace cgicc;
 
+#define z string
+
 void printform(const Cgicc& cgi, Controller& c) {
-   string userid = cgi.getElement("id");
-   vector<string> userinfo = c.showUserInfo(userid);
-   cout   << "<table>\n"
-          << "<tr><th>User E-Mail</th>\n"
-          << "<td>" << << "</td></tr>\n"
-          << "<tr><th>Phone Number</th>\n"
-          << "<td>1-800-888-888</td></tr>\n"
-          << "<tr><th>Hours Volunteered</th>\n"
-          << "<td>0</td></tr>\n"
-          << "</table>\n";
-   
-   cout   << "<hr>\n""<form action=\"helpers-help.me/createEvent.cgi\">\n"
-          << "<form action=\"helpers-help.me/createEvent.cgi\">\n"
-          << "<input type=\"submit\" value=\"Create Event\"/>\n"
-          << " </form>\n";
-           
-   cout   << "<!--<form name=\"delete event\">\n"
-          << "<input type=\"submit\" value=\"Delete Event\"/>\n"
-          << "</form>-->\n";
-   
-   cout   << "<!-- Will recieve events/positions related to user one at a time, in vector of strings\n"
-          << "i.e. a vector with event/position title, desc., etc as string val in vector-->\n"
-          << " <p><h3>Events 'User' created</h3></p>\n"
-          << " <dl>\n"
-          << "<dt>Event1</dt>\n"
-          << "<dd>Event1 desc, date, times, loc</dd>\n"
-          << "<dt>Event2</dt>\n"
-          << "<dd>Event2 desc, date, times, loc</dd>\n"
-          << "</dl>\n"
-          << "<p><h3>Previous Positions</h3></p>\n"
-          << "<dl>\n"
-          << "<dt>Position1</dt>\n"
-          << "<dd>Event date, time worked, loc</dd>\n"
-          << "</dl>" << endl;
+   if (evaluate(cgi)) {
+       vector<string> userinfo = c.showUserInfo(z);
+       cout   << "<table>\n"
+              << "<tr><th>User E-Mail</th>\n"
+              << "<td>" << userinfo[0] << "</td></tr>\n"
+              << "<tr><th>Phone Number</th>\n"
+              << "<td>" << userinfo[1] << "</td></tr>\n"
+              << "<tr><th>Hours Volunteered</th>\n"
+              << "<td>N/A</td></tr>\n"
+              << "</table>\n";
+       
+       cout   << "<hr>\n""<form action=\"helpers-help.me/createEvent.cgi\">\n"
+              << "<form action=\"helpers-help.me/createEvent.cgi\">\n"
+              << "<input type=\"submit\" value=\"Create Event\"/>\n"
+              << " </form>\n";
+               
+       cout   << "<!--<form name=\"delete event\">\n"
+              << "<input type=\"submit\" value=\"Delete Event\"/>\n"
+              << "</form>-->\n";
+       
+       cout   << "<!-- Will recieve events/positions related to user one at a time, in vector of strings\n"
+              << "i.e. a vector with event/position title, desc., etc as string val in vector-->\n"
+              << " <p><h3>Events 'User' created</h3></p>\n"
+              << " <dl>\n"
+              << "<dt>Event1</dt>\n"
+              << "<dd>Event1 desc, date, times, loc</dd>\n"
+              << "<dt>Event2</dt>\n"
+              << "<dd>Event2 desc, date, times, loc</dd>\n"
+              << "</dl>\n"
+              << "<p><h3>Previous Positions</h3></p>\n"
+              << "<dl>\n"
+              << "<dt>Position1</dt>\n"
+              << "<dd>Event date, time worked, loc</dd>\n"
+              << "</dl>" << endl;
+   } else {
+//         cout << httpredirectheader(string("helpers-help.me/login.cgi") << endl;
+         cout << httpredirectheader(string("helpers-help.me/view/lulu/login.cgi") << endl;
+//         cout << httpredirectheader(string("helpers-help.me/view/isarmien/login.cgi") << endl;
+//         cout << httpredirectheader(string("helpers-help.me/view/jtoledo/login.cgi") << endl;
+   }
+}
+
+bool evaluate(const Cgicc& cgi) {
+   const CgiEnvironment& env = cgi.getEnvironment();
+
+   if(!env.getCookieList().empty()) {
+       const_cookie_iterator it = env.getCookieList();
+       for (it = env.getCookieList().begin(); it != env.getCookieList().end(); ++it) {
+           if(it->getName() == "Authenticated") {
+               if(it->getValue().find("true") {
+                  userID(it->getValue());
+                  return true;
+               }
+               break;
+           }
+       }
+   }
+   return false;
+}
+
+void userID(string ui) {
+        int z = ui.find(";");
+        ui = ui.substr(z);
+        z = ui.find(";");
+        ui = ui.substr(0, z);
 }
 
 int main(int /*argc*/, char** /**/) {

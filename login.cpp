@@ -16,32 +16,66 @@ using namespace cgicc;
 
 void printForm(const Cgicc& cgi)
 {
-   cout << "<form method=\"post\" action=\""
-        << cgi.getEnvironment().getScriptName() << "\">" << endl;
+   if(evaluate(cgi)) {
+       cout << "<form method=\"post\" action=\""
+            << cgi.getEnvironment().getScriptName() << "\">" << endl;
+  
+       cout << "<table align=\"center\">" << endl;
+  
+       cout << "<tr><td class=\"title\">Phone Number</td>"
+            << "<td class=\"phone\">"
+            << "<input type=\"text\" name=\"pnumber\" value=\"8889990000\"/>"
+            << "</td></tr>" << endl;
+  
+       cout << "<tr><td class=\"title\">Password</td>"
+            << "<td><input type=\"password\" name=\"password\" value=\"password\""
+            << " maxlength=\"\" autocomplete=\"off\" data-validate=\"{required: true}\"/>"
+            << "</td></tr>" << endl;
+  
+       cout << "</table>" << endl;
+  
+       cout << "<div class=\"center\"><p>"
+            << "<input type=\"submit\" name=\"login\"  value=\"Log In\" />"
+            << "</p></div></form>" << endl;
+   }
+   else{
+        string to = it->getValue();
+        int x = to.find(";");
+        to = to.substr(x);
+        x = to.find(";");
+        to = to.substr(0, x);
+//         cout << httpredirectheader(string("helpers-help.me/userprofile.cgi?id=").append(to)) << endl;
+         cout << httpredirectheader(string("helpers-help.me/view/lulu/userprofile.cgi?id=").append(to)) << endl;
+//         cout << httpredirectheader(string("helpers-help.me/view/isarmien/userprofile.cgi?id=").append(to)) << endl;
+//         cout << httpredirectheader(string("helpers-help.me/view/jtoledo/userprofile.cgi?id=").append(to)) << endl;
+   }
+}
 
-   cout << "<table align=\"center\">" << endl;
+bool evaluate(const Cgicc& cgi) {
+   const CgiEnvironment& env = cgi.getEnvironment();
 
-   cout << "<tr><td class=\"title\">Phone Number</td>"
-        << "<td class=\"phone\">"
-        << "<input type=\"text\" name=\"pnumber\" value=\"8889990000\"/>"
-        << "</td></tr>" << endl;
-
-   cout << "<tr><td class=\"title\">Password</td>"
-        << "<td><input type=\"password\" name=\"password\" value=\"password\""
-        << " maxlength=\"\" autocomplete=\"off\" data-validate=\"{required: true}\"/>"
-        << "</td></tr>" << endl;
-
-   cout << "</table>" << endl;
-
-   cout << "<div class=\"center\"><p>"
-        << "<input type=\"submit\" name=\"login\"  value=\"Log In\" />"
-        << "</p></div></form>" << endl;
+   if(!env.getCookieList().empty()) {
+       const_cookie_iterator it = env.getCookieList();
+       for (it = env.getCookieList().begin(); it != env.getCookieList().end(); ++it) {
+           if(it->getName() == "Authenticated") {
+               if(it->getValue().find("true") {
+                  return true;
+               }
+               break;
+           }
+       }
+   }
+   return false;
 }
 
 int main(int argc, char **argv) {
    try{
       Cgicc cgi;
-     
+      HTTPCookie c;
+      c.setName("Authenticated");
+      c.setValue("false");
+      cout << HTTPHTMLHeader().setCookie(c) << endl;
+
       //retrieves form information and sends it to controller
       vector<string> loginfo;
       Controller control;
@@ -53,21 +87,23 @@ int main(int argc, char **argv) {
          loginfo.push_back((*pw).getStrippedValue());
       vector<string> success = control.signIn(&loginfo);
       if(success[0] == "true") {
-         cout << "<p align=\"center\"> Sign In Successful! </p>" << endl;
+         string val;
+         val.append(success[0]).append(";").append(success[0]);
+         c.setValue(val);
+         cout << p().set("align", "center") << "Sign In Successful!" << p() << endl;
 //         cout << HTTPRedirectHeader(string("helpers-help.me/userprofile.cgi?id=").append(success[1])) << endl;
-         cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/lulu/userprofile.cgi?id=" << success[1] << "\">" << endl;
-//         cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/isarmien/userprofile.cgi?id=" << success[1] << "\\">" << endl;
-//         cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/jtoledo/userprofile.cgi?id=" << success[1] << "\\">" << endl;
+         cout << HTTPRedirectHeader(string("helpers-help.me/view/lulu/userprofile.cgi?id=").append(success[1])) << endl;
+//         cout << HTTPRedirectHeader(string("helpers-help.me/view/isarmien/userprofile.cgi?id=").append(success[1])) << endl;
+//         cout << HTTPRedirectHeader(string("helpers-help.me/view/jtoledo/userprofile.cgi?id=").append(success[1])) << endl;
       } else {
          cout << "<p> Username or Password Invalid </p>" << endl;
          printForm(cgi);
       }
 
-      cout << HTTPHTMLHeader().setCookie << endl;
       cout << html().set("lang","en").set("dir","ltr") <<endl;
       cout << html() << endl;
       cout << head() << endl;
-      cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" << endl;
+      cout << meta().set("name", "viewport").set("content", "width=device-width, initial-scale=1.0") << endl;
       cout << style() << comment() << endl;
       cout << styles;
       cout << comment() << style() <<endl;
