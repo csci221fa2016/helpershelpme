@@ -117,7 +117,7 @@ vector<string> Controller::signIn(vector<string> v) {
 		//send to database to verify
 		//if(whatanot) return true; else return false;
 	//Hash only given to database to check
-	Creation c = new Creation();
+	Creation* c = new Creation();
 	size_t dbpass = c->login(v[0]);
 	hash<string> str_hash;
 	vector<string> ret;
@@ -138,7 +138,7 @@ vector<string> Controller::signIn(vector<string> v) {
 
 void Controller::addVolunteer(vector<string> v, int eventId, int userId, int eposId) {
 		// add Volunteer to event
-		Creation c = new Creation();
+		Creation* c = new Creation();
 		if(c->findUser(userId) && c->findEvent(eventId)){
 			User* u = new User(userId);
 			Event* e = new Event(eventId);

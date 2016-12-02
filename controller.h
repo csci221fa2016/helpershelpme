@@ -21,7 +21,7 @@ class Controller {
 		void updateProfile(vector<string> v, int id);
 		void updateEvent(vector<string> v, int id);
 		vector<string> signIn(vector<string> v);
-		void addVolunteer(vector<string> v, int eventId, int userId);
+		void addVolunteer(vector<string> v, int eventId, int userId, int posId);
 		void showStats(int id);
 		vector<vector<string> > showAllUpcoming(string currentDate);
 		void showEvent(int id);
