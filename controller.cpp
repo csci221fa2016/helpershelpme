@@ -13,6 +13,7 @@
 #include <sstream>
 #include <locale>
 #include <iomanip>
+#include <time.h> 
 
 using namespace std;
 using tr1::hash;
@@ -57,7 +58,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		strcpy(date, s.c_str());
 
 		// char date[] = v[0][2];
-		
+
 		tm *stm;
 
 		char* start_pch;
@@ -73,11 +74,11 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		mktime (stm);
 
 		// This is the end time that the view is passing to us
-		
+
 
 		string s1 = v[0][3];
-                char * date1 = new char[s1.size()+1]; //mutable string
-                strcpy(date1, s1.c_str());
+		char * date1 = new char[s1.size()+1]; //mutable string
+		strcpy(date1, s1.c_str());
 		//char date1[] = v[0][3];
 		tm *etm;
 
@@ -182,8 +183,8 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 
 		// This is the start time that the view is passing to us
 		string s = v[0][2];
-                char * date = new char[s.size()+1]; //mutable string
-                strcpy(date, s.c_str());
+		char * date = new char[s.size()+1]; //mutable string
+		strcpy(date, s.c_str());
 
 		//char date[] = v[0][2];
 		tm *stm;
@@ -201,10 +202,10 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 		mktime (stm);
 
 		// This is the end time that the view is passing to us
-		
+
 		string s1 = v[0][3];
-                char * date1 = new char[s1.size()+1]; //mutable string
-                strcpy(date1, s1.c_str());
+		char * date1 = new char[s1.size()+1]; //mutable string
+		strcpy(date1, s1.c_str());
 		// char date1[] = v[0][3];
 		tm *etm;
 
@@ -274,7 +275,7 @@ void Controller::addVolunteer(vector<string> v, int eventId, int userId, int epo
 	if(c->findUser(userId) && c->findEvent(eventId)){
 		User* u = new User(userId);
 		Event* e = new Event(eventId);
-		
+
 		// Does this add a user to an event or adds an event position to a event?
 	}else{
 
@@ -282,39 +283,43 @@ void Controller::addVolunteer(vector<string> v, int eventId, int userId, int epo
 
 }
 
-void Controller::showStats(int id) {//convert to datetime for calculations
+double Controller::showStats(int id) {//convert to datetime for calculations
 	// show the user profile to the view. (hours, etc.)
-
-
+	User* u = new User(id);
+	double total_hours;
+	for (int i = 0; i < u->getEventsWorked().size(); i++) {
+		total_hours += difftime(u->getEventsWorked()[i]->getEndTime(), u->getEventsWorked()[i]->getStartTime())/360;
+	}
+	return total_hours;
 }
 //Combine all these functions -useraccess. for home page showing upcoming events need vector<vector<string>>
 
 vector<int > Controller::showAllUpcoming(){                 
 
-//	time_t now;
-//	struct tm upcoming = etm;
-//	double seconds;
-//
-//	time(&now);  /* get current time; same as: now = time(NULL)  */
-//
-//	upcoming = *localtime(&now);
-//
-//	upcoming.tm_hour = 0;
-//	upcoming.tm_min = 0;
-//	upcoming.tm_sec = 0;
-//	upcoming.tm_mon = 0; 
-//	upcoming.tm_mday = 1;
-//
-//	seconds = difftime(now,mktime(&upcoming));
-//	
-//	// This is now hours.
-//	seconds = seconds/360;
-//
-//	// This would give us the days.
-//	if (seconds > 24) {
-//		seconds = seconds/24;
-//	}
-	
+	//	time_t now;
+	//	struct tm upcoming = etm;
+	//	double seconds;
+	//
+	//	time(&now);  /* get current time; same as: now = time(NULL)  */
+	//
+	//	upcoming = *localtime(&now);
+	//
+	//	upcoming.tm_hour = 0;
+	//	upcoming.tm_min = 0;
+	//	upcoming.tm_sec = 0;
+	//	upcoming.tm_mon = 0; 
+	//	upcoming.tm_mday = 1;
+	//
+	//	seconds = difftime(now,mktime(&upcoming));
+	//	
+	//	// This is now hours.
+	//	seconds = seconds/360;
+	//
+	//	// This would give us the days.
+	//	if (seconds > 24) {
+	//		seconds = seconds/24;
+	//	}
+
 	Creation *c = new Creation();
 	vector<int> upcoming = c->getUpcoming();
 	return upcoming;
@@ -332,13 +337,27 @@ vector<string> Controller::showEvent(int id) {
 }
 
 vector<int> Controller::showOrganizedEvents(int id){
-
+	// get Organized events then getEventId, then return the vector of ints
+	User* u = new User(id);
+	vector<int> num_organized_events;
+	vector<Event*> e = u->getOrganizedEvents();
+	for (int i = 0; i < e.size(); i++) {
+		num_organized_events.push_back(e[i]->getEventId());
+	}
+	return num_organized_events;	
 }
 
 vector<int> Controller::showEventsWorked(int id){
-
+	User* u = new User(id);
+	vector<int> num_events_worked;
+	vector<EventPosition*> ep = u->getEventsWorked();
+	for (int i = 0; i < ep.size(); i++) {
+		num_events_worked.push_back(ep[i]->getEvent()->getEventId());
+	}
+	return num_events_worked;
 }
 
 vector<string> Controller::showEventPositions(int id){
 
 }
+
