@@ -19,12 +19,13 @@ EventPosition::EventPosition(int _eposid, int _eventid, int _userid, int _posid)
         cout << "Cannot open test.db: " << sqlite3_errcode(db) << endl;
         return;
     }
-	retval = sqlite3_exec(db, "create table if not exists eventpositions (eposid integer primary key, eventid integer, userid integer, posid integer);", NULL, NULL, &errmsg);
+	retval = sqlite3_exec(db, "create table if not exists eventpositions (eposid integer primary key, eventid integer, userid integer, posid integer, desc text);", NULL, NULL, &errmsg);
     if(retval != SQLITE_OK)
     {
         cout << "Error in previous command: " << errmsg << endl;
         sqlite3_free(errmsg);
     }
+
 
     // make sure this event exists in db
     bool exists = false;
@@ -115,24 +116,24 @@ string EventPosition::getDescription(){
 	return desc;
 }
 
-string EventPosition::getStartTime(){
+time_t EventPosition::getStartTime(){
 	sqlite3_stmt *s;
-	string start;
-	const char *sql = "select start from events where id = " + (char)eposid;
+	time_t start;
+	const char *sql = "select start from events where id = " + (char)eventid;
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	while(sqlite3_step(s)==SQLITE_ROW) {
-		start = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
+		time_t = (time_t)sqlite3_column_int(s, 0);
 	}
 	return start;
 }
 
-string EventPosition::getEndTime(){
+time_t EventPosition::getEndTime(){
 	sqlite3_stmt *s;
 	string end;
-	const char *sql = "select start from events where id = " + (char)eposid;
+	const char *sql = "select start from events where id = " + (char)eventid;
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	while(sqlite3_step(s)==SQLITE_ROW) {
-		end = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
+		end = (time_t)sqlite3_column_int(s, 0);
 	}
 	return end;
 }
