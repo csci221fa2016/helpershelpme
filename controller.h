@@ -22,14 +22,21 @@ class Controller {
 		void updateEvent(vector<string> v, int id);
 		vector<string> signIn(vector<string> v);
 		void addVolunteer(vector<string> v, int eventId, int userId, int posId);
+
+		// This show stats of a user, including hours worked
 		void showStats(int id);
 		vector<vector<string> > showAllUpcoming(string currentDate);
 		vector<vector<string> > showEvent(int id);
+
+		// This shows the events that the user organized
 		vector<int> showOrganizedEvents(int id);
+
+		// This shows the events that the user worked at
 		vector<int> showEventsWorked(int id);
 		void showEventTitle(int id);
 		void showEventDate(int id);
 		void checkUserAccess();
+		
 
 };
 
