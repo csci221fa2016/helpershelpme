@@ -1,6 +1,7 @@
 #ifndef EVENTPOSITIONH
 #define EVENTPOSITIONH
 #include <string>
+#include <ctime>
 #include "sqlite3.h"
 using namespace std;
 
@@ -19,8 +20,8 @@ class EventPosition
 		User* getVolunteer();
 		Event* getEvent();
 		string getDescription();
-		string getStartTime();
-		string getEndTime();
+		time_t getStartTime();
+		time_t getEndTime();
 		void setDescription(string _description);
 		void setVolunteer(int _userId);
 		void setPosType(int _posid);

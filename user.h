@@ -20,7 +20,7 @@ class User {
 	string getName();
 	string getPhoneNumber();
 	vector<EventPosition*> getEventsWorked();
-	vector<EventPosition*> getOrganizedEvents();
+	vector<Event*> getOrganizedEvents();
 	bool setName(string _name);
 	bool setPhoneNumber(string _phoneNumber);
 	void addEvent(Event* _event);
