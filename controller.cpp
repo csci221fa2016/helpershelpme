@@ -43,7 +43,7 @@ int Controller::sendUser(vector<string> v, int id) {
 	}
 }
 
-int Controller::sendEvent(vector<vector<string> > v, vector<int> openings, int userId) {
+int Controller::sendEvent(vector<vector<string> > v, int userId) {
 	if (userId == -1) {
 		// runtime error. no one is making an event.
 		throw runtime_error("No active user is making the event.");
@@ -73,7 +73,12 @@ int Controller::sendEvent(vector<vector<string> > v, vector<int> openings, int u
 		mktime (stm);
 
 		// This is the end time that the view is passing to us
-		char date1[] = v[0][3];
+		
+
+		string s1 = v[0][3];
+                char * date1 = new char[s1.size()+1]; //mutable string
+                strcpy(date1, s1.c_str());
+		//char date1[] = v[0][3];
 		tm *etm;
 
 		char* end_pch;
@@ -89,10 +94,10 @@ int Controller::sendEvent(vector<vector<string> > v, vector<int> openings, int u
 		mktime (etm);
 
 
-		//need to set start time end time 0 -name, 1 -description, 2- start, 3-end		
+		//need to set start time end time 0 -name, 1 -description, 2-openings		
 		int eventId = c->createEvent(v[0][0], v[0][1], stm, etm, userId, v[0][4]);
 		for(int i = 0; i <openings.size(); ++i){ 
-			c->createEventPosition(eventId, i+1,  v[i+1][0], v[i+1][1], openings[i]);
+			c->createEventPosition(eventId, i+1,  v[i+1][0], v[i+1][1], v[i+1][2]);
 		}
 	}
 }
@@ -176,7 +181,11 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 		Creation* c = new Creation();
 
 		// This is the start time that the view is passing to us
-		char date[] = v[0][2];
+		string s = v[0][2];
+                char * date = new char[s.size()+1]; //mutable string
+                strcpy(date, s.c_str());
+
+		//char date[] = v[0][2];
 		tm *stm;
 
 		char* start_pch;
@@ -192,7 +201,11 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 		mktime (stm);
 
 		// This is the end time that the view is passing to us
-		char date1[] = v[0][3];
+		
+		string s1 = v[0][3];
+                char * date1 = new char[s1.size()+1]; //mutable string
+                strcpy(date1, s1.c_str());
+		// char date1[] = v[0][3];
 		tm *etm;
 
 		char* end_pch;
