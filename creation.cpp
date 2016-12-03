@@ -6,6 +6,8 @@
 #include <iostream>
 #include <string>
 #include "creation.h"
+#include <ctime>
+#include <time.h>
 #include "string.h"
 using namespace std;
 
@@ -129,7 +131,7 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 	return userid;
 }
 
-int Creation::createEvent(string _name, string _description, string _start, string _end, int userid, string _location) {
+int Creation::createEvent(string _name, string _description, time_t _start, time_t _end, int userid, string _location) {
 	int eventid;
 	sqlite3_stmt *s;
 	const char *sql = "insert into events (name, description, start, end, organizer, location) values (?, ?, ?, ?, ?, ?)";
@@ -205,7 +207,7 @@ int Creation::createEvent(string _name, string _description, string _start, stri
 	return eventid;
 }
 
-int Creation::createEventPosition(int eventid, int posid, string _name, string _description, int _openings, int userid) {
+int Creation::createEventPosition(int eventid, int posid, string _description, int _openings, int userid) {
 	int eposid;
 	sqlite3_stmt *s;
 	const char *sql = "insert into eventpositions (eventid, posid) values (?, ?)";

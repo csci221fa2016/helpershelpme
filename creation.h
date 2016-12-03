@@ -15,4 +15,5 @@ class Creation {
 	int createUser(string _name, string _phoneNumber, string _password);
 	int createEvent(string _name, string _description, string _startTime, string _endTime, int userid, string _location);
 	int createEventPosition(int eventid, int eposid, string _name, string _description, int _openings, int userid);
+	vector<int> getUpcomingEvents();
 };
