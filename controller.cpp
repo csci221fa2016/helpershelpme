@@ -163,8 +163,9 @@ void Controller::updateProfile(vector<string> v, int id) {
 	if (!v[0].empty() && !v[1].empty() && !v[2].empty())
 	{
 		u->setName(v[0]);
-		u->setPhoneNumber(v[1]);  
-		u->setPassword(v[2]);
+		u->setPhoneNumber(v[1]);
+		tr1::hash<string> str_hash;  
+		u->setPassword(str_hash(v[2]));
 	}
 	else {
 		throw runtime_error("Empty update.");
@@ -227,7 +228,7 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 		//convert v[1], v[2] to times
 		e->setDescription(v[0][3]);
 		e->setLocation(v[0][4]);
-		for(int i = 1, i<v.size();++i){
+		for(int i = 1; i<v.size();++i){
 			EventPosition* ep = new EventPosition(id, userId, i);
 			ep->setName(v[i][0]);
 			ep->setDescription(v[i][1]);
