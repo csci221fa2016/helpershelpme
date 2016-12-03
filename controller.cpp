@@ -82,10 +82,10 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 
 		// third and fourth thing passed in here should be time_t's now
 		c->createEvent(v[0][0], v[0][1], stm, etm, userId, v[0][4]);
-		
+
 		// Think this is not needed anymore???
 		/*for(int i = 0; i < (v.size()-1); ++i){
-			//	c->createEventPosition
+		//	c->createEventPosition
 		}*/
 	}
 }
@@ -111,17 +111,17 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 	}
 
 	// Convert StartDate and EndDate from time_t to string to pass back to view
-	
+
 	time_t start_rawdate = e->getStartDate();
-  	time (&start_rawdate);
+	time (&start_rawdate);
 
 	time_t end_rawdate = e->getEndDate();
-        time (&end_rawdate);
-	
+	time (&end_rawdate);
+
 
 	a[0].push_back(e->getName());
 	a[0].push_back(e->getOrganizer()->getName());
-	
+
 	// ctime converts the time to a string format = Www Mmm dd hh:mm:ss yyyy
 	a[0].push_back(ctime (&start_rawdate));
 	a[0].push_back(ctime (&end_rawdate));
@@ -130,12 +130,12 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 	for (int i = 0; i < ep_arr.size(); ++i ) {
 		a[i+1].push_back(ep_arr[i]->getVolunteer()->getName());
 		a[i+1].push_back(ep_arr[i]->getDescription());
-		
-		time_t stat_rawtime = ep_arr[i]->getStartTime();
-        	time (&start_rawtime);
 
-        	time_t end_rawtime = ep_arr[i]->getEndTime();
-        	time (&end_rawtime);
+		time_t stat_rawtime = ep_arr[i]->getStartTime();
+		time (&start_rawtime);
+
+		time_t end_rawtime = ep_arr[i]->getEndTime();
+		time (&end_rawtime);
 
 		a[i+1].push_back(ctime (&start_rawtime));
 		a[i+1].push_back(ctime (&end_rawtime));
@@ -158,12 +158,60 @@ void Controller::updateProfile(vector<string> v, int id) {
 	}
 }
 
-void Controller::updateEvent(vector<string> v, int id){
+void Controller::updateEvent(vector<string> v, int id,int userId){
 	Event* e = new Event(id);
 
-	//	if(!v[0].empty() && !v[1].empty() && !v[2].empty() ...){
+	if (userId != (e->getOrganizer()->getUserId())) {
+		// runtime error. no one is making an event.
+		throw runtime_error("Only organizer can edit this event.");
+	}else {
 
-	//	}
+		Creation* c = new Creation();
+
+		// This is the start time that the view is passing to us
+		char date[] = v[0][2];
+		tm *stm;
+
+		char* start_pch;
+		start_pch = strtok(date, " ,.-:");
+		stm->tm_year = atoi(start_pch); //get the year value
+		stm->tm_mon = atoi(strtok(NULL, " ,.-:"));  //get the month value
+		stm->tm_mday = atoi(strtok(NULL, " ,.-:")); //get the day value
+		stm->tm_hour = atoi(strtok(NULL, " ,.-:")); //get the hour value
+		stm->tm_min = atoi(strtok(NULL, " ,.-:")); //get the min value
+		stm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value			
+
+		// This coverts the tm* ltm to time_t
+		mktime (stm);
+
+		// This is the end time that the view is passing to us
+		char date[] = v[0][3];
+		tm *etm;
+
+		char* end_pch;
+		end_pch = strtok(date, " ,.-:");
+		etm->tm_year = atoi(end_pch); //get the year value
+		etm->tm_mon = atoi(strtok(NULL, " ,.-:"));  //get the month value
+		etm->tm_mday = atoi(strtok(NULL, " ,.-:")); //get the day value
+		etm->tm_hour = atoi(strtok(NULL, " ,.-:")); //get the hour value
+		etm->tm_min = atoi(strtok(NULL, " ,.-:")); //get the min value
+		etm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value                  
+
+		// This coverts the tm* ltm to time_t
+		mktime (etm);
+
+
+		// third and fourth thing passed in here should be time_t's now
+		e->setName(v[0]);
+		//convert v[1], v[2] to times
+		e->setDescription(v[3]);
+		e->setLocation(v[4]);
+
+		// Think this is not needed anymore???
+		/*for(int i = 0; i < (v.size()-1); ++i){
+		//	c->createEventPosition
+		}*/
+	}
 }
 
 vector<string> Controller::signIn(vector<string> v) {
@@ -215,25 +263,46 @@ void Controller::showStats(int id) {//convert to datetime for calculations
 }
 //Combine all these functions -useraccess. for home page showing upcoming events need vector<vector<string>>
 
-vector<vector<string> > Controller::showAllUpcoming(string currentDate){
+vector<int > Controller::showAllUpcoming(){                 
 
+//	time_t now;
+//	struct tm upcoming = etm;
+//	double seconds;
+//
+//	time(&now);  /* get current time; same as: now = time(NULL)  */
+//
+//	upcoming = *localtime(&now);
+//
+//	upcoming.tm_hour = 0;
+//	upcoming.tm_min = 0;
+//	upcoming.tm_sec = 0;
+//	upcoming.tm_mon = 0; 
+//	upcoming.tm_mday = 1;
+//
+//	seconds = difftime(now,mktime(&upcoming));
+//	
+//	// This is now hours.
+//	seconds = seconds/360;
+//
+//	// This would give us the days.
+//	if (seconds > 24) {
+//		seconds = seconds/24;
+//	}
+	
+	Creation *c = new Creation();
+	vector<int> upcoming = c->getUpcoming();
+	return upcoming;
 }
-void Controller::showEvent(int id) {
-	// show event info to the view
-
+vector<string> Controller::showEvent(int id) {
+	Event* event = new Event(id);
+	vector<string> a;
+	time_t start_rawdate;
+	a[0].push_back(event->getName());
+	start_rawdate = event->getStartDate();
+	time (&start_rawdate);
+	a[1].push_back(ctime (&start_rawdate));
+	a[2].push_back(event->getLocation());
+	return a;
 }
 
-void Controller::showEventTitle(int id) {
-	// give event title to home page.
 
-}
-
-void Controller::showEventDate(int id) {
-	// give event date to home page.
-
-}
-
-void Controller::checkUserAccess() {
-	// permissions with buttons
-
-}

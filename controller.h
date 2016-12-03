@@ -25,17 +25,14 @@ class Controller {
 
 		// This show stats of a user, including hours worked
 		void showStats(int id);
-		vector<vector<string> > showAllUpcoming(string currentDate);
-		vector<vector<string> > showEvent(int id);
+		vector<int> showAllUpcoming();
+		vector<string> showEvent(int id);
 
 		// This shows the events that the user organized
 		vector<int> showOrganizedEvents(int id);
 
 		// This shows the events that the user worked at
 		vector<int> showEventsWorked(int id);
-		void showEventTitle(int id);
-		void showEventDate(int id);
-		void checkUserAccess();
 		
 		vector<string> showEventPositions(int id);
 
