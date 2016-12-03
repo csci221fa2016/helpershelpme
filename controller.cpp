@@ -211,14 +211,14 @@ void Controller::addVolunteer(vector<string> v, int eventId, int userId, int epo
 void Controller::showStats(int id) {//convert to datetime for calculations
 	// show the user profile to the view. (hours, etc.)
 
-
 }
 //Combine all these functions -useraccess. for home page showing upcoming events need vector<vector<string>>
 
 vector<vector<string> > Controller::showAllUpcoming(string currentDate){
 
 }
-void Controller::showEvent(int id) {
+
+vector<string> Controller::showEvent(int id) {
 	// show event info to the view
 
 }

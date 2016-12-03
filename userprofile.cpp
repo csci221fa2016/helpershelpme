@@ -18,6 +18,7 @@
 #include "cgicc/CgiDefs.h"
 #include "cgicc/HTTPHTMLHeader.h"
 #include "cgicc/HTMLClasses.h"
+#include "cgicc/HTTPRedirectHeader.h"
 
 #include "controller.h"
 #include "styles.h"
@@ -25,11 +26,20 @@
 using namespace std;
 using namespace cgicc;
 
-#define z string
+int z;
 
+bool evaluate(const Cgicc& cgi);
+void userID(string ui);
+
+//show all the information relating to the user if they are logged in
+//i.e personal information, events they have organized,
+//      volunteer positions they have held, etc.
+//Redirects to the login page if verification fails
 void printform(const Cgicc& cgi, Controller& c) {
    if (evaluate(cgi)) {
        vector<string> userinfo = c.showUserInfo(z);
+       vector<int> eventinfo = c.showOrganizedEvents(z);
+       vector<int> posinfo = c.showEventsWorked(z);
        cout   << "<table>\n"
               << "<tr><th>User E-Mail</th>\n"
               << "<td>" << userinfo[0] << "</td></tr>\n"
@@ -39,7 +49,7 @@ void printform(const Cgicc& cgi, Controller& c) {
               << "<td>N/A</td></tr>\n"
               << "</table>\n";
        
-       cout   << "<hr>\n""<form action=\"helpers-help.me/createEvent.cgi\">\n"
+       cout   << "<hr>\n <form action=\"helpers-help.me/createEvent.cgi\">\n"
               << "<form action=\"helpers-help.me/createEvent.cgi\">\n"
               << "<input type=\"submit\" value=\"Create Event\"/>\n"
               << " </form>\n";
@@ -51,33 +61,48 @@ void printform(const Cgicc& cgi, Controller& c) {
        cout   << "<!-- Will recieve events/positions related to user one at a time, in vector of strings\n"
               << "i.e. a vector with event/position title, desc., etc as string val in vector-->\n"
               << " <p><h3>Events 'User' created</h3></p>\n"
-              << " <dl>\n"
-              << "<dt>Event1</dt>\n"
-              << "<dd>Event1 desc, date, times, loc</dd>\n"
-              << "<dt>Event2</dt>\n"
-              << "<dd>Event2 desc, date, times, loc</dd>\n"
-              << "</dl>\n"
-              << "<p><h3>Previous Positions</h3></p>\n"
-              << "<dl>\n"
-              << "<dt>Position1</dt>\n"
-              << "<dd>Event date, time worked, loc</dd>\n"
-              << "</dl>" << endl;
+              << " <dl>\n";
+       int x;
+    //***********IMPORTANT: go into controller later and verify the
+    //positions of the information AND function names.
+       for( x = 0; x < eventinfo.size(); ++x){
+           vector<vector<string> > einfo = c.showEvent(eventinfo[x]);
+           cout   << "<dt><a href=\"\">" << einfo[x][0] << " in " << einfo[x][1] << "</a></dt>\n"
+                  << "<dd>1a" << einfo[x][2] << "</dd>\n";
+       }
+       cout  << "</dl>\n";
+       cout << "<p><h3>Previous Positions</h3></p>\n"
+            << "<dl>\n";
+       for( x = 0; x < posinfo.size(); ++x){
+           vector<string> pinfo = c.showEventPositions(posinfo[x]);
+           cout << "<dt>Position: " << pinfo[x][0] // << " in event " 
+//                <<  pinfo[x][1] << " " << "</dt>\n"
+//                << "<dd>" <<  pinfo[x][2] << " from "
+//                << pinfo[x][3] << " to " << pinfo[x][4] 
+                << "</dd>\n";
+       }
+       cout   << "</dl>" << endl;
    } else {
-//         cout << httpredirectheader(string("helpers-help.me/login.cgi") << endl;
-         cout << httpredirectheader(string("helpers-help.me/view/lulu/login.cgi") << endl;
-//         cout << httpredirectheader(string("helpers-help.me/view/isarmien/login.cgi") << endl;
-//         cout << httpredirectheader(string("helpers-help.me/view/jtoledo/login.cgi") << endl;
+//         cout << HTTPRedirectHeader("helpers-help.me/login.cgi")) << endl;
+         cout << HTTPRedirectHeader("helpers-help.me/view/lulu/login.cgi") << endl;
+//         cout << HTTPRedirectHeader("helpers-help.me/view/isarmien/login.cgi")) << endl;
+//         cout << HTTPRedirectHeader("helpers-help.me/view/jtoledo/login.cgi")) << endl;
    }
 }
 
+/*
+ * Determines whether the person accessing
+ * the page is signed in
+ * */
 bool evaluate(const Cgicc& cgi) {
    const CgiEnvironment& env = cgi.getEnvironment();
 
    if(!env.getCookieList().empty()) {
-       const_cookie_iterator it = env.getCookieList();
-       for (it = env.getCookieList().begin(); it != env.getCookieList().end(); ++it) {
+       const_cookie_iterator it;
+       for (it = env.getCookieList().begin();
+            it != env.getCookieList().end(); ++it) {
            if(it->getName() == "Authenticated") {
-               if(it->getValue().find("true") {
+               if(it->getValue().find("true")) {
                   userID(it->getValue());
                   return true;
                }
@@ -88,11 +113,16 @@ bool evaluate(const Cgicc& cgi) {
    return false;
 }
 
+/*
+ * finds and sets the userId to 
+ * a global variable
+ * */
 void userID(string ui) {
-        int z = ui.find(";");
-        ui = ui.substr(z);
-        z = ui.find(";");
-        ui = ui.substr(0, z);
+    int x = ui.find(";");
+    ui = ui.substr(x);
+    x = ui.find(";");
+    ui = ui.substr(0, x);
+    z = stoi(ui);
 }
 
 int main(int /*argc*/, char** /**/) {
@@ -125,7 +155,7 @@ int main(int /*argc*/, char** /**/) {
                        break;\
                    case (8):\
                        prefix = '- - - ';\
-                       break;\
+                      break;\
                    case (10):\
                        prefix = '- - - - - ';\
                        break;\
@@ -202,7 +232,6 @@ int main(int /*argc*/, char** /**/) {
        cout << " </nav>" << endl;
        cout << "</div>" << endl;
      
- 
        //Footer
        cout << "<div class=\"wrapper row4\">"<< endl;
        cout << "<footer id=\"footer\" class=\"clear\">" <<  endl;
@@ -213,7 +242,7 @@ int main(int /*argc*/, char** /**/) {
        cout << body() << endl;
        return EXIT_SUCCESS;
    } catch(exception& e) {
-      cout << "<pre>" << e.what << "</pre>";
+      cout << "<pre>" << e.what() << "</pre>";
       return EXIT_SUCCESS;
    }
 }

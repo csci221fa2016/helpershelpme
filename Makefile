@@ -49,31 +49,31 @@ eventposition: eventposition.o sqlite3.o user.o event.o main.o
 	g++ -ldl -pthread -lsqlite3 -o eventposition eventposition.o sqlite3.o main.o user.o event.o
 
 eventposition.o: user.h event.h eventposition.h sqlite3.h eventposition.cpp
-	$(CXX) -c eventposition.cpp
+	$(CXX) -std=c++11 -c eventposition.cpp
 
 home.cgi: home.o controller.o user.o event.o eventposition.o sqlite3.o
 	g++ -ldl -lpthread -lsqlite3 -lcgicc -o home.cgi home.o controller.o user.o event.o eventposition.o sqlite3.o
 
 home.o: home.cpp controller.h styles.h
-	$(CXX) -c home.cpp
+	$(CXX) -std=c++11 -c home.cpp
 
 login.cgi: login.o controller.o user.o event.o sqlite3.o eventposition.o
 	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o login.cgi login.o controller.o user.o event.o eventposition.o sqlite3.o
 
 login.o: login.cpp controller.h styles.h
-	$(CXX) -c login.cpp
+	$(CXX) -std=c++11 -c login.cpp
 
 userprofile.cgi: userprofile.o controller.o user.o event.o eventposition.o sqlite3.o
 	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o userprofile.cgi userprofile.o user.o event.o eventposition.o sqlite3.o
 
 userprofile.o: userprofile.cpp controller.h userprofile.cpp
-	$(CXX) -c userprofile.cpp
+	$(CXX) -std=c++11 -c userprofile.cpp
 
 eventpage.cgi: eventpage.o controller.o user.o event.o eventposition.o
 	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o eventpage.cgi eventpage.o controller.o user.o event.o eventposition.o sqlite3.o
 
 eventpage.o: eventpage.cpp styles.h controller.h
-	$(CXX) -c eventpage.cpp
+	$(CXX) -std=c++11 -c eventpage.cpp
 
 sqlite3.o: sqlite3.h sqlite3.c
 	gcc -c sqlite3.c
