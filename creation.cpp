@@ -177,7 +177,7 @@ int Creation::createEvent(string _name, string _description, string _start, stri
 
 	//Get eventid to return to controller.
 
-	sql = "select eventid from events where name = ?";
+	sql = "select eventid from events where name = ? AND description = ? AND userid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
@@ -186,6 +186,16 @@ int Creation::createEvent(string _name, string _description, string _start, stri
 	retval = sqlite3_bind_text(s, 0, _name.c_str(), _name.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
+		return -1;
+	}
+	retval = sqlite3_bind_text(s, 1, _description.c_str(), _description.size(), SQLITE_STATIC);
+	if (retval != SQLITE_OK) {
+		cout << "Error is binding SQL statement " << sql;
+		return -1;
+	}
+	retval = sqlite3_bind_int(s, 2, userid);
+	if (retval != SQLITE_OK) {
+		cout << "Error is binding SQL statment " << sql;
 		return -1;
 	}
 	while (sqlite3_step(s) == SQLITE_ROW) {
