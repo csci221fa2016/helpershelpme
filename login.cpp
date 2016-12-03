@@ -6,13 +6,19 @@
 #include "cgicc/Cgicc.h"
 #include "cgicc/HTTPHTMLHeader.h"
 #include "cgicc/HTMLClasses.h"
-#include <cgicc/HTTPRedirectHeader.h>
+#include "cgicc/HTTPRedirectHeader.h"
+#include "cgicc/HTTPCookie.h"
 
 #include "styles.h"
-//#include "controller.h"
+#include "controller.h"
 
 using namespace std;
 using namespace cgicc;
+
+string Z;
+
+bool evaluate(const Cgicc& cgi);
+string find();
 
 void printForm(const Cgicc& cgi)
 {
@@ -39,26 +45,32 @@ void printForm(const Cgicc& cgi)
             << "</p></div></form>" << endl;
    }
    else{
-        string to = it->getValue();
-        int x = to.find(";");
-        to = to.substr(x);
-        x = to.find(";");
-        to = to.substr(0, x);
-//         cout << httpredirectheader(string("helpers-help.me/userprofile.cgi?id=").append(to)) << endl;
-         cout << httpredirectheader(string("helpers-help.me/view/lulu/userprofile.cgi?id=").append(to)) << endl;
-//         cout << httpredirectheader(string("helpers-help.me/view/isarmien/userprofile.cgi?id=").append(to)) << endl;
-//         cout << httpredirectheader(string("helpers-help.me/view/jtoledo/userprofile.cgi?id=").append(to)) << endl;
+//         cout << HTTPRedirectHeader(string("helpers-help.me/userprofile.cgi?id=").append(a)) << endl;
+         string l = find();
+         cout << HTTPRedirectHeader(string("helpers-help.me/view/lulu/userprofile.cgi?id=").append(Z)) << endl;
+//         cout << HTTPRedirectHeader(string("helpers-help.me/view/isarmien/userprofile.cgi?id=").append(a)) << endl;
+//         cout << HTTPRedirectHeader(string("helpers-help.me/view/jaledo/userprofile.cgi?id=").append(a)) << endl;
    }
+}
+
+string find() {
+   int x = Z.find(";");
+   Z = Z.substr(x);
+   x = Z.find(";");
+   Z = Z.substr(0, x);
+   return Z;
 }
 
 bool evaluate(const Cgicc& cgi) {
    const CgiEnvironment& env = cgi.getEnvironment();
 
    if(!env.getCookieList().empty()) {
-       const_cookie_iterator it = env.getCookieList();
+       const_cookie_iterator it;
        for (it = env.getCookieList().begin(); it != env.getCookieList().end(); ++it) {
            if(it->getName() == "Authenticated") {
-               if(it->getValue().find("true") {
+               if(it->getValue().find("true")) {
+                  Z = it->getValue();
+                  find();
                   return true;
                }
                break;
@@ -85,7 +97,7 @@ int main(int argc, char **argv) {
       const_form_iterator pw = cgi.getElement("password");
       if(pw != (*cgi).end() && !pw->isEmpty())
          loginfo.push_back((*pw).getStrippedValue());
-      vector<string> success = control.signIn(&loginfo);
+      vector<string> success = control.signIn(loginfo);
       if(success[0] == "true") {
          string val;
          val.append(success[0]).append(";").append(success[0]);
