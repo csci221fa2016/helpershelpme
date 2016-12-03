@@ -37,6 +37,7 @@ class Controller {
 		void showEventDate(int id);
 		void checkUserAccess();
 		
+		vector<string> showEventPositions(int id);
 
 };
 
