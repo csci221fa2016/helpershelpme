@@ -36,7 +36,7 @@ void userID(string ui);
 //      volunteer positions they have held, etc.
 //Redirects to the login page if verification fails
 void printform(const Cgicc& cgi, Controller& c) {
-   if (evaluate(cgi)) {
+//   if (evaluate(cgi)) {
        vector<string> userinfo = c.showUserInfo(z);
        vector<int> eventinfo = c.showOrganizedEvents(z);
        vector<int> posinfo = c.showEventsWorked(z);
@@ -76,8 +76,9 @@ void printform(const Cgicc& cgi, Controller& c) {
        for( x = 0; x < posinfo.size(); ++x){
 //          do Position name, event name, hours worked
            vector<string> pinfo = c.showEventPositions(posinfo[x]);
-           cout << "<dt>Position: " << pinfo[x][0] // << " in event " 
+           cout << "<dt>Position: " << pinfo[x][0] 
                 << " " << "</dt>\n"
+                //<< " in event " 
 //                << "<dd>Hours Worked: " <<  pinfo[x][2]
 //                << "</dd>\n";
        }
@@ -87,7 +88,7 @@ void printform(const Cgicc& cgi, Controller& c) {
          cout << HTTPRedirectHeader("helpers-help.me/view/lulu/login.cgi") << endl;
 //         cout << HTTPRedirectHeader("helpers-help.me/view/isarmien/login.cgi")) << endl;
 //         cout << HTTPRedirectHeader("helpers-help.me/view/jtoledo/login.cgi")) << endl;
-   }
+//   }
 }
 
 /*

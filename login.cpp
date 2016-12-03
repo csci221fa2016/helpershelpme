@@ -100,11 +100,11 @@ int main(int argc, char **argv) {
       vector<string> success = control.signIn(loginfo);
       if(success[0] == "true") {
          string val;
-         val.append(success[0]).append(";").append(success[0]);
+         val.append(success[0]).append(";").append(success[1]);
          c.setValue(val);
          cout << p().set("align", "center") << "Sign In Successful!" << p() << endl;
 //         cout << HTTPRedirectHeader(string("helpers-help.me/userprofile.cgi?id=").append(success[1])) << endl;
-         cout << HTTPRedirectHeader(string("helpers-help.me/view/lulu/userprofile.cgi?id=").append(success[1])) << endl;
+         cout << HTTPRedirectHeader("helpers-help.me/view/lulu/userprofile.cgi") << endl;
 //         cout << HTTPRedirectHeader(string("helpers-help.me/view/isarmien/userprofile.cgi?id=").append(success[1])) << endl;
 //         cout << HTTPRedirectHeader(string("helpers-help.me/view/jtoledo/userprofile.cgi?id=").append(success[1])) << endl;
       } else {
