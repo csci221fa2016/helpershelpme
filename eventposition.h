@@ -16,12 +16,13 @@ class EventPosition
 		sqlite3 *db;
 			
 	public:
-		EventPosition(int _eposid, int _eventid, int _userid, int _posid);
+		EventPosition(int _eventid, int _userid, int _posid);
 		User* getVolunteer();
 		Event* getEvent();
 		string getDescription();
 		time_t getStartTime();
 		time_t getEndTime();
+		int getPosId();
 		void setDescription(string _description);
 		void setVolunteer(int _userId);
 		void setPosType(int _posid);

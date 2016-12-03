@@ -7,8 +7,7 @@
 #include <iostream>
 using namespace std;
 
-EventPosition::EventPosition(int _eposid, int _eventid, int _userid, int _posid) {
-	eposid = _eposid;
+EventPosition::EventPosition(int _eventid, int _userid, int _posid) {
 	posid = _posid;
 	eventid = _eventid;
 	userId = _userid;
@@ -30,7 +29,8 @@ EventPosition::EventPosition(int _eposid, int _eventid, int _userid, int _posid)
     // make sure this event exists in db
     bool exists = false;
 	sqlite3_stmt *s;
-	const char *sql = "select * from eventpositions where eposid = ?";
+	const char *sql = 
+	sql = "select * from eventpositions where eposid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
     if(retval != SQLITE_OK) {
         cout << "Error in SQL statement " << sql;
@@ -122,14 +122,14 @@ time_t EventPosition::getStartTime(){
 	const char *sql = "select start from events where id = " + (char)eventid;
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	while(sqlite3_step(s)==SQLITE_ROW) {
-		time_t = (time_t)sqlite3_column_int(s, 0);
+		start = (time_t)sqlite3_column_int(s, 0);
 	}
 	return start;
 }
 
 time_t EventPosition::getEndTime(){
 	sqlite3_stmt *s;
-	string end;
+	time_t end;
 	const char *sql = "select start from events where id = " + (char)eventid;
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	while(sqlite3_step(s)==SQLITE_ROW) {
