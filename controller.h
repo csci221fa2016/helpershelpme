@@ -19,12 +19,12 @@ class Controller {
 		vector<string> showUserInfo(int id);
 		vector<vector<string> > showEventInfo(int id);
 		void updateProfile(vector<string> v, int id);
-		void updateEvent(vector<<string> > v, int id, int userId);
+		void updateEvent(vector<vector<string> > v, int id, int userId);
 		vector<string> signIn(vector<string> v);
 		void addVolunteer(vector<string> v, int eventId, int userId, int posId);
 
 		// This show stats of a user, including hours worked
-		void showStats(int id);
+		double showStats(int id);
 		vector<int> showAllUpcoming();
 		vector<string> showEvent(int id);
 
