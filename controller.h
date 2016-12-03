@@ -19,7 +19,7 @@ class Controller {
 		vector<string> showUserInfo(int id);
 		vector<vector<string> > showEventInfo(int id);
 		void updateProfile(vector<string> v, int id);
-		void updateEvent(vector<string> v, int id, int userId);
+		void updateEvent(vector<<string> > v, int id, int userId);
 		vector<string> signIn(vector<string> v);
 		void addVolunteer(vector<string> v, int eventId, int userId, int posId);
 
