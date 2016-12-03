@@ -52,7 +52,12 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		Creation* c = new Creation();
 
 		// This is the start time that the view is passing to us
-		char date[] = v[0][2];
+		string s = v[0][2];
+		char * date = new char[s.size()+1]; //mutable string
+		strcpy(date, s.c_str());
+
+		// char date[] = v[0][2];
+		
 		tm *stm;
 
 		char* start_pch;
@@ -68,8 +73,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		mktime (stm);
 
 		// This is the end time that the view is passing to us
-		char* date1 = new char[(v[0][3]).length()];
-		 date1 = v[0][3];
+		char date1[] = v[0][3];
 		tm *etm;
 
 		char* end_pch;
