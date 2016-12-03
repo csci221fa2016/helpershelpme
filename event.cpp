@@ -16,7 +16,7 @@ Event::Event(int _eventid) : eventid(_eventid) {
 		cout << "Cannot open test.db: " << sqlite3_errcode(db) << endl;
 		return;
 	}
-	retval = sqlite3_exec(db, "create table if not exists events (eventid integer primary key, name text, description text, start text, end text, organizer integer, location text);", NULL, NULL, &errmsg);
+	retval = sqlite3_exec(db, "create table if not exists events (eventid integer primary key, name text primary key, description text, start text, end text, organizer integer, location text);", NULL, NULL, &errmsg);
 	if(retval != SQLITE_OK)
 	{
 		cout << "Error in previous command: " << errmsg << endl;
