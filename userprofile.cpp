@@ -74,12 +74,12 @@ void printform(const Cgicc& cgi, Controller& c) {
        cout << "<p><h3>Previous Positions</h3></p>\n"
             << "<dl>\n";
        for( x = 0; x < posinfo.size(); ++x){
+//          do Position name, event name, hours worked
            vector<string> pinfo = c.showEventPositions(posinfo[x]);
            cout << "<dt>Position: " << pinfo[x][0] // << " in event " 
-//                <<  pinfo[x][1] << " " << "</dt>\n"
-//                << "<dd>" <<  pinfo[x][2] << " from "
-//                << pinfo[x][3] << " to " << pinfo[x][4] 
-                << "</dd>\n";
+                << " " << "</dt>\n"
+//                << "<dd>Hours Worked: " <<  pinfo[x][2]
+//                << "</dd>\n";
        }
        cout   << "</dl>" << endl;
    } else {
@@ -116,6 +116,7 @@ bool evaluate(const Cgicc& cgi) {
 /*
  * finds and sets the userId to 
  * a global variable
+ * @author: Luisa Molina
  * */
 void userID(string ui) {
     int x = ui.find(";");

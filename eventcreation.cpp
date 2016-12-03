@@ -68,7 +68,7 @@ printForm(const Cgicc& cgi)
 	{
 //	cout << HTTPRedirectHeader(string("helpers-help.me/userprofile.cgi?id=").append(success[1])) << endl;
 //	cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/lulu/userprofile.cgi?id=" << namedCookie << "\">" << endl;
-	cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/isarmien/userprofile.cgi?id=" << namedCookie << "\">" << endl;
+	cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/isarmien/userprofile.cgi\">" << endl;
 //	cout << "<meta http-equiv=\"refresh\" content=\"0; helpers-help.me/view/jtoledo/userprofile.cgi?id=" << namedCookie << "\">" << endl;
 	}
 	break;
