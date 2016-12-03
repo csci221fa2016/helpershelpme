@@ -108,6 +108,7 @@ vector<string> Controller::showUserInfo(int id) {
 	User* u = new User(id);
 	v.push_back(u->getName());
 	v.push_back(u->getPhoneNumber());
+	v.push_back(id);
 	return v;
 }
 
@@ -140,6 +141,7 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 	a[0].push_back(ctime (&end_rawdate));
 	a[0].push_back(e->getDescription());
 	a[0].push_back(e->getLocation());
+	a[0].push_back(id);
 	for (int i = 0; i < ep_arr.size(); ++i ) {
 		a[i+1].push_back(ep_arr[i]->getVolunteer()->getName());
 		a[i+1].push_back(ep_arr[i]->getDescription());
@@ -152,6 +154,7 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 
 		a[i+1].push_back(ctime (&start_rawtime));
 		a[i+1].push_back(ctime (&end_rawtime));
+		a[i+1].push_back(ep_arr[i]->getPosId());
 	}
 
 	return a;
@@ -334,6 +337,7 @@ vector<string> Controller::showEvent(int id) {
 	time (&start_rawdate);
 	a.push_back(ctime (&start_rawdate));
 	a.push_back(event->getLocation());
+	a.push_back(event->getId());
 	return a;
 }
 
