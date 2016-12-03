@@ -26,6 +26,7 @@ class EventPosition
 		void setVolunteer(int _userId);
 		void setPosType(int _posid);
 		void setStartTime(string _start);
+		int getPoisId();
 		void setEndTime(string _end);
 };
 
