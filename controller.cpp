@@ -297,11 +297,11 @@ vector<string> Controller::showEvent(int id) {
 	Event* event = new Event(id);
 	vector<string> a;
 	time_t start_rawdate;
-	a[0].push_back(event->getName());
+	a.push_back(event->getName());
 	start_rawdate = event->getStartDate();
 	time (&start_rawdate);
-	a[1].push_back(ctime (&start_rawdate));
-	a[2].push_back(event->getLocation());
+	a.push_back(ctime (&start_rawdate));
+	a.push_back(event->getLocation());
 	return a;
 }
 
