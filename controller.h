@@ -25,6 +25,8 @@ class Controller {
 		void showStats(int id);
 		vector<vector<string> > showAllUpcoming(string currentDate);
 		void showEvent(int id);
+		vector<int> showOrganizedEvents(int id);
+		vector<int> showEventsWorked(int id);
 		void showEventTitle(int id);
 		void showEventDate(int id);
 		void checkUserAccess();
