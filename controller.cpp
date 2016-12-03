@@ -43,7 +43,7 @@ int Controller::sendUser(vector<string> v, int id) {
 	}
 }
 
-int Controller::sendEvent(vector<vector<string> > v, int userId) {
+int Controller::sendEvent(vector<vector<string> > v, vector<int> openings, int userId) {
 	if (userId == -1) {
 		// runtime error. no one is making an event.
 		throw runtime_error("No active user is making the event.");
@@ -89,13 +89,11 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		mktime (etm);
 
 
-		// third and fourth thing passed in here should be time_t's now
+		//need to set start time end time 0 -name, 1 -description, 2- start, 3-end		
 		int eventId = c->createEvent(v[0][0], v[0][1], stm, etm, userId, v[0][4]);
-		c->createEventPosition(eventId, 1, v[1][0]
-		// Think this is not needed anymore???
-		/*for(int i = 0; i < (v.size()-1); ++i){
-		//	c->createEventPosition
-		}*/
+		for(int i = 0; i <openings.size(); ++i){ 
+			c->createEventPosition(eventId, i+1,  v[i+1][0], v[i+1][1], openings[i]);
+		}
 	}
 }
 
@@ -167,7 +165,7 @@ void Controller::updateProfile(vector<string> v, int id) {
 	}
 }
 
-void Controller::updateEvent(vector<string> v, int id,int userId){
+void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 	Event* e = new Event(id);
 
 	if (userId != (e->getOrganizer()->getUserId())) {
@@ -211,10 +209,10 @@ void Controller::updateEvent(vector<string> v, int id,int userId){
 
 
 		// third and fourth thing passed in here should be time_t's now
-		e->setName(v[0]);
+		e->setName(v[0][0]);
 		//convert v[1], v[2] to times
-		e->setDescription(v[3]);
-		e->setLocation(v[4]);
+		e->setDescription(v[0][3]);
+		e->setLocation(v[0][4]);
 
 		// Think this is not needed anymore???
 		/*for(int i = 0; i < (v.size()-1); ++i){
