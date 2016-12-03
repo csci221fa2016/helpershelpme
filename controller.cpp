@@ -226,7 +226,12 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 		//convert v[1], v[2] to times
 		e->setDescription(v[0][3]);
 		e->setLocation(v[0][4]);
-
+		for(int i = 1, i<v.size();++i){
+			EventPosition* ep = new EventPosition(id, userId, i);
+			ep->setName(v[i][0]);
+			ep->setDescription(v[i][1]);
+			//set openings?
+		}
 		// Think this is not needed anymore???
 		/*for(int i = 0; i < (v.size()-1); ++i){
 		//	c->createEventPosition
