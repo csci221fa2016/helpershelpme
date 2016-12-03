@@ -21,7 +21,7 @@ class Controller {
 		void updateProfile(vector<string> v, int id);
 		void updateEvent(vector<vector<string> > v, int id, int userId);
 		vector<string> signIn(vector<string> v);
-		void addVolunteer(vector<string> v, int eventId, int userId, int posId);
+		void addVolunteer(int eventId, int userId, int posId);
 
 		// This show stats of a user, including hours worked
 		double showStats(int id);

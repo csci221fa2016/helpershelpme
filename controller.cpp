@@ -99,6 +99,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		int eventId = c->createEvent(v[0][0], v[0][1], stm, etm, userId, v[0][4]);
 		for(int i = 1; i <v.size(); ++i){ 
 			c->createEventPosition(eventId, i,  v[i][0], v[i][1], v[i][2]);
+
 		}
 	}
 }
@@ -108,7 +109,6 @@ vector<string> Controller::showUserInfo(int id) {
 	User* u = new User(id);
 	v.push_back(u->getName());
 	v.push_back(u->getPhoneNumber());
-	v.push_back(id);
 	return v;
 }
 
@@ -129,6 +129,7 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 	time_t start_rawdate = e->getStartDate();
 	time (&start_rawdate);
 
+
 	time_t end_rawdate = e->getEndDate();
 	time (&end_rawdate);
 
@@ -141,7 +142,12 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 	a[0].push_back(ctime (&end_rawdate));
 	a[0].push_back(e->getDescription());
 	a[0].push_back(e->getLocation());
-	a[0].push_back(id);
+	string Result;
+        ostringstream Convert;
+       	Convert << id;
+        Result = Convert.str();
+	a[0].push_back(Result);
+
 	for (int i = 0; i < ep_arr.size(); ++i ) {
 		a[i+1].push_back(ep_arr[i]->getVolunteer()->getName());
 		a[i+1].push_back(ep_arr[i]->getDescription());
@@ -154,7 +160,11 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 
 		a[i+1].push_back(ctime (&start_rawtime));
 		a[i+1].push_back(ctime (&end_rawtime));
-		a[i+1].push_back(ep_arr[i]->getPosId());
+		string Result;
+                ostringstream Convert;
+                Convert << (ep_arr[i]->getPosId());
+                Result = Convert.str();
+		a[i+1].push_back(Result);
 	}
 
 	return a;
@@ -182,8 +192,6 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 		// runtime error. no one is making an event.
 		throw runtime_error("Only organizer can edit this event.");
 	}else {
-
-		Creation* c = new Creation();
 
 		// This is the start time that the view is passing to us
 		string s = v[0][2];
@@ -245,16 +253,13 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 }
 
 vector<string> Controller::signIn(vector<string> v) {
-	//  hash<string> pw_hash;
-	//  const size_t dbPass = pw_hash(v[1]);
+	hash<string> pw_hash;
+	const size_t dbPass = pw_hash(v[1]);
 	//send to database to verify
-	//if(whatanot) return true; else return false;
-	//Hash only given to database to check
-	Creation* c = new Creation();
-	size_t dbpass = c->logIn(v[0]);
 	tr1::hash<string> str_hash;
 	vector<string> ret;
-	if(str_hash(v[1]) == dbpass){
+	Creation* c = new Creation();
+	if(str_hash(v[1]) == dbPass){
 		int uId = c->searchUser(v[0]);
 		ret.push_back("true");
 		string Result;
@@ -273,16 +278,14 @@ vector<string> Controller::signIn(vector<string> v) {
 	return ret;
 }
 
-void Controller::addVolunteer(vector<string> v, int eventId, int userId, int eposId) {
+void Controller::addVolunteer(int eventId, int userId, int posId) {
 	// add Volunteer to event
 	Creation* c = new Creation();
 	if(c->findUser(userId) && c->findEvent(eventId)){
-		User* u = new User(userId);
-		Event* e = new Event(eventId);
-
+		EventPosition* ep = new EventPosition(eventId, userId, posId);
 		// Does this add a user to an event or adds an event position to a event?
 	}else{
-
+		throw runtime_error("User/Event is invalid");
 	}
 
 }
@@ -337,7 +340,6 @@ vector<string> Controller::showEvent(int id) {
 	time (&start_rawdate);
 	a.push_back(ctime (&start_rawdate));
 	a.push_back(event->getLocation());
-	a.push_back(event->getId());
 	return a;
 }
 
@@ -363,6 +365,7 @@ vector<int> Controller::showEventsWorked(int id){
 }
 
 vector<string> Controller::showEventPositions(int id){
-
+	vector<string> c;
+	return c;
 }
 
