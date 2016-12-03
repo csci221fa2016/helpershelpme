@@ -68,11 +68,12 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		mktime (stm);
 
 		// This is the end time that the view is passing to us
-		char date[] = v[0][3];
+		char* date1 = new char[(v[0][3]).length()];
+		 date1 = v[0][3];
 		tm *etm;
 
 		char* end_pch;
-		end_pch = strtok(date, " ,.-:");
+		end_pch = strtok(date1, " ,.-:");
 		etm->tm_year = atoi(end_pch); //get the year value
 		etm->tm_mon = atoi(strtok(NULL, " ,.-:"));  //get the month value
 		etm->tm_mday = atoi(strtok(NULL, " ,.-:")); //get the day value
@@ -85,8 +86,8 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 
 
 		// third and fourth thing passed in here should be time_t's now
-		c->createEvent(v[0][0], v[0][1], stm, etm, userId, v[0][4]);
-
+		int eventId = c->createEvent(v[0][0], v[0][1], stm, etm, userId, v[0][4]);
+		c->createEventPosition(eventId, 1, v[1][0]
 		// Think this is not needed anymore???
 		/*for(int i = 0; i < (v.size()-1); ++i){
 		//	c->createEventPosition
@@ -189,11 +190,11 @@ void Controller::updateEvent(vector<string> v, int id,int userId){
 		mktime (stm);
 
 		// This is the end time that the view is passing to us
-		char date[] = v[0][3];
+		char date1[] = v[0][3];
 		tm *etm;
 
 		char* end_pch;
-		end_pch = strtok(date, " ,.-:");
+		end_pch = strtok(date1, " ,.-:");
 		etm->tm_year = atoi(end_pch); //get the year value
 		etm->tm_mon = atoi(strtok(NULL, " ,.-:"));  //get the month value
 		etm->tm_mday = atoi(strtok(NULL, " ,.-:")); //get the day value
@@ -310,4 +311,14 @@ vector<string> Controller::showEvent(int id) {
 	return a;
 }
 
+vector<int> Controller::showOrganizedEvents(int id){
 
+}
+
+vector<int> Controller::showEventsWorked(int id){
+
+}
+
+vector<string> Controller::showEventPositions(int id){
+
+}

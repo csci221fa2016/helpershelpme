@@ -15,7 +15,7 @@ class Controller {
 
 		Controller();
 		int sendUser(vector<string> v, int id);
-		int sendEvent(vector<string> v, int userId);
+		int sendEvent(vector<vector<string> > v, int userId);
 		vector<string> showUserInfo(int id);
 		vector<vector<string> > showEventInfo(int id);
 		void updateProfile(vector<string> v, int id);
