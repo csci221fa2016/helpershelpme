@@ -1,7 +1,12 @@
 #include <string>
+#include <iostream>
+#include <sstream>
+#include "string.h"
 #include "event.h"
 #include "user.h"
+#include "sqlite3.h"
 #include "eventposition.h"
+using namespace std;
 
 Event::Event(int _eventid) : eventid(_eventid) {
 	char *errmsg;
@@ -11,8 +16,14 @@ Event::Event(int _eventid) : eventid(_eventid) {
 		cout << "Cannot open test.db: " << sqlite3_errcode(db) << endl;
 		return;
 	}
-	retval = sqlite3_exec(db, "create table if not exists event (eventid integer primary key, 
-name text, description text, start text, end text, organizer integer, location text);", NULL, NULL, &errmsg);
+	retval = sqlite3_exec(db, "create table if not exists events (eventid integer primary key, name text, description text, start text, end text, organizer integer, location text);", NULL, NULL, &errmsg);
+	if(retval != SQLITE_OK)
+	{
+		cout << "Error in previous command: " << errmsg << endl;
+		sqlite3_free(errmsg);
+	}
+
+	retval = sqlite3_exec(db, "create table if not exists vacancies (eventid integer, posid integer, name text, desc text, openings int);", NULL, NULL, &errmsg);
 	if(retval != SQLITE_OK)
 	{
 		cout << "Error in previous command: " << errmsg << endl;
@@ -22,7 +33,7 @@ name text, description text, start text, end text, organizer integer, location t
 	//make sure that event exists in db
 	bool exists = false;
 	sqlite3_stmt *s;
-	const char *sql = "select * from events where eventid = ?"'
+	const char *sql = "select * from events where eventid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if(retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
@@ -68,13 +79,13 @@ string Event::getName() {
 		cout << "Bad event id? " << eventid;
 	}
 	sqlite3_reset(s);
-	return desc;
+	return name;
 }
 
 string Event::getStartDate() {
 	sqlite3_stmt *s;
 	string start;
-	const char *sql = "select start from events where id = " + (char)eventid;
+	const char *sql = "select start from events where eventid = " + (char)eventid;
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	while(sqlite3_step(s)==SQLITE_ROW) {
 		start = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
@@ -85,10 +96,10 @@ string Event::getStartDate() {
 User* Event::getOrganizer() {
 	sqlite3_stmt *s;
 	int orgid;
-	const char *sql = "select organizer from events where id = " + (char)eventid;
+	const char *sql = "select organizer from events where eventid = " + (char)eventid;
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	while(sqlite3_step(s)==SQLITE_ROW) {
-		start = sqlite3_column_int(s, 0);
+			orgid = sqlite3_column_int(s, 0);
 	}
 	//TODO should prob check that is valid int somehow
     return new User(orgid);
@@ -97,7 +108,7 @@ User* Event::getOrganizer() {
 string Event::getEndDate() {
 	sqlite3_stmt *s;
 	string end;
-	const char *sql = "select end from events where id = " + (char)eventid;
+	const char *sql = "select end from events where eventid = " + (char)eventid;
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	while(sqlite3_step(s)==SQLITE_ROW) {
 		end = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
@@ -108,7 +119,7 @@ string Event::getEndDate() {
 string Event::getDescription() {
 	sqlite3_stmt *s;
 	string desc;
-	const char *sql = "select end from events where id = " + (char)eventid;
+	const char *sql = "select desc from events where eventid = " + (char)eventid;
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	while(sqlite3_step(s)==SQLITE_ROW) {
 		desc = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
@@ -119,7 +130,7 @@ string Event::getDescription() {
 string Event::getLocation() {
 	sqlite3_stmt *s;
 	string loc;
-	const char *sql = "select end from events where id = " + (char)eventid;
+	const char *sql = "select location from events where eventid = " + (char)eventid;
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	while(sqlite3_step(s)==SQLITE_ROW) {
 		loc = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
@@ -127,7 +138,27 @@ string Event::getLocation() {
 	return loc;
 }
 
-// UPDATE WITH SQLITE!!!!!!!!!
+//Returns information about vacancies as a vector of strings, one for each
+//posid in the event. Each string is delimited by semicolons in the format
+//name;desc;posid;openings
+//The last two will have to be converted back into ints later
+vector<string> Event::getVacancies(){
+	sqlite3_stmt *s;
+	vector<string> vacs;
+	const char *sql = "select name, desc, posid, openings from vacancies where eventid = " + (char)eventid;
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	while(sqlite3_step(s)==SQLITE_ROW) {
+		string newvac = "";
+		newvac = newvac + string(reinterpret_cast<const char*>(sqlite3_column_text(s,0)));
+		newvac = newvac + ";" + string(reinterpret_cast<const char*>(sqlite3_column_text(s,1)));
+		stringstream stm;
+		stm << ";" << sqlite3_column_int(s,2) << ";" << sqlite3_column_int(s,3);
+		newvac = newvac + stm.str();
+		vacs.push_back(newvac);
+	}
+	sqlite3_reset(s);
+	return vacs;
+}
 
 void Event::setName(string _name) {
 	sqlite3_stmt *s;
@@ -289,12 +320,12 @@ vector<EventPosition*> Event::getVolunteers() {
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if(retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return NULL; //is this right?
+		return volunteers; //is this right?
 	}
 	retval = sqlite3_bind_int(s, 1, eventid);
 	if(retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return NULL;
+		return volunteers;
 	}
 	while(sqlite3_step(s) == SQLITE_ROW) {
 		_eposid = sqlite3_column_int(s, 0);
