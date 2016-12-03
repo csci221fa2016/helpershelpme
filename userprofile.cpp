@@ -77,18 +77,18 @@ void printform(const Cgicc& cgi, Controller& c) {
 //          do Position name, event name, hours worked
            vector<string> pinfo = c.showEventPositions(posinfo[x]);
            cout << "<dt>Position: " << pinfo[x][0] 
-                << " " << "</dt>\n"
+                << " " << "</dt>\n";
                 //<< " in event " 
 //                << "<dd>Hours Worked: " <<  pinfo[x][2]
 //                << "</dd>\n";
        }
        cout   << "</dl>" << endl;
-   } else {
+/*   } else {
 //         cout << HTTPRedirectHeader("helpers-help.me/login.cgi")) << endl;
-         cout << HTTPRedirectHeader("helpers-help.me/view/lulu/login.cgi") << endl;
+         cout << "<meta http-equiv=\"refresh\" content=\"0; url=helpers-help.me/view/lulu/login.cpp\"" << endl;
 //         cout << HTTPRedirectHeader("helpers-help.me/view/isarmien/login.cgi")) << endl;
 //         cout << HTTPRedirectHeader("helpers-help.me/view/jtoledo/login.cgi")) << endl;
-//   }
+//   }*/
 }
 
 /*
