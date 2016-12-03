@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <ctime>
 #include "string.h"
 #include "event.h"
 #include "user.h"
@@ -16,7 +17,7 @@ Event::Event(int _eventid) : eventid(_eventid) {
 		cout << "Cannot open test.db: " << sqlite3_errcode(db) << endl;
 		return;
 	}
-	retval = sqlite3_exec(db, "create table if not exists events (eventid integer primary key, name text, description text, start text, end text, organizer integer, location text);", NULL, NULL, &errmsg);
+	retval = sqlite3_exec(db, "create table if not exists events (eventid integer primary key, name text, description text, start integer, end integer, organizer integer, location text);", NULL, NULL, &errmsg);
 	if(retval != SQLITE_OK)
 	{
 		cout << "Error in previous command: " << errmsg << endl;
@@ -82,13 +83,13 @@ string Event::getName() {
 	return name;
 }
 
-string Event::getStartDate() {
+time_t Event::getStartDate() {
 	sqlite3_stmt *s;
-	string start;
+	time_t start;
 	const char *sql = "select start from events where eventid = " + (char)eventid;
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	while(sqlite3_step(s)==SQLITE_ROW) {
-		start = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
+		start = (time_t)sqlite3_column_int(s, 0);
 	}
 	return start;
 }
@@ -105,13 +106,13 @@ User* Event::getOrganizer() {
     return new User(orgid);
 }
 
-string Event::getEndDate() {
+time_t Event::getEndDate() {
 	sqlite3_stmt *s;
-	string end;
+	time_t end;
 	const char *sql = "select end from events where eventid = " + (char)eventid;
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	while(sqlite3_step(s)==SQLITE_ROW) {
-		end = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
+		end = (time_t)sqlite3_column_int(s, 0);
 	}
 	return end;
 }
@@ -185,7 +186,7 @@ void Event::setName(string _name) {
 	sqlite3_reset(s);
 }
 
-void Event::setStartDate(string _date) {
+void Event::setStartDate(time_t _start) {
 	sqlite3_stmt *s;
 	const char *sql = "update events set start = ? where eventid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
@@ -198,7 +199,7 @@ void Event::setStartDate(string _date) {
         cout << "Error in binding SQL statement " << sql;
         return;
     }
-    retval = sqlite3_bind_text(s, 1, _date.c_str(), _date.size(), SQLITE_STATIC);
+    retval = sqlite3_bind_int(s, 1, (int)_start);
     if(retval != SQLITE_OK) {
         cout << "Error in binding SQL statement " << sql;
         return;
@@ -210,7 +211,7 @@ void Event::setStartDate(string _date) {
 	sqlite3_reset(s);
 }
 
-void Event::setEndDate(string _date) {
+void Event::setEndDate(time_t _end) {
 	sqlite3_stmt *s;
 	const char *sql = "update events set end = ? where eventid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
@@ -223,7 +224,7 @@ void Event::setEndDate(string _date) {
         cout << "Error in binding SQL statement " << sql;
         return;
     }
-    retval = sqlite3_bind_text(s, 1, _date.c_str(), _date.size(), SQLITE_STATIC);
+    retval = sqlite3_bind_int(s, 1, (int)_end);
     if(retval != SQLITE_OK) {
         cout << "Error in binding SQL statement " << sql;
         return;

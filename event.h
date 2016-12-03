@@ -1,6 +1,7 @@
 #ifndef EVENT
 #define EVENT
 #include <string>
+#include <ctime>
 #include "sqlite3.h"
 #include <vector>
 using namespace std;
@@ -16,15 +17,15 @@ class Event {
      public:
 	Event(int _eventid);
 	string getName();
-	string getStartDate();
-	string getEndDate();
+	time_t getStartDate();
+	time_t getEndDate();
 	User* getOrganizer();
 	vector<EventPosition*> getVolunteers();
 	string getDescription();
 	string getLocation();
 	vector<string> getVacancies();
-	void setStartDate(string _date);
-	void setEndDate(string _date);
+	void setStartDate(time_t _start);
+	void setEndDate(time_t _start);
 	void addVolunteer(vector<EventPosition*> _volunteer);
 	void setDescription(string _description);
 	void setLocation(string _location);
