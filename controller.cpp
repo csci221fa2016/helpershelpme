@@ -96,8 +96,8 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 
 		//need to set start time end time 0 -name, 1 -description, 2-openings		
 		int eventId = c->createEvent(v[0][0], v[0][1], stm, etm, userId, v[0][4]);
-		for(int i = 0; i <openings.size(); ++i){ 
-			c->createEventPosition(eventId, i+1,  v[i+1][0], v[i+1][1], v[i+1][2]);
+		for(int i = 1; i <v.size(); ++i){ 
+			c->createEventPosition(eventId, i,  v[i][0], v[i][1], v[i][2]);
 		}
 	}
 }
@@ -241,7 +241,7 @@ vector<string> Controller::signIn(vector<string> v) {
 	//if(whatanot) return true; else return false;
 	//Hash only given to database to check
 	Creation* c = new Creation();
-	size_t dbpass = c->login(v[0]);
+	size_t dbpass = c->logIn(v[0]);
 	tr1::hash<string> str_hash;
 	vector<string> ret;
 	if(str_hash(v[1]) == dbpass){
