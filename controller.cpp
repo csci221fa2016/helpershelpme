@@ -9,6 +9,10 @@
 #include <ctime>
 #include <string.h>
 #include <cstdlib>
+#include <iostream>
+#include <sstream>
+#include <locale>
+#include <iomanip>
 
 using namespace std;
 using tr1::hash;
@@ -131,7 +135,7 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 		a[i+1].push_back(ep_arr[i]->getVolunteer()->getName());
 		a[i+1].push_back(ep_arr[i]->getDescription());
 
-		time_t stat_rawtime = ep_arr[i]->getStartTime();
+		time_t start_rawtime = ep_arr[i]->getStartTime();
 		time (&start_rawtime);
 
 		time_t end_rawtime = ep_arr[i]->getEndTime();
@@ -227,7 +231,11 @@ vector<string> Controller::signIn(vector<string> v) {
 	if(str_hash(v[1]) == dbpass){
 		int uId = c->searchUser(v[0]);
 		ret.push_back("true");
-		ret.push_back(to_string(uId));
+		string Result;
+		ostringstream Convert;
+		Convert << uId;
+		Result = Convert.str();
+		ret.push_back(Result);
 		return ret;
 	}else{
 		ret.push_back("false");
@@ -245,10 +253,7 @@ void Controller::addVolunteer(vector<string> v, int eventId, int userId, int epo
 	if(c->findUser(userId) && c->findEvent(eventId)){
 		User* u = new User(userId);
 		Event* e = new Event(eventId);
-		EventPosition* ep = new EventPosition(eposId);
-		u->addEvent(e);
-		ep->setVolunteer(u);
-		e->addVolunteer(ep);
+		
 		// Does this add a user to an event or adds an event position to a event?
 	}else{
 
