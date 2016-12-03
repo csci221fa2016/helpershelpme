@@ -27,8 +27,8 @@ int Controller::sendUser(vector<string> v, int id) {
 		// 0 -name, 1 - phone#, 2-pass
 		if (!v[0].empty() && !v[1].empty() && !v[2].empty())
 		{
-			tr1::hash<string> str_hash;
-			int newUserId =  c->createUser(v[0], v[1], str_hash(v[2]));
+			// tr1::hash<string> str_hash;
+			int newUserId =  c->createUser(v[0], v[1], v[2]);
 			return newUserId;
 
 		}
@@ -167,8 +167,8 @@ void Controller::updateProfile(vector<string> v, int id) {
 	{
 		u->setName(v[0]);
 		u->setPhoneNumber(v[1]);
-		tr1::hash<string> str_hash;  
-		u->setPassword(str_hash(v[2]));
+		// tr1::hash<string> str_hash;  
+		u->setPassword(v[2]);
 	}
 	else {
 		throw runtime_error("Empty update.");
