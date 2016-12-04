@@ -26,7 +26,8 @@
 using namespace std;
 using namespace cgicc;
 
-int z;
+//remove value once I've got cookies down.
+int z = 1;
 
 bool evaluate(const Cgicc& cgi);
 void userID(string ui);
@@ -39,7 +40,7 @@ void printform(const Cgicc& cgi, Controller& c) {
 //   if (evaluate(cgi)) {
        vector<string> userinfo = c.showUserInfo(z);
         //wait to see what type of vector
-       vector<string> stats = c.showStats(z);
+       double stats = c.showStats(z);
        vector<int> eventinfo = c.showOrganizedEvents(z);
        vector<int> posinfo = c.showEventsWorked(z);
        cout   << "<table>\n"
@@ -48,7 +49,7 @@ void printform(const Cgicc& cgi, Controller& c) {
               << "<tr><th>Phone Number</th>\n"
               << "<td>" << userinfo[1] << "</td></tr>\n"
               << "<tr><th>Hours Volunteered</th>\n"
-              << "<td>" << stats[1] << "</td></tr>\n"
+              << "<td>" << stats << "</td></tr>\n"
               << "</table>\n";
        
        cout   << "<hr>\n <form action=\"helpers-help.me/createEvent.cgi\">\n"
@@ -57,17 +58,15 @@ void printform(const Cgicc& cgi, Controller& c) {
                
        cout   << "<!--<form name=\"delete event\">\n"
               << "<input type=\"submit\" value=\"Delete Event\"/>\n"
-              << "</form>-->\n";
-       
-       cout   << "<!-- Will recieve events/positions related to user one at a time, in vector of strings\n"
-              << "i.e. a vector with event/position title, desc., etc as string val in vector-->\n"
+              << "</form>-->\n"
               << " <p><h3>Events created</h3></p>\n"
               << " <dl>\n";
+
        int x;
     //***********IMPORTANT: go into controller later and verify the
     //positions of the information AND function names.
        for( x = 0; x < eventinfo.size(); ++x){
-           vector<vector<string> > einfo = c.showEvent(eventinfo[x]);
+           vector<string> einfo = c.showEvent(eventinfo[x]);
            cout   << "<dt><a href=\"\">" << einfo[x][0] << " in " << einfo[x][1] << "</a></dt>\n"
                   << "<dd>1a" << einfo[x][2] << "</dd>\n";
        }
@@ -79,9 +78,9 @@ void printform(const Cgicc& cgi, Controller& c) {
            vector<string> pinfo = c.showEventPositions(posinfo[x]);
            cout << "<dt>Position: " << pinfo[x][0] 
                 << " " << "</dt>\n";
-                //<< " in event " 
-//                << "<dd>Hours Worked: " <<  pinfo[x][2]
-//                << "</dd>\n";
+                /*<< " in event " 
+                << "<dd>Hours Worked: " <<  pinfo[x][2]
+                << "</dd>\n";*/
        }
        cout   << "</dl>" << endl;
 /*   } else {

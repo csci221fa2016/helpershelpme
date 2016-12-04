@@ -122,27 +122,31 @@ int main(int /*argc*/, char** /*argv*/) {
         //print out the everything related to the event
         // description, time, location, volunteer positions
         // add button to sign up for event
-        vector<vector<string> > evinfo;
+        // once cookies are done add the usability here
+        Controller c;
+        vector<vector<string> > evinfo = c.showEventInfo(1);
         cout << "<dl><dt><b>" << evinfo[0][0] << " Organizer: "
             << evinfo[0][1] << "</b><dt>"
             << "<p><dd>Date(s): " << evinfo[0][2] 
             << " to " << evinfo[0][3] << "</dd></p>"
             << "<dt> Event Positions: </dt>\n"
             << "<dd>";
-        cout << "<form method=\"post\" action=\"\">;
-            for (int x =1; x < evinfo.size(); ++x) {
-                cout << "<p>" << evinfo[x][0] << "</p>\n";
-                cout << evinfo[x][1]
-                    << " from " << evinfo[x][2] << " to " 
-                    << evinfo[x][3] 
-                    << "<input type=\"radio\" name=\"volunteer\" value=\"" 
-                    <</*pos id*/ evinfo[x][4]<< "\"><br>\n";
-            }
+        cout << "<form method=\"post\" action=\"\">";
+        for (int x = 1; x < evinfo.size(); ++x) {
+            cout << "<p>" << evinfo[x][0] << "</p>\n";
+            cout << evinfo[x][1]
+                << " from " << evinfo[x][2] << " to " 
+                << evinfo[x][3] 
+                << "<input type=\"radio\" name=\"volunteer\" value=\"" 
+                <</*pos id*/ evinfo[x][4]<< "\"><br>\n";
+        }
         cout << "</form>" << endl;
         cout << "</dd></dl>" << endl;;
 
         string posID = cgi("volunteer");
-        
+        int evID = stoi(evinfo[0][4]);
+        int pID = stoi(posID);
+        c.addVolunteer(evID, 1, pID);
 
 
 		//FOOTER
