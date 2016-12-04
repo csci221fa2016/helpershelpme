@@ -240,3 +240,6 @@ void EventPosition::setEndTime(string _end){
     }
     sqlite3_reset(s);
 }
+int EventPosition::getPosId() {
+	return posid;
+}
