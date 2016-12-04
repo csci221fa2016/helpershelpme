@@ -38,6 +38,8 @@ void userID(string ui);
 void printform(const Cgicc& cgi, Controller& c) {
 //   if (evaluate(cgi)) {
        vector<string> userinfo = c.showUserInfo(z);
+        //wait to see what type of vector
+       vector<string> stats = c.showStats(z);
        vector<int> eventinfo = c.showOrganizedEvents(z);
        vector<int> posinfo = c.showEventsWorked(z);
        cout   << "<table>\n"
@@ -46,11 +48,10 @@ void printform(const Cgicc& cgi, Controller& c) {
               << "<tr><th>Phone Number</th>\n"
               << "<td>" << userinfo[1] << "</td></tr>\n"
               << "<tr><th>Hours Volunteered</th>\n"
-              << "<td>N/A</td></tr>\n"
+              << "<td>" << stats[1] << "</td></tr>\n"
               << "</table>\n";
        
        cout   << "<hr>\n <form action=\"helpers-help.me/createEvent.cgi\">\n"
-              << "<form action=\"helpers-help.me/createEvent.cgi\">\n"
               << "<input type=\"submit\" value=\"Create Event\"/>\n"
               << " </form>\n";
                
@@ -60,7 +61,7 @@ void printform(const Cgicc& cgi, Controller& c) {
        
        cout   << "<!-- Will recieve events/positions related to user one at a time, in vector of strings\n"
               << "i.e. a vector with event/position title, desc., etc as string val in vector-->\n"
-              << " <p><h3>Events 'User' created</h3></p>\n"
+              << " <p><h3>Events created</h3></p>\n"
               << " <dl>\n";
        int x;
     //***********IMPORTANT: go into controller later and verify the

@@ -50,7 +50,7 @@ printForm(const Cgicc& cgi)
  
    cout << "<tr><td class=\"title\">Event Date End</td>"
         << "<td class=\"form\">"
-        << "<input type=\"text\" name=\"efinish\" value=\"When does it end? (DD/MM/YYYY)\""
+        << "<input type=\"text\" name=\"efinish\" value=\"When does it end? (YYYY/MM/DD)\""
         << "</td></tr>"
 
    << endl;  cout << "</table>" << endl;

@@ -22,7 +22,7 @@ string find();
 
 void printForm(const Cgicc& cgi)
 {
-   if(evaluate(cgi)) {
+//   if(evaluate(cgi)) {
        cout << "<form method=\"post\" action=\""
             << cgi.getEnvironment().getScriptName() << "\">" << endl;
   
@@ -43,14 +43,13 @@ void printForm(const Cgicc& cgi)
        cout << "<div class=\"center\"><p>"
             << "<input type=\"submit\" name=\"login\"  value=\"Log In\" />"
             << "</p></div></form>" << endl;
-   }
+/*   }
    else{
 //         cout << HTTPRedirectHeader(string("helpers-help.me/userprofile.cgi?id=").append(a)) << endl;
-         string l = find();
-         cout << HTTPRedirectHeader(string("helpers-help.me/view/lulu/userprofile.cgi?id=").append(Z)) << endl;
+         cout << "<meta http-equiv=\"refresh\" content=\"0; url=helpers-help.me/view/lulu/login.cpp\"" << endl;
 //         cout << HTTPRedirectHeader(string("helpers-help.me/view/isarmien/userprofile.cgi?id=").append(a)) << endl;
 //         cout << HTTPRedirectHeader(string("helpers-help.me/view/jaledo/userprofile.cgi?id=").append(a)) << endl;
-   }
+   }*/
 }
 
 string find() {
@@ -86,7 +85,8 @@ int main(int argc, char **argv) {
       HTTPCookie c;
       c.setName("Authenticated");
       c.setValue("false");
-      cout << HTTPHTMLHeader().setCookie(c) << endl;
+      c.setDomain(".helpers-help.me/");
+      cout << HTTPHTMLHeader() << endl;
 
       //retrieves form information and sends it to controller
       vector<string> loginfo;
@@ -104,7 +104,7 @@ int main(int argc, char **argv) {
          c.setValue(val);
          cout << p().set("align", "center") << "Sign In Successful!" << p() << endl;
 //         cout << HTTPRedirectHeader(string("helpers-help.me/userprofile.cgi?id=").append(success[1])) << endl;
-         cout << HTTPRedirectHeader("helpers-help.me/view/lulu/userprofile.cgi") << endl;
+         cout << "<meta http-equiv=\"refresh\" content=\"0; url=helpers-help.me/view/lulu/userprofile.cpp\"" << endl;
 //         cout << HTTPRedirectHeader(string("helpers-help.me/view/isarmien/userprofile.cgi?id=").append(success[1])) << endl;
 //         cout << HTTPRedirectHeader(string("helpers-help.me/view/jtoledo/userprofile.cgi?id=").append(success[1])) << endl;
       } else {
