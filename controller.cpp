@@ -71,7 +71,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		stm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value			
 
 		// This coverts the tm* ltm to time_t
-		mktime (stm);
+
 
 		// This is the end time that the view is passing to us
 
@@ -92,13 +92,19 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		etm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value                  
 
 		// This coverts the tm* ltm to time_t
-		mktime (etm);
 
 
 		//need to set start time end time 0 -name, 1 -description, 2-openings		
-		int eventId = c->createEvent(v[0][0], v[0][1], stm, etm, userId, v[0][4]);
+		int eventId = c->createEvent(v[0][0], v[0][1],mktime (stm), mktime (etm), userId, v[0][4]);
+		string Result;
+		ostringstream Convert;
 		for(int i = 1; i <v.size(); ++i){ 
-			c->createEventPosition(eventId, i,  v[i][0], v[i][1], v[i][2]);
+
+			string myStream = v[i][1];
+			istringstream buffer(myStream);
+			int value;
+			buffer >> value;
+			c->createEventPosition(eventId, i,  v[i][0], value, userId);
 
 		}
 	}
@@ -143,9 +149,9 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 	a[0].push_back(e->getDescription());
 	a[0].push_back(e->getLocation());
 	string Result;
-        ostringstream Convert;
-       	Convert << id;
-        Result = Convert.str();
+	ostringstream Convert;
+	Convert << id;
+	Result = Convert.str();
 	a[0].push_back(Result);
 
 	for (int i = 0; i < ep_arr.size(); ++i ) {
@@ -161,9 +167,9 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 		a[i+1].push_back(ctime (&start_rawtime));
 		a[i+1].push_back(ctime (&end_rawtime));
 		string Result;
-                ostringstream Convert;
-                Convert << (ep_arr[i]->getPosId());
-                Result = Convert.str();
+		ostringstream Convert;
+		Convert << (ep_arr[i]->getPosId());
+		Result = Convert.str();
 		a[i+1].push_back(Result);
 	}
 
@@ -211,7 +217,6 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 		stm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value			
 
 		// This coverts the tm* ltm to time_t
-		mktime (stm);
 
 		// This is the end time that the view is passing to us
 
@@ -231,7 +236,6 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 		etm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value                  
 
 		// This coverts the tm* ltm to time_t
-		mktime (etm);
 
 
 		// third and fourth thing passed in here should be time_t's now
