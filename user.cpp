@@ -73,7 +73,7 @@ vector<EventPosition*> User::getEventsWorked() {
 		return events;
 	} 
 	while(sqlite3_step(s)==SQLITE_ROW) {
-		EventPosition* e = new EventPosition(sqlite3_column_int(s, 0),sqlite3_column_int(s, 1),sqlite3_column_int(s,2),sqlite3_column_int(s,3));
+		EventPosition* e = new EventPosition(,sqlite3_column_int(s, 1),sqlite3_column_int(s,2),sqlite3_column_int(s,3));
 		events.push_back(e);
 	}
 	return events;
