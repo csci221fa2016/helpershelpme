@@ -14,6 +14,6 @@ class Creation {
 	bool findEvent(int eventid);
 	int createUser(string _name, string _phoneNumber, string _password);
 	int createEvent(string _name, string _description, time_t _startTime, time_t _endTime, int userid, string _location);
-	int createEventPosition(int eventid, int eposid, string _description, int _openings, int userid);
+	int createEventPosition(int eventid, int posid, string _description, int _openings, int userid);
 	vector<int> getUpcoming();
 };
