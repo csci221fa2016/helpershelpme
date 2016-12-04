@@ -30,5 +30,9 @@ class User {
 	int getUserId();
 	void setPassword(string _pass);
 	bool checkPassword(string _pass);
+
 };
 #endif
+
+
+
