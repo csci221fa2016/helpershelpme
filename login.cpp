@@ -6,223 +6,142 @@
 #include "cgicc/Cgicc.h"
 #include "cgicc/HTTPHTMLHeader.h"
 #include "cgicc/HTMLClasses.h"
-#include "cgicc/HTTPRedirectHeader.h"
-#include "cgicc/HTTPCookie.h"
+#include <cgicc/HTTPRedirectHeader.h>
 
 #include "styles.h"
 #include "controller.h"
 
 using namespace std;
 using namespace cgicc;
-
-string Z;
-
-bool evaluate(const Cgicc& cgi);
-string find();
-
-void printForm(const Cgicc& cgi)
-{
-//   if(evaluate(cgi)) {
-       cout << "<form method=\"post\" action=\""
-            << cgi.getEnvironment().getScriptName() << "\">" << endl;
-  
-       cout << "<table align=\"center\">" << endl;
-  
-       cout << "<tr><td class=\"title\">Phone Number</td>"
-            << "<td class=\"phone\">"
-            << "<input type=\"text\" name=\"pnumber\" value=\"8889990000\"/>"
-            << "</td></tr>" << endl;
-  
-       cout << "<tr><td class=\"title\">Password</td>"
-            << "<td><input type=\"password\" name=\"password\" value=\"password\""
-            << " maxlength=\"\" autocomplete=\"off\" data-validate=\"{required: true}\"/>"
-            << "</td></tr>" << endl;
-  
-       cout << "</table>" << endl;
-  
-       cout << "<div class=\"center\"><p>"
-            << "<input type=\"submit\" name=\"login\"  value=\"Log In\" />"
-            << "</p></div></form>" << endl;
-/*   }
-   else{
-//         cout << HTTPRedirectHeader(string("helpers-help.me/userprofile.cgi?id=").append(a)) << endl;
-         cout << "<meta http-equiv=\"refresh\" content=\"0; url=helpers-help.me/view/lulu/login.cpp\"" << endl;
-//         cout << HTTPRedirectHeader(string("helpers-help.me/view/isarmien/userprofile.cgi?id=").append(a)) << endl;
-//         cout << HTTPRedirectHeader(string("helpers-help.me/view/jaledo/userprofile.cgi?id=").append(a)) << endl;
-   }*/
-}
-
-string find() {
-   int x = Z.find(";");
-   Z = Z.substr(x);
-   x = Z.find(";");
-   Z = Z.substr(0, x);
-   return Z;
-}
-
-bool evaluate(const Cgicc& cgi) {
-   const CgiEnvironment& env = cgi.getEnvironment();
-
-   if(!env.getCookieList().empty()) {
-       const_cookie_iterator it;
-       for (it = env.getCookieList().begin(); it != env.getCookieList().end(); ++it) {
-           if(it->getName() == "Authenticated") {
-               if(it->getValue().find("true")) {
-                  Z = it->getValue();
-                  find();
-                  return true;
-               }
-               break;
-           }
-       }
-   }
-   return false;
-}
-
 int main(int argc, char **argv) {
-   try{
-      Cgicc cgi;
-      HTTPCookie c;
-      c.setName("Authenticated");
-      c.setValue("false");
-      c.setDomain(".helpers-help.me/");
-      cout << HTTPHTMLHeader() << endl;
+	try{
+		Cgicc cgi;
+		cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
+		cout << html().set("lang", "en").set("dir", "ltr") << endl;
+		cout << html() <<endl;
+		cout << head() << endl;
+		cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
+		cout <<"<link rel=\"stylesheet\" href=\"css/main2.css\" />"<<endl;
+		cout << style() << comment() << endl;
+		cout << styles;
+		cout << comment() << style() <<endl;
+		cout << title() << "Home" << title() << endl;
+		cout << head() << endl;
+		cout << "<body class =\"index\">" << endl;
+		cout<<"<div id=\"page-wrapper\">"<<endl;
+		//<================================================HEADER DONT TOUCH=========================================================>
+		cout<<"<header id=\"header\" class=\"alt\">"<<endl;
+		cout<<"<h1 id=\"logo\"><a href=\"home.cgi\">Helpers Help Me</a></h1>"<<endl;
+		cout<<"<nav id=\"nav\">"<<endl;
+		cout<<"<ul>"<<endl;
+		cout<<"<li class=\"current\"><a href=\"home.cgi\">Welcome</a></li>"<<endl;
+		cout<<"<li class=\"submenu\">"<<endl;
+		cout<<"<a href=\"#\">Menu</a>"<<endl;
+		cout<<"<ul>"<<endl;
+		cout<<"<li><a href=\"#\">Rankings</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">News</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">Donate</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">Contact</a></li>"<<endl;
+		cout<<"<li class=\"submenu\">"<<endl;
+		cout<<"<a href=\"#\">Events</a>"<<endl;
+		cout<<"<ul>"<<endl;
+		cout<<"<li><a href=\"#\">See All Events</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">Upcoming Events</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">Closed Events</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">New Events</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">Past Events</a></li>"<<endl;
+		cout<<"</ul>"<<endl;
+		cout<<"</li>"<<endl;
+		cout<<"</ul>"<<endl;
+		cout<<"</li>"<<endl;
+		cout<<"<li><a href=\"#\" class=\"button special\">Log In</a></li>"<<endl;
+		cout<<"</ul>"<<endl;
+		cout<<"</nav>"<<endl;
+		cout<<"</header>"<<endl;
+		cout<<"<section id=\"banner\">"<<endl;
+		//<=======================LOGIN WORK HERE=========================================>	
+		cout << "<div class = \"form\">" << endl;
+		cout << "<ul class = \"tab-group\">" << endl;
+		cout<<"<li class=\"tab active\"><a href=\"#signup\">Sign Up</a></li>"<<endl;
+		cout<<"<li class=\"tab\"><a href=\"#login\">Log In</a></li>"<<endl;
+		cout << "</ul>" << endl;
+		cout << "<div class = \"tab-content\">" << endl;
+		cout << "<div id = \"signup\">" << endl;
+		cout << "<h1>Sign Up for Free</h1>" << endl;
+		cout << "<form action = \"/view/jtoledo/sign_up_info.cgi\" method = \"post\">" << endl;
+		cout << "<div class = \"top-row\">" << endl;
+		cout << "<div class = \"field-wrap\">" << endl;
+		cout << "<label> First Name<span class = \"req\">*</span> </label>" << endl;
+		cout << "<input type = \"text\" name=\"user_first_name\" required autocomplete = \"off\"/>" << endl;
+		cout << "</div>" << endl;
+		cout << "<div class =\"field-wrap\">" << endl;
+		cout << "<label> Last Name<span class = \"req\">*</span> </label>" << endl;
+		cout << "<input type = \"text\" name= \"user_last_name\" required autocomplete = \"off\"/>" << endl;
+		cout << "</div>" << endl;
+		cout << "</div>" << endl;
+		cout << "<div class = \"field-wrap\">" << endl;
+		cout << "<label>Phone Number<span class = \"req\">*</span> </label>" << endl;
+		cout << "<input type = \"number\"name=\"user_phone_number_s\"required autocomplete=\"off\"/>" << endl;
+		cout << "</div>" << endl;
+		cout << "<div class = \"field-wrap\">" << endl;
+		cout << "<label> Set A Password<span class = \"req\">*</span> </label>" << endl;
+		cout << "<input type = \"password\"name=\"user_password_s\"required autocomplete = \"off\"/>" << endl;
+		cout << "</div>" << endl;
+		cout << "<button type = \"submit\" class = \"button button-block\"/>" << endl;
+		cout << "Get Started"<< endl;
+		cout << "</button>"<< endl;
+		cout << "</form>"<< endl;
+		cout << "</div>"<< endl;
+		cout << "<div id = \"login\">"<< endl;
+		cout << "<h1>Welcome Back!</h1>"<< endl;
+		cout << "<form action = \"/view/jtoledo/login_info.cgi\" method = \"post\">"<< endl;
+		cout << "<div class = \"field-wrap\">"<< endl;
+		cout << "<label>Phone Number<span class = \"req\">*</span></label>" << endl;
+		cout << "<input type = \"number\" name=\"user_phone_number\"required autocomplete = \"off\"/>" << endl;
+		cout << "</div>" << endl;
+		cout << "<div class = \"field-wrap\">" << endl;
+		cout << "<label> Password<span class = \"req\">*</span></label>" << endl;
+		cout << "<input type = \"password\" name=\"user_password\"required autocomplete = \"off\"/>" << endl;
+		cout << "</div>" << endl;
+		cout << "<p class = \"forgot\"><a href = \"#\">Forgot Password ?</a></p>" << endl;
+		cout << "<button class = \"button button-block\"/>" << endl;
+		cout << "Log In" << endl;
+		cout << "</button>" << endl;
+		cout << "</form>" << endl;
+		cout << "</div>" << endl;
+		cout << "</div>" << endl;
+		cout << "</div>" << endl;
+		//<=========================================FOOTER DON'T TOUCH=============================================================>
+		cout<<"</section>"<<endl;
+		cout<<"<footer id=\"footer\">"<<endl;
+		cout<<"<ul class=\"icons\">"<<endl;
+		cout<<"<li><a href=\"#\" class=\"icon circle fa-twitter\"><span class=\"label\">Twitter</span></a></li>"<<endl;
+		cout<<"<li><a href=\"#\" class=\"icon circle fa-facebook\"><span class=\"label\">Facebook</span></a></li>"<<endl;
+		cout<<"<li><a href=\"#\" class=\"icon circle fa-google-plus\"><span class=\"label\">Google+</span></a></li>"<<endl;
+		cout<<"<li><a href=\"#\" class=\"icon circle fa-github\"><span class=\"label\">Github</span></a></li>"<<endl;
+		cout<<"<li><a href=\"#\" class=\"icon circle fa-dribbble\"><span class=\"label\">Dribbble</span></a></li>"<<endl;
+		cout<<"</ul>"<<endl;
+		cout<<"<ul class=\"copyright\">"<<endl;
+		cout<<"<li>&copy; Helpers Help me</li><li>Design: <a href=\"http://html5up.net\">HTML5 UP</a></li>"<<endl;
+		cout<<"</ul>"<<endl;
+		cout<<"</footer>"<<endl;
+		cout<<"</div>"<<endl;
 
-      //retrieves form information and sends it to controller
-      vector<string> loginfo;
-      Controller control;
-      const_form_iterator phoneNum = cgi.getElement("pnumber");
-      if(phoneNum != (*cgi).end() && !phoneNum->isEmpty())
-          loginfo.push_back((*phoneNum).getStrippedValue());
-      const_form_iterator pw = cgi.getElement("password");
-      if(pw != (*cgi).end() && !pw->isEmpty())
-         loginfo.push_back((*pw).getStrippedValue());
-      vector<string> success = control.signIn(loginfo);
-      if(success[0] == "true") {
-         string val;
-         val.append(success[0]).append(";").append(success[1]);
-         c.setValue(val);
-         cout << p().set("align", "center") << "Sign In Successful!" << p() << endl;
-//         cout << HTTPRedirectHeader(string("helpers-help.me/userprofile.cgi?id=").append(success[1])) << endl;
-         cout << "<meta http-equiv=\"refresh\" content=\"0; url=helpers-help.me/view/lulu/userprofile.cpp\"" << endl;
-//         cout << HTTPRedirectHeader(string("helpers-help.me/view/isarmien/userprofile.cgi?id=").append(success[1])) << endl;
-//         cout << HTTPRedirectHeader(string("helpers-help.me/view/jtoledo/userprofile.cgi?id=").append(success[1])) << endl;
-      } else {
-         cout << "<p> Username or Password Invalid </p>" << endl;
-         printForm(cgi);
-      }
+		cout<<"<script src=\"js/jquery.min.js\"></script>"<<endl;
+		cout<<"<script src=\"js/login.js\"></script>"<<endl;
+		cout<<"<script src=\"js/jquery.dropotron.min.js\"></script>"<<endl;
+		cout<<"<script src=\"js/jquery.scrolly.min.js\"></script>"<<endl;
+		cout<<"<script src=\"js/jquery.scrollgress.min.js\"></script>"<<endl;
+		cout<<"<script src=\"js/skel.min.js\"></script>"<<endl;
+		cout<<"<script src=\"js/util.js\"></script>"<<endl;
+		cout<<"<script src=\"js/main.js\"></script>"<<endl;
+		cout << body() <<endl;
+		cout << html() <<endl;		 
+	} catch(exception& e) {
 
-      cout << html().set("lang","en").set("dir","ltr") <<endl;
-      cout << html() << endl;
-      cout << head() << endl;
-      cout << meta().set("name", "viewport").set("content", "width=device-width, initial-scale=1.0") << endl;
-      cout << style() << comment() << endl;
-      cout << styles;
-      cout << comment() << style() <<endl;
-      cout << "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js\"></script>" << endl;
-      cout << "<script>" << endl;
-      cout << "jQuery.noConflict()(function ($) {\
-               $(\"<form id='mobilemenu'><select /></form>\").appendTo(\"#topnav\");\
-                        $(\"<option />\", {\
-                        \"selected\": \"selected\",\
-                        \"value\": \"\",\
-                        \"text\": \"Please Click Here To Navigate\"\
-                }).appendTo(\"#topnav select\");\
-                $(\"#topnav a\").each(function () {\
-                        var el = $(this);\
-                        var prefix = '';\
-                        switch (el.parents().length) {\
-                        case (6):\
-                                prefix = '';\
-                                break;\
-                        case (8):\
-                                prefix = '- - - ';\
-                                break;\
-                        case (10):\
-                                prefix = '- - - - - ';\
-                                break;\
-                        case (12):\
-                                prefix = '- - - - - - - ';\
-                                break;\
-                        default:\
-                                prefix = '';\
-                                break;\
-                        }\
-                        $(\"<option />\", {\
-                        \"value\": el.attr(\"href\"),\
-                        \"text\": prefix + el.text()\
-                        }).appendTo(\"#topnav select\");\
-                        $(\"#topnav select\").change(function () {\
-                        window.location = $(this).find(\"option:selected\").val();\
-                        });\
-                });\
-                });"<< endl;
-
-      cout << "</script>" << endl;
-      cout << title("Log In") <<endl;
-      cout << head() << endl;
-      cout << body() << endl;
-
-   	  //HEADER
-	  cout << "<div class=\"wrapper row1\">" << endl;
-      cout << "<header id=\"header\" class=\"clear\">" << endl;
-      cout << "<div id=\"hgroup\">" << endl;
-      cout << "<h1><a href=\"#\">Helpers Help Me</a></h1>" << endl;
-      cout << "<h2>Testing home</h2>" << endl;
-      cout << "</div>" << endl;
-      cout << "</header>" << endl;
-
-      cout << "</div>" <<endl;
-      cout << "<div class=\"wrapper row2\">" << endl;
-      cout << "<nav id=\"topnav\">" << endl;
-      cout << "<ul class=\"clear\">" << endl;
-      cout << "<li class=\"active first\"><a href=\"home.cgi\">Homepage</a></li>" << endl;
-      cout << "<li><a class=\"drop\" href=\"#\">Event</a>" << endl;
-      cout << "<ul>" << endl;
-      cout << "<li><a href=\"#\">List Events</a></li>" << endl;
-      cout << "<li><a href=\"#\">List Available Positions</a></li>" << endl;
-      cout << "<li><a class=\"drop\" href=\"#\">Old Events</a>" << endl;
-      cout<< "<ul>" << endl;
-      cout << "<li><a href=\"#\">2015</a></li>" << endl;
-      cout << "<li><a href=\"#\">2016</a></li>" <<endl;
-      cout<< "</ul>" <<endl;
-      cout << "</li>" <<endl;
-      cout << "</ul>" <<endl;
-      cout << "</li>" << endl;
-      cout << "<li><a href=\"#\">Profile</a></li>" << endl;
-      cout << "<li><a href=\"#\">Full Width</a></li>" << endl;
-      cout << "<li><a href=\"#\">Gallery</a></li>" <<endl;
-      cout << "<li><a href=\"#\">Portfolio</a></li>" << endl;
-      cout << "<li><a href=\"#\">A Long Link Text Here</a></li>" <<endl;
-      cout << "<li class=\"last-child\"><a class=\"drop\" href=\"#\">User</a>" <<endl;
-      cout << "<ul>" << endl;
-      cout << "<li><a href=\"login.cgi\">Log In</a></li>" << endl;
-      cout << "<li><a href=\"#\">Sign up</a></li>" << endl;
-      cout << "<li><a class=\"drop\" href=\"#\">Level 2 + Drop</a>" << endl;
-      cout << "<ul class=\"negative\">" << endl;
-      cout <<"<li><a href=\"#\">Level 3</a></li>" <<endl;
-      cout <<"<li><a href=\"#\">Level 3</a></li>" << endl;
-      cout <<"<li><a href=\"#\">Level 3</a></li>" << endl;
-      cout << "</ul>" << endl;
-      cout << "</li>" << endl;
-      cout << "</ul>" << endl;
-      cout <<"</li>"<< endl;
-      cout <<"</ul>"<< endl;
-      cout << " </nav>" << endl;
-      cout << "</div>" << endl;
-
-	   //FOOTER
-	   cout <<"<div class=\"wrapper row4\">"<< endl;
-       cout << "<footer id=\"footer\" class=\"clear\">" <<  endl;
-       cout << "<p class=\"fl_left\">Copyright &copy; 2013 - All Rights Reserved - <a href=\"#\">Domain Name</a></p>" <<endl;
-       cout << "<p class=\"fl_right\">Template by <a href=\"http://www.os-templates.com/\" title=\"Free Website Templates\">OS Templates</a></p>"<<endl;
-       cout << "</footer>" <<endl;
-       cout << "</div>" << endl;
-       cout << body() << endl;
-       return EXIT_SUCCESS;
-    } catch(exception& e) {
-       cout << "<pre>" << e.what() << "</pre>";
-       return EXIT_SUCCESS;
-    }
+	}
 }
+
+//<==============================================================TESTING FUNCTIONS===============================================================>
+
 
