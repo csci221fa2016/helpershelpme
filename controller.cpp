@@ -18,7 +18,7 @@
 using namespace std;
 using tr1::hash;
 
-
+class Creation;
 
 Controller::Controller() {}
 
