@@ -12,19 +12,11 @@
 using namespace std;
 using namespace cgicc;
 
-void
-printForm(const Cgicc& cgi)
+bool evaluate(const Cgicc& cgi);
+
+void printForm(const Cgicc& cgi)
 {
-
-	const CgiEnvironment& env = cgi.CgiEnvironment();
-	const_cookie_iterator iter;
-
-   for(iter= env.getCookieList().begin(); iter!= env.getCookierList().end(); ++iter){
-   
-   if(iter->getName()=="Authenticated"){
-	string namedCookie = iter->getName();
-	
-	if(iter->getValue().find("true")){
+//  if(evaluate(cgi)){
 
    cout << "<table>" << endl;
 
@@ -93,7 +85,7 @@ printForm(const Cgicc& cgi)
         << "<input type=\"submit\" name=\"login\"  value=\"Log In\" />"
         << "</p></div></form>" << endl;
 	
-	}
+/*	}
 	else
 	{
 //	cout << HTTPRedirectHeader(string("helpers-help.me/userprofile.cgi?id=").append(success[1])) << endl;
@@ -103,8 +95,31 @@ printForm(const Cgicc& cgi)
 	}
 	break;
    }
-   }
+   }*/
 }
+
+/*
+bool evaluate(Cgicc& cgi)
+{
+	const CgiEnvironment& env = cgi.CgiEnvironment();
+	const_cookie_iterator iter;
+
+   for(iter= env.getCookieList().begin(); iter!= env.getCookierList().end(); ++iter){
+   
+   if(iter->getName()=="Authenticated"){
+	string namedCookie = iter->getName();
+	
+	if(iter->getValue().find("true")){
+	return true;
+	}
+    break;
+    }
+    }
+
+    return false;
+
+}
+*/
 
 int main(int argc, char **argv) {
    try{
