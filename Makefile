@@ -20,11 +20,11 @@ gtest.a : gtest-all.o
 gtest_main.a : gtest-all.o gtest_main.o
 	$(AR) $(ARFLAGS) $@ $^
 
-event_test.o: event_test.cpp event.h $(GTEST_HEADERS)
-	$(CXX) $(CXXFLAGS) -c event_test.cpp
+testcontroller.o: testcontroller.cpp controller.h $(GTEST_HEADERS)
+	$(CXX) $(CXXFLAGS) -c testcontroller.cpp
 
-event_test: event_test.o gtest_main.a
-	$(CXX) $(CXXFLAGS) -o event_test event_test.o gtest_main.a
+testcontroller: testcontroller.o gtest_main.a
+	$(CXX) $(CXXFLAGS) -o testcontroller testcontroller.o gtest_main.a
 
 main.o: main.cpp controller.h user.h event.h eventposition.h
 	g++ -ldl -g -Wall -c main.cpp
