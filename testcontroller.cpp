@@ -1,14 +1,15 @@
 #include <iostream>
 #include "controller.h"
+#include "creation.h"
 #include "gtest/gtest.h"
 using namespace std;
 
 
 TEST(controller, sendUser)
 {
-	Controller c = new Controller();
+	Controller* c = new Controller();
 	int id = 0;
-	vector<string> v = new vector<string>;
+	vector<string> v;
 	v[0] = "Joe Blow";
 	v[1] = "8888888888";
 	v[2] = "JoePass2";
@@ -16,9 +17,9 @@ TEST(controller, sendUser)
 }
 TEST(controller, sendUser2)
 {
-    	Controller c = new Controller();
+    	Controller* c = new Controller();
     	int id = 1;
-    	vector<string> v = new vector<string>;
+    	vector<string> v;
     	v[0] = "Joe Blow";
     	v[1] = "8888888888";
     	v[2] = "JoePass2";
@@ -26,8 +27,8 @@ TEST(controller, sendUser2)
 }
 TEST(controller, showUserInfo)
 {
-	Controller cont = new Controller();
-	Creation c = new Creation();
+	Controller* cont = new Controller();
+	Creation* c = new Creation();
         int id = c->createUser("Joe Blow", "8888888888", "JoePass2");
 	vector<string> v = cont->showUserInfo(id);
 	ASSERT_EQ(true, v[0] == "Joe Blow");
@@ -35,5 +36,10 @@ TEST(controller, showUserInfo)
 }
 TEST(controller, showEventInfo)
 {
-	Controller cont = new Controller;
-		
+	Controller* cont = new Controller();
+}
+
+int main(int argc, char **argv) {
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+}		
