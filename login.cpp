@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
 		cout << "<div class = \"tab-content\">" << endl;
 		cout << "<div id = \"signup\">" << endl;
 		cout << "<h1>Sign Up for Free</h1>" << endl;
-		cout << "<form action = \"/view/jtoledo/sign_up_info.cgi\" method = \"post\">" << endl;
+		cout << "<form action = \"/view/lulu/sign_up_info.cgi\" method = \"post\">" << endl;
 		cout << "<div class = \"top-row\">" << endl;
 		cout << "<div class = \"field-wrap\">" << endl;
 		cout << "<label> First Name<span class = \"req\">*</span> </label>" << endl;
@@ -100,11 +100,11 @@ int main(int argc, char **argv) {
 //		cout << "<form action = \"login_info.cgi\" method = \"post\">"<< endl;
 		cout << "<div class = \"field-wrap\">"<< endl;
 		cout << "<label>Phone Number<span class = \"req\">*</span></label>" << endl;
-		cout << "<input type = \"number\" name=\"user_phone_number\"required autocomplete = \"off\"/>" << endl;
+		cout << "<input type = \"number\" name=\"user_phone_number\" value=\"8889990000\" required autocomplete = \"off\"/>" << endl;
 		cout << "</div>" << endl;
 		cout << "<div class = \"field-wrap\">" << endl;
 		cout << "<label> Password<span class = \"req\">*</span></label>" << endl;
-		cout << "<input type = \"password\" name=\"user_password\"required autocomplete = \"off\"/>" << endl;
+		cout << "<input type = \"password\" name=\"user_password\" value=\"password\" required autocomplete = \"off\"/>" << endl;
 		cout << "</div>" << endl;
 		cout << "<p class = \"forgot\"><a href = \"#\">Forgot Password ?</a></p>" << endl;
 		cout << "<button class = \"button button-block\"/>" << endl;

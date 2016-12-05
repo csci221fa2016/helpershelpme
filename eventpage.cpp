@@ -8,7 +8,7 @@
 #include "cgicc/HTMLClasses.h"
 
 #include "styles.h"
-//#include "controller.h"
+#include "controller.h"
 
 using namespace std;
 using namespace cgicc;
@@ -59,15 +59,13 @@ int main(int /*argc*/, char** /*argv*/) {
 		cout<<"</header>"<<endl;
 		cout<<"<section id=\"banner\">"<<endl;
 //<=================Event Page Information=====================>
-        cout << "<div class=\"form\" >" << endl;
-
-
-/*        //print out the everything related to the event
+        //print out the everything related to the event
         // description, time, location, volunteer positions
         // add button to sign up for event
         // once cookies are done add the usability here
+        cout << "<div class=\"form\" >" << endl;
         Controller c;
-        vector<vector<string> > evinfo = c.showEventInfo(1);
+ /*       vector<vector<string> > evinfo = c.showEventInfo(1);
         cout << "<dl><dt><b>" << evinfo[0][0] << " Organizer: "
             << evinfo[0][1] << "</b><dt>"
             << "<p><dd>Date(s): " << evinfo[0][2] 

@@ -11,7 +11,7 @@
 #include <cgicc/HTTPRedirectHeader.h>
 #include <cgicc/HTTPCookie.h>
 
-#include "controller.h"
+//#include "controller.h"
 
 using namespace std;
 using namespace cgicc;
@@ -20,22 +20,21 @@ int main () {
     Cgicc cgi;
     HTTPCookie c1;
     cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
-    cout << "<html>\n";
-    cout << "<head>\n";
+    cout << html() << head() << endl;
     cout << "<title>Redirecting</title>\n";
-    cout << "</head>\n";
-    cout << "<body>\n";
+    cout << head() << body() << endl;
     //<==================================================================CGI DATA PROCESS======================================>    
     //retrieves form information and sends it to controller
-/*    vector<string> loginfo;
-    Controller control;
-    const_form_iterator phoneNum = cgi.getElement("pnumber");
+    vector<string> loginfo;
+ /*   Controller control;
+    const_form_iterator phoneNum = cgi.getElement("user_phone_number");
     if(phoneNum != (*cgi).end() && !phoneNum->isEmpty())
         loginfo.push_back((*phoneNum).getStrippedValue());
-    const_form_iterator pw = cgi.getElement("password");
+    const_form_iterator pw = cgi.getElement("user_password");
     if(pw != (*cgi).end() && !pw->isEmpty())
        loginfo.push_back((*pw).getStrippedValue());
     vector<string> success = control.signIn(loginfo);
+    cout << success[0] << success[1] << endl;
     if(success[0] == "true") {
        string val;
        val.append(success[0]).append(";").append(success[1]);
@@ -46,11 +45,10 @@ int main () {
     } else {
         cout << "<p> Username or Password Invalid </p>" << endl;
         cout << HTTPRedirectHeader("/view/lulu/login.cgi") <<endl;
-<<<<<<< HEAD
     }*/
 
     //===========================================================Log in==============================================>
-    form_iterator it = cgi.getElement("user_phone_number");  
+ /*   form_iterator it = cgi.getElement("user_phone_number");  
     if( !it->isEmpty() && it != (*cgi).end()) {  
         cout <<"<h2>Phone Number:: " << **it<<" </h2>" << endl;
         login.push_back(**it);      
@@ -65,7 +63,7 @@ int main () {
         cout << "<h2>No text entered for last name,</h2>" << endl;  
     }
     cout<<"<p> Your phone number is /"<<login[0]<<"/ and yourt password is /"<<login[1]<<"/</p>"<<endl;
-//    c=:
+//    c=:*/
 
     cout << "</body>\n";
     cout << "</html>\n";
