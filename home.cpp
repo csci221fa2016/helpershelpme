@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-//#include "controller.h"
+#include "controller.h"
 #include "cgicc/CgiDefs.h"
 #include "cgicc/Cgicc.h"
 #include "cgicc/HTTPHTMLHeader.h"
@@ -209,6 +209,39 @@ int main(int argc, char** argv){
 					cout<<"</ul>"<<endl;
 				cout<<"</footer>"<<endl;
 			cout<<"</section>"<<endl;
+
+	Controller control;
+	string id;
+	int uID;
+         const CgiEnvironment& env = cgi.getEnvironment();
+         const_cookie_iterator iter;
+
+
+         for(iter= env.getCookieList().begin(); iter!= env.getCookieList().end(); ++iter){
+          if(iter->getName()=="Authenticated"){
+          string namedCookie = iter->getName();
+         if(iter->getValue().find("true")){
+         size_t found = iter->getValue().find(";");
+         size_t found1 = iter->getValue().find("=");
+	 id = iter->getValue().substr(found1+1,found);
+         uID = stoi(id);
+         }
+         break;
+         }
+	}
+
+        if(uID>=0){
+        vector<string> logged = control.showUserInfo(uID);
+	
+	for(int i=0; i<logged.size(); i++){
+	cout<< logged[i] << endl;
+	}
+	
+        } else{
+	 cout<< "<p class=\"fl_left\"> NO User Found</a></p>" <<endl;
+       }
+
+
 
 		//<!-- Footer -->
 			cout<<"<footer id=\"footer\">"<<endl;

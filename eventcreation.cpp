@@ -9,6 +9,7 @@
 #include "cgicc/Cgicc.h"
 #include "cgicc/HTTPHTMLHeader.h"
 #include "cgicc/HTMLClasses.h"
+#include <cgicc/CgiEnvironment.h>
 
 #include "sqlite3.h"
 
@@ -36,7 +37,7 @@
 using namespace std;
 using namespace cgicc;
 
-bool evaluate(const Cgicc& cgi);
+//bool evaluate(const Cgicc& cgi);
 
 void printForm(const Cgicc& cgi)
 {
@@ -107,7 +108,8 @@ void printForm(const Cgicc& cgi)
 
    cout << "<div class=\"center\"><p>"
         << "<input type=\"submit\" name=\"subEvent\"  value=\"Submit Event\" />"
-        << "</p></div></form>" << endl;
+//        << "</p></div></form>" << endl;
+    << "<form action = \"/view/isarmien/home.cgi\" method = \"post\">"<< endl;
 	
 /*	}
 	else
@@ -300,10 +302,10 @@ int main(int argc, char **argv) {
          if(eventposi3n!= (*cgi).end() && ! eventposi3n->isEmpty())
             eventpos.push_back((*eventposi3n).getStrippedValue());
 
-	 const CgiEnvironment& env = cgi.CgiEnvironment();
+	 const CgiEnvironment& env = cgi.getEnvironment();
 	 const_cookie_iterator iter;
 
-	 for(iter= env.getCookieList().begin(); iter!= env.getCookierList().end(); ++iter){
+	 for(iter= env.getCookieList().begin(); iter!= env.getCookieList().end(); ++iter){
 	  if(iter->getName()=="Authenticated"){
 	  string namedCookie = iter->getName();
 	 if(iter->getValue().find("true")){
@@ -316,6 +318,9 @@ int main(int argc, char **argv) {
 	 }
 
 	 control.sendEvent(eventcreate,uID);
+
+//         cout << "<form action = \"/view/isarmien/home.cgi\" method = \"post\">"<< endl;
+
 
  	  //FOOTER
 	   cout <<"<div class=\"wrapper row4\">"<< endl;

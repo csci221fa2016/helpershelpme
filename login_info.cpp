@@ -19,13 +19,14 @@ using namespace cgicc;
 int main () {
     Cgicc cgi;
     HTTPCookie c1;
-    cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
+    //cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
+    cout << HTTPRedirectHeader("/view/jtoledo/home.cgi") <<endl;
     cout << html() << head() << endl;
     cout << "<title>Redirecting</title>\n";
     cout << head() << body() << endl;
     //<==================================================================CGI DATA PROCESS======================================>    
     //retrieves form information and sends it to controller
-    vector<string> loginfo;
+/*    vector<string> loginfo;
     Controller control;
     const_form_iterator phoneNum = cgi.getElement("user_phone_number");
     if(phoneNum != (*cgi).end() && !phoneNum->isEmpty())
@@ -45,7 +46,22 @@ int main () {
     } else {
         cout << "<p> Username or Password Invalid </p>" << endl;
         cout << head() << "<meta http-equiv=\"refresh\" content=\"0; /view/lulu/login.cgi\" />" << head() << endl;
-    }
+    }*/
+
+        Controller control;
+        vector<string> user;
+//        string id;
+//        int uID;
+         const_form_iterator pnum = cgi.getElement("user_phone_number");
+         if(pnum!= (*cgi).end() && ! pnum->isEmpty())
+            user.push_back((*pnum).getStrippedValue());
+         const_form_iterator passw = cgi.getElement("user_password");
+         if(passw!= (*cgi).end() && ! passw->isEmpty())
+            user.push_back((*passw).getStrippedValue());
+
+	control.signIn(user);
+
+
 
     //===========================================================Log in==============================================>
  /*   form_iterator it = cgi.getElement("user_phone_number");  
@@ -64,7 +80,6 @@ int main () {
     }
     cout<<"<p> Your phone number is /"<<login[0]<<"/ and yourt password is /"<<login[1]<<"/</p>"<<endl;
 //    c=:*/
-
     cout << "</body>\n";
     cout << "</html>\n";
     

@@ -9,6 +9,8 @@
 #include <cgicc/HTTPHTMLHeader.h> 
 #include <cgicc/HTMLClasses.h>  
 #include <cgicc/HTTPRedirectHeader.h>
+#include "controller.h"
+
 using namespace std;
 using namespace cgicc;
 
@@ -25,7 +27,7 @@ int main () {
 	vector<string> signup;
 	string full_name;
 	//<=========================================Sign Up=========================================>
-	form_iterator it = cgi.getElement("user_first_name");  
+/*	form_iterator it = cgi.getElement("user_first_name");  
 	if( !it->isEmpty() && it != (*cgi).end()) {  
 		cout <<"<h2>First name: " << **it<<" </h2>" << endl;
 		full_name=**it;	  
@@ -55,6 +57,43 @@ int main () {
 		cout << "<h2>No text entered for password</h2>" << endl;  
 	}
 	cout<<"<p> You full name is/"<<signup[0]<<"/ and phone number/"<<signup[1]<<"/and pass/"<<signup[2]<<"/"<<endl;
+*/
+        Controller control;
+        vector<string> newuser;
+        string id;
+        int uID;
+         const_form_iterator firstname = cgi.getElement("user_first_name");
+         if(firstname!= (*cgi).end() && ! firstname->isEmpty())
+            newuser.push_back((*firstname).getStrippedValue());
+
+         const_form_iterator pnum = cgi.getElement("user_phone_number_s");
+         if(pnum!= (*cgi).end() && ! pnum->isEmpty())
+            newuser.push_back((*pnum).getStrippedValue());
+         const_form_iterator passw = cgi.getElement("user_password_s");
+         if(passw!= (*cgi).end() && ! passw->isEmpty())
+            newuser.push_back((*passw).getStrippedValue());
+
+         const CgiEnvironment& env = cgi.getEnvironment();
+         const_cookie_iterator iter;
+
+         for(iter= env.getCookieList().begin(); iter!= env.getCookieList().end(); ++iter){
+          if(iter->getName()=="Authenticated"){
+          string namedCookie = iter->getName();
+         if(iter->getValue().find("true")){
+         size_t found = iter->getValue().find(";");
+         id = iter->getValue().substr(0,found);
+         uID = stoi(id);
+         }
+         break;
+         }
+         }
+
+        if(uID>=0){
+        cout << "Not Possible" << endl;
+        } else{
+        control.sendUser(newuser,-1);
+        }
+
 
 	cout << "</body>\n";
 	cout << "</html>\n";
