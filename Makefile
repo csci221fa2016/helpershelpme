@@ -88,8 +88,8 @@ userprofile.cgi: userprofile.o controller.o user.o event.o eventposition.o sqlit
 userprofile.o: userprofile.cpp controller.h userprofile.cpp
 	$(CXX) -std=c++11 -c userprofile.cpp
 
-eventpage.cgi: eventpage.o controller.o user.o event.o eventposition.o
-	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o eventpage.cgi eventpage.o controller.o user.o event.o eventposition.o sqlite3.o
+eventpage.cgi: eventpage.o controller.o user.o event.o eventposition.o creation.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o eventpage.cgi eventpage.o controller.o creation.o user.o event.o eventposition.o sqlite3.o
 
 eventpage.o: eventpage.cpp styles.h controller.h
 	$(CXX) -std=c++11 -c eventpage.cpp
