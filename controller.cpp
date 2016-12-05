@@ -18,6 +18,8 @@
 using namespace std;
 using tr1::hash;
 
+
+
 Controller::Controller() {}
 
 int Controller::sendUser(vector<string> v, int id) {
@@ -48,6 +50,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 	if (userId == -1) {
 		// runtime error. no one is making an event.
 		throw runtime_error("No active user is making the event.");
+		return -1;
 	}else{
 
 		Creation* c = new Creation();
@@ -107,6 +110,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 			c->createEventPosition(eventId, i,  v[i][0], value, userId);
 
 		}
+		return eventId;
 	}
 }
 
@@ -243,7 +247,7 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 		//convert v[1], v[2] to times
 		e->setDescription(v[0][3]);
 		e->setLocation(v[0][4]);
-		for(int i = 1; i<v.size();++i){
+		for(unsigned int i = 1; i<v.size();++i){
 			EventPosition* ep = new EventPosition(id, userId, i);
 			ep->setDescription(v[i][0]);
 			// ep->setDescription(v[i][1]);
@@ -298,7 +302,7 @@ double Controller::showStats(int id) {//convert to datetime for calculations
 	// show the user profile to the view. (hours, etc.)
 	User* u = new User(id);
 	double total_hours;
-	for (int i = 0; i < u->getEventsWorked().size(); i++) {
+	for (unsigned int i = 0; i < u->getEventsWorked().size(); i++) {
 		total_hours += difftime(u->getEventsWorked()[i]->getEndTime(), u->getEventsWorked()[i]->getStartTime())/360;
 	}
 	return total_hours;
@@ -352,7 +356,7 @@ vector<int> Controller::showOrganizedEvents(int id){
 	User* u = new User(id);
 	vector<int> num_organized_events;
 	vector<Event*> e = u->getOrganizedEvents();
-	for (int i = 0; i < e.size(); i++) {
+	for (unsigned int i = 0; i < e.size(); i++) {
 		num_organized_events.push_back(e[i]->getEventId());
 	}
 	return num_organized_events;	
@@ -362,7 +366,7 @@ vector<int> Controller::showEventsWorked(int id){
 	User* u = new User(id);
 	vector<int> num_events_worked;
 	vector<EventPosition*> ep = u->getEventsWorked();
-	for (int i = 0; i < ep.size(); i++) {
+	for (unsigned int i = 0; i < ep.size(); i++) {
 		num_events_worked.push_back(ep[i]->getEvent()->getEventId());
 	}
 	return num_events_worked;
