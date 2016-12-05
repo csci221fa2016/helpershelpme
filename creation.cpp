@@ -6,8 +6,6 @@
 #include <iostream>
 #include <string>
 #include "creation.h"
-#include <ctime>
-#include <time.h>
 #include "string.h"
 using namespace std;
 
@@ -121,6 +119,7 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 		cout << "Error in binding SQL statement " << sql;
 		return -1;
 	}
+	
 	retval = sqlite3_bind_text(s, 0, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		userid = sqlite3_column_int(s, 0);
@@ -230,8 +229,6 @@ int Creation::createEventPosition(int eventid, int posid, string _description, i
 		cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
 		return -1;
 	}
-	sqlite3_reset(s);
-
 	//Finished putting values into eventpositions table, now need to put values into vacancies table.
 
 	sql = "insert into vacancies (eventid, posid, name, desc, openings) values (?, ?, ?, ?, ?)";
@@ -250,17 +247,17 @@ int Creation::createEventPosition(int eventid, int posid, string _description, i
 		cout << "Error in binding SQL statement " << sql;
 		return -1;
 	}	
-	retval = sqlite3_bind_text(s, 2, _name.c_str(), _name.size(), SQLITE_STATIC);
+//	retval = sqlite3_bind_text(s, 2, _name.c_str(), _name.size(), SQLITE_STATIC);
+//	if (retval != SQLITE_OK) {
+//		cout << "Error in binding SQL statement " << sql;
+//		return -1;
+//	}
+	retval = sqlite3_bind_text(s, 2, _description.c_str(), _description.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
 		return -1;
 	}
-	retval = sqlite3_bind_text(s, 3, _description.c_str(), _description.size(), SQLITE_STATIC);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return -1;
-	}
-	retval = sqlite3_bind_int(s, 4, _openings);
+	retval = sqlite3_bind_int(s, 3, _openings);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
 		return -1;
