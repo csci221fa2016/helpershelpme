@@ -11,7 +11,7 @@
 #include <cgicc/HTTPRedirectHeader.h>
 #include <cgicc/HTTPCookie.h>
 
-//#include "controller.h"
+#include "controller.h"
 
 using namespace std;
 using namespace cgicc;
@@ -26,7 +26,7 @@ int main () {
     //<==================================================================CGI DATA PROCESS======================================>    
     //retrieves form information and sends it to controller
     vector<string> loginfo;
- /*   Controller control;
+    Controller control;
     const_form_iterator phoneNum = cgi.getElement("user_phone_number");
     if(phoneNum != (*cgi).end() && !phoneNum->isEmpty())
         loginfo.push_back((*phoneNum).getStrippedValue());
@@ -34,7 +34,7 @@ int main () {
     if(pw != (*cgi).end() && !pw->isEmpty())
        loginfo.push_back((*pw).getStrippedValue());
     vector<string> success = control.signIn(loginfo);
-    cout << success[0] << success[1] << endl;
+    cout << success[0] << success[1] << "I showed up!" << endl;
     if(success[0] == "true") {
        string val;
        val.append(success[0]).append(";").append(success[1]);
@@ -44,8 +44,8 @@ int main () {
         //cout << HTTPRedirectHeader("/home.cgi") <<endl;
     } else {
         cout << "<p> Username or Password Invalid </p>" << endl;
-        cout << HTTPRedirectHeader("/view/lulu/login.cgi") <<endl;
-    }*/
+        cout << head() << "<meta http-equiv=\"refresh\" content=\"0; /view/lulu/login.cgi\" />" << head() << endl;
+    }
 
     //===========================================================Log in==============================================>
  /*   form_iterator it = cgi.getElement("user_phone_number");  
