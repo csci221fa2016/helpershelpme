@@ -1,4 +1,4 @@
-GTEST_DIR = /usr/local/home/cbaily/csci-221/helpershelpme/chadTest/ls/googletest
+GTEST_DIR = /var/www/html/csci221fa2016/googletest/googletest
 CXX = g++
 CXXFLAGS = -ansi -Wall -ggdb3 -isystem $(GTEST_DIR)/include -Wextra -lpthread
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
