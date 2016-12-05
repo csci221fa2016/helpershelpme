@@ -268,13 +268,11 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 }
 
 vector<string> Controller::signIn(vector<string> v) {
-	hash<string> pw_hash;
-	const size_t dbPass = pw_hash(v[1]);
-	//send to database to verify
-	tr1::hash<string> str_hash;
-	vector<string> ret;
 	Creation* c = new Creation();
-	if(str_hash(v[1]) == dbPass){
+	string dbPass = c->logIn(v[0]);
+	//send to database to verify
+	vector<string> ret;
+	if(v[1] == dbPass){
 		int uId = c->searchUser(v[0]);
 		ret.push_back("true");
 		string Result;
