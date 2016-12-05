@@ -47,7 +47,7 @@ eventposition.o: user.h event.h eventposition.h sqlite3.h eventposition.cpp
 	$(CXX) -std=c++11 -c eventposition.cpp
 
 creation: creation.o eventposition.o sqlite3.o user.o event.o main.o
-	g++ -ldl -pthread -lsqlite3 -o creation.o sqlite3.o main.o user.o event.o eventposition.o
+	g++ -ldl -pthread -lsqlite3 -o creation creation.o sqlite3.o main.o user.o event.o eventposition.o
 
 creation.o: creation.h user.h event.h eventposition.h sqlite3.h creation.cpp
 	$(CXX) -std=c++11 -c creation.cpp
