@@ -116,7 +116,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 
 vector<string> Controller::showUserInfo(int id) {
 	vector<string> v;
-	Creation c = new Creation();
+	Creation* c = new Creation();
 	if(c->findUser(id)){
 		User* u = new User(id);
 		v.push_back(u->getName());
