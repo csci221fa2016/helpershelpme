@@ -10,9 +10,9 @@ TEST(Controller, sendUser)
 	Controller* c = new Controller();
 	int id = 0;
 	vector<string> v;
-	v[0] = "Joe Blow";
-	v[1] = "8888888888";
-	v[2] = "JoePass2";
+	v.push_back("Joe Blow");
+	v.push_back("8888888888");
+	v.push_back("JoePass2");
 	ASSERT_EQ(true, c->sendUser(v, id) != 0);
 }
 TEST(Controller, sendUser2)
@@ -20,9 +20,9 @@ TEST(Controller, sendUser2)
     	Controller* c = new Controller();
     	int id = 1;
     	vector<string> v;
-    	v[0] = "Joe Blow";
-    	v[1] = "8888888888";
-    	v[2] = "JoePass2";
+	v.push_back("Joe Blow");
+	v.push_back("8888888888");
+	v.push_back("JoePass2");
     	ASSERT_EQ(true, c->sendUser(v, id) == 0);
 }
 TEST(Controller, showUserInfo)

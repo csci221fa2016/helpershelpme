@@ -5,11 +5,10 @@ CXXFLAGS = -ansi -Wall -g -ggdb3 -isystem $(GTEST_DIR)/include -Wextra -lpthread
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
-test: testcontroller.cpp
-
 all: user event eventposition creation controller userprofile.o eventpage.cgi login.cgi home.cgi login_info.cgi sign_up_info.cgi eventcreation.cgi
 
-test: testcontroller
+.PHONY: test
+test: testcontroller user_test
 
 gtest-all.o: $(GTEST_SRCS)
 	$(CXX) $(CXXFLAGS) -I$(GTEST_DIR) -c $(GTEST_DIR)/src/gtest-all.cc
@@ -17,23 +16,20 @@ gtest-all.o: $(GTEST_SRCS)
 gtest_main.o: $(GTEST_SRCS)
 	$(CXX) $(CXXFLAGS) -I$(GTEST_DIR) -c $(GTEST_DIR)/src/gtest_main.cc
 
-gtest.a : gtest-all.o
-	$(AR) $(ARFLAGS) $@ $^
-
 gtest_main.a : gtest-all.o gtest_main.o
-	$(AR) $(ARFLAGS) $@ $^
+	$(AR) $(ARFLAGS) gtest_main.a gtest-all.o gtest_main.o
 
 user_test.o: user_test.cpp user.h $(GTEST_HEADERS)
 	$(CXX) $(CXXFLAGS) -lsqlite3 -c user_test.cpp
 
-user_test: user_test.o gtest_main.a user.o
-	$(CXX) $(CXXFLAGS) -lpthread -o user_test user_test.o gtest_main.a user.o
+user_test: user_test.o gtest_main.a user.o event.o eventposition.o
+	$(CXX) $(CXXFLAGS) -lpthread -lsqlite3 -o user_test user_test.o gtest_main.a user.o event.o eventposition.o
 
 testcontroller.o: testcontroller.cpp controller.h event.h user.h eventposition.h creation.h $(GTEST_HEADERS)
 	$(CXX) $(CXXFLAGS) -c testcontroller.cpp
 
-testcontroller: testcontroller.o controller.h gtest_main.a
-	$(CXX) $(CXXFLAGS) -o testcontroller testcontroller.o gtest_main.a
+testcontroller: testcontroller.o controller.h controller.o creation.o user.o event.o eventposition.o gtest_main.a
+	$(CXX) $(CXXFLAGS) -lsqlite3 -o testcontroller testcontroller.o controller.o event.o eventposition.o creation.o user.o gtest_main.a
 
 main.o: main.cpp controller.h user.h event.h eventposition.h
 	g++ -ldl -g -Wall -c main.cpp
@@ -115,4 +111,4 @@ sqlite3.o: sqlite3.h sqlite3.c
 
 .PHONY: clean
 clean:
-	rm -f *.o *.cgi controller.o controller event.o event eventposition eventposition.o login.cgi login.o home.cgi home.o
+	rm -f *.o *.cgi
