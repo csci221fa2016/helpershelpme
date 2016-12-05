@@ -23,7 +23,7 @@ class Creation;
 Controller::Controller() {}
 
 int Controller::sendUser(vector<string> v, int id) {
-	if (id == 0) {
+	if (id == -1) {
 		// make a new user
 		Creation* c = new Creation();
 		// 0 -name, 1 - phone#, 2-pass
@@ -116,9 +116,16 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 
 vector<string> Controller::showUserInfo(int id) {
 	vector<string> v;
-	User* u = new User(id);
-	v.push_back(u->getName());
-	v.push_back(u->getPhoneNumber());
+	Creation* c = new Creation();
+	if(c->findUser(id)){
+		User* u = new User(id);
+		v.push_back(u->getName());
+		v.push_back(u->getPhoneNumber());
+		return v;
+	}else{
+		throw runtime_error("Not a user.");
+		return v;
+	}
 	return v;
 }
 
