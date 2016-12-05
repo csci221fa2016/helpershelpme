@@ -1,5 +1,6 @@
 #include <iostream>
 #include "controller.h"
+#include "creation.h"
 #include "gtest/gtest.h"
 using namespace std;
 
@@ -36,4 +37,9 @@ TEST(controller, showUserInfo)
 TEST(controller, showEventInfo)
 {
 	Controller* cont = new Controller();
+}
+
+int main(int argc, char **argv) {
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
 }		
