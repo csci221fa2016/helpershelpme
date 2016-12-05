@@ -5,11 +5,11 @@ CXXFLAGS = -ansi -Wall -ggdb3 -isystem $(GTEST_DIR)/include -Wextra -lpthread
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
-test: testcontroller.cpp
-
 all: user event eventposition creation controller userprofile.o eventpage.cgi login.cgi home.cgi eventcreation.cgi
 
-testviet-all.o: $(GTEST_SRCS)
+test: testcontroller
+
+gtest-all.o: $(GTEST_SRCS)
 	$(CXX) $(CXXFLAGS) -I$(GTEST_DIR) -c $(GTEST_DIR)/src/gtest-all.cc
 
 gtest_main.o: $(GTEST_SRCS)
@@ -27,8 +27,8 @@ event_test.o: event_test.cpp event.h $(GTEST_HEADERS)
 event_test: event_test.o gtest_main.a
 	$(CXX) $(CXXFLAGS) -o event_test event_test.o gtest_main.a
 
-testcontroller.o: testcontroller.cpp controller.o $(GTEST_HEADERS)
-	$(CXX) $(CXXFLAGS) -c testcontroller.cpp
+testcontroller.o: testcontroller.cpp controller.h event.h user.h eventposition.h creation.h $(GTEST_HEADERS)
+	$(CXX) $(CXXFLAGS) -g -Wall -c testcontroller.cpp
 
 testcontroller: testcontroller.o gtest_main.a
 	$(CXX) $(CXXFLAGS) -o testcontroller testcontroller.o gtest_main.a
