@@ -97,7 +97,7 @@ eventpage.o: eventpage.cpp styles.h controller.h
 	$(CXX) -std=c++11 -c eventpage.cpp
 
 eventcreation.cgi: eventcreation.o controller.o user.o event.o eventposition.o creation.o
-	$(CXX) -ldl -lpthreadi -lsqlite3 -lcgicc -o eventcreation.cgi eventcreation.o controller.o creation.o user.o event.o eventposition.o sqlite3.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o eventcreation.cgi eventcreation.o controller.o creation.o user.o event.o eventposition.o sqlite3.o
 
 eventcreation.o: eventcreation.cpp styles.h controller.h
 	$(CXX) -std=c++11 -c eventcreation.cpp

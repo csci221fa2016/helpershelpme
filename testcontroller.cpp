@@ -6,7 +6,7 @@ using namespace std;
 
 TEST(controller, sendUser)
 {
-	Controller c = new Controller;
+	Controller c = new Controller();
 	int id = 0;
 	vector<string> v = new vector<string>;
 	v[0] = "Joe Blow";
@@ -16,7 +16,7 @@ TEST(controller, sendUser)
 }
 TEST(controller, sendUser2)
 {
-    	Controller c = new Controller;
+    	Controller c = new Controller();
     	int id = 1;
     	vector<string> v = new vector<string>;
     	v[0] = "Joe Blow";
@@ -26,7 +26,7 @@ TEST(controller, sendUser2)
 }
 TEST(controller, showUserInfo)
 {
-	Controller cont = new Controller;
+	Controller cont = new Controller();
 	Creation c = new Creation();
         int id = c->createUser("Joe Blow", "8888888888", "JoePass2");
 	vector<string> v = cont->showUserInfo(id);
