@@ -60,7 +60,6 @@ string User::getPhoneNumber() {
 vector<EventPosition*> User::getEventsWorked() {
 	vector<EventPosition*> events;
 	sqlite3_stmt *s;
-	int event;
 	const char *sql = "select * from eventpositions where userid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
