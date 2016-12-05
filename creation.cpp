@@ -5,6 +5,7 @@
 #include "sqlite3.h"
 #include <iostream>
 #include <string>
+#include <ctime>
 #include "creation.h"
 #include "string.h"
 using namespace std;
@@ -297,4 +298,22 @@ int Creation::createEventPosition(int eventid, int posid, string _description, i
 		//TODO make some error checkers here!
 	}
 	return eposid;
+}
+
+vector<int> Creation::getUpcoming(){
+	sqlite3_stmt *s;
+	time_t timer = time(NULL);
+	vector<int> upcoming;
+	
+	const char *sql = "SELECT eventid FROM events WHERE start > timer";
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
+		return upcoming;
+	}
+	while(sqlite3_step(s) == SQLITE_ROW) {
+		upcoming.push_back(sqlite3_column_int(s,0));
+	}
+	sqlite3_reset(s);
+	return upcoming;
 }
