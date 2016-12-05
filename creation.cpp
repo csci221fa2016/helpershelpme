@@ -149,12 +149,12 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 		cout << "Error in binding SQL statement " << sql;
 		return -1;
 	}
-	retval = sqlite3_bind_text(s, 2, _start.c_str(), _start.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_int(s, 2, (int)_start);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
 		return -1;
 	}
-	retval = sqlite3_bind_text(s, 3, _end.c_str(), _end.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_int(s, 3, (int)_end);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
 		return -1;

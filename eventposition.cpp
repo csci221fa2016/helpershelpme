@@ -190,8 +190,9 @@ void EventPosition::setDescription(string _description){
 	}
     sqlite3_reset(s);
 }
-
+//TODO: IMPLEMENT INDIVIDUAL START AND END TIMES FOR EVENTPOSITIONS
 void EventPosition::setStartTime(string _start) {
+/*
 	sqlite3_stmt *s;
 	const char *sql = "update events set start = ? where eventid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
@@ -214,9 +215,12 @@ void EventPosition::setStartTime(string _start) {
 	return;
     }
     sqlite3_reset(s);
+*/
 }
 
+//TODO: iMPLEMENT INDIVIDUAL START AND END TIMES FOR EVENTPOSITIONS
 void EventPosition::setEndTime(string _end){
+/*
     sqlite3_stmt *s;
     const char *sql = "update events set end = ? where eventid = ?";
     retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
@@ -239,6 +243,7 @@ void EventPosition::setEndTime(string _end){
 	return;
     }
     sqlite3_reset(s);
+*/
 }
 int EventPosition::getPosId() {
 	return posid;

@@ -1,3 +1,6 @@
+#ifndef CREATION_H
+#define CREATION_H
+
 #include <string>
 #include "sqlite3.h"
 using namespace std;
@@ -17,3 +20,5 @@ class Creation {
 	int createEventPosition(int eventid, int posid, string _description, int _openings, int userid);
 	vector<int> getUpcoming();
 };
+
+#endif
