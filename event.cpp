@@ -332,11 +332,13 @@ vector<EventPosition*> Event::getVolunteers() {
 		_eposid = sqlite3_column_int(s, 0);
 		_userid = sqlite3_column_int(s, 1);
 		_posid = sqlite3_column_int(s, 2);
-    	EventPosition *ep = new EventPosition(_eposid, eventid, _userid, _posid );
+    	EventPosition *ep = new EventPosition(eventid, _userid, _posid );
     	volunteers.push_back(ep);
 	}
 	sqlite3_reset(s);
     return volunteers;
 }
 
-
+int Event::getEventId(){
+	return eventid;
+}
