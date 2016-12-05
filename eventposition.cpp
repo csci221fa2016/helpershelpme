@@ -191,7 +191,7 @@ void EventPosition::setDescription(string _description){
     sqlite3_reset(s);
 }
 //TODO: IMPLEMENT INDIVIDUAL START AND END TIMES FOR EVENTPOSITIONS
-void EventPosition::setStartTime(string _start) {
+void EventPosition::setStartTime(time_t _start) {
 /*
 	sqlite3_stmt *s;
 	const char *sql = "update events set start = ? where eventid = ?";
@@ -219,7 +219,7 @@ void EventPosition::setStartTime(string _start) {
 }
 
 //TODO: iMPLEMENT INDIVIDUAL START AND END TIMES FOR EVENTPOSITIONS
-void EventPosition::setEndTime(string _end){
+void EventPosition::setEndTime(time_t _end){
 /*
     sqlite3_stmt *s;
     const char *sql = "update events set end = ? where eventid = ?";

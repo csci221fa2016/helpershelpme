@@ -22,7 +22,6 @@ class EventPosition
 		string getDescription();
 		time_t getStartTime();
 		time_t getEndTime();
-		int getPosId();
 		void setDescription(string _description);
 		void setVolunteer(int _userId);
 		void setPosType(int _posid);
