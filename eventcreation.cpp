@@ -30,34 +30,64 @@ printForm(const Cgicc& cgi)
 
    cout << "<tr><td class=\"title\">Event Name</td>"
         << "<td class=\"form\">"
-        << "<input type=\"text\" name=\"ename\" value=\"fundraiser\""
+        << "<input type=\"text\" name=\"ename\" value=\"\""
         << "</td></tr>" << endl;
 
    cout << "<tr><td class=\"title\">Event Description</td>"
         << "<td class=\"form\">"
-        << "<input type=\"text\" name=\"edescription\" value=\"What is it about? What will people do at it?\""
+        << "<input type=\"text\" name=\"edescription\" value=\"\""
         << "</td></tr>" << endl;
 
    cout << "<tr><td class=\"title\">Event Location</td>"
         << "<td class=\"form\">"
-        << "<input type=\"text\" name=\"elocation\" value=\"Where will it be at?\""
+        << "<input type=\"text\" name=\"elocation\" value=\"\""
         << "</td></tr>" << endl;
 
    cout << "<tr><td class=\"title\">Event Date Start</td>"
         << "<td class=\"form\">"
-        << "<input type=\"text\" name=\"estart\" value=\"When does it start? (DD/MM/YYYY)\""
-        << "</td></tr>" 
+        << "<input type=\"text\" name=\"estart\" value=\"YYYY-MM-DD HH:MM\""
+        << "</td></tr>" << endl;
  
    cout << "<tr><td class=\"title\">Event Date End</td>"
         << "<td class=\"form\">"
-        << "<input type=\"text\" name=\"efinish\" value=\"When does it end? (YYYY/MM/DD)\""
-        << "</td></tr>"
+        << "<input type=\"text\" name=\"efinish\" value=\"YYYY-MM-DD HH:MM\""
+        << "</td></tr>" << endl;
 
-   << endl;  cout << "</table>" << endl;
+   cout << "<tr><td class=\"title\">Event Position 1</td>"
+        << "<td class=\"form\">"
+        << "<input type=\"text\" name=\"epos1\" value=\"\""
+        << "</td></tr>" << endl;
 
-   cout << "<div class=\"center\"><p>"
-        << "<input type=\"button\" name=\"epos\"  value=\"Add Event Position\" />"
-        << "</p></div></form>" << endl;
+   cout << "<tr><td class=\"title\">Event Position 1 Number</td>"
+        << "<td class=\"form\">"
+        << "<input type=\"text\" name=\"epos1num\" value=\"\""
+        << "</td></tr>" << endl;
+
+   cout << "<tr><td class=\"title\">Event Position 2</td>"
+        << "<td class=\"form\">"
+        << "<input type=\"text\" name=\"epos2\" value=\"\""
+        << "</td></tr>" << endl;
+ 
+   cout << "<tr><td class=\"title\">Event Position 2 Number</td>"
+        << "<td class=\"form\">"
+        << "<input type=\"text\" name=\"epos2num\" value=\"\""
+        << "</td></tr>" << endl;
+ 
+   cout << "<tr><td class=\"title\">Event Position 3</td>"
+        << "<td class=\"form\">"
+        << "<input type=\"text\" name=\"epos3\" value=\"\""
+        << "</td></tr>" << endl;
+ 
+   cout << "<tr><td class=\"title\">Event Position 3 Number</td>"
+        << "<td class=\"form\">"
+        << "<input type=\"text\" name=\"epos3num\" value=\"\""
+        << "</td></tr>" << endl;
+ 
+   cout << "</table>" << endl;
+
+/*   cout << "<div class=\"center\"><p>"
+        << "<input type=\"submit\" name=\"epos\"  value=\"Add Event Position\" />"
+        << "</p></div></form>" << endl;*/
 
    cout << "<div class=\"center\"><p>"
         << "<input type=\"submit\" name=\"login\"  value=\"Log In\" />"
@@ -192,9 +222,33 @@ int main(int argc, char **argv) {
    	  cout << hr().set("class", "half") << endl;
 	 
 	 //EventCreation Code
-	
+         vector<string> eventcreate;
+	 const_form_iterator eventname = cgi.getElement("ename");
+         if(eventname!= (*cgi).end() && ! eventname ->isEmpty())
+             eventcreate.push_back((*eventname).getStrippedValue());
+         const_form_iterator eventdesc = cgi.getElement("edescrition");
+         if(eventdesc!= (*cgi).end() && ! eventdesc ->isEmpty())
+            eventcreate.push_back((*eventdesc).getStrippedValue());
+         const_form_iterator eventloc = cgi.getElement("elocation");
+         if(eventloc!= (*cgi).end() && ! eventloc ->isEmpty())
+            eventcreate.push_back((*eventloc).getStrippedValue());
+         const_form_iterator eventst = cgi.getElement("estart");
+         if(eventst!= (*cgi).end() && ! eventst ->isEmpty())
+            eventcreate.push_back((*eventst).getStrippedValue());
+         const_form_iterator eventfin = cgi.getElement("efinish");
+         if(eventfin!= (*cgi).end() && ! eventfin ->isEmpty())
+            eventcreate.push_back((*eventfin).getStrippedValue());
+         const_form_iterator eventposi1 = cgi.getElement("epos1");
+         if(eventposi1!= (*cgi).end() && ! eventposi1 ->isEmpty())
+            eventcreate.push_back((*eventposi1).getStrippedValue());
+         const_form_iterator eventposi2 = cgi.getElement("epos2");
+         if(eventposi2!= (*cgi).end() && ! eventposi2->isEmpty())
+            eventcreate.push_back((*eventposi2).getStrippedValue());
+         const_form_iterator eventposi3 = cgi.getElement("epos3");
+         if(eventposi3!= (*cgi).end() && ! eventposi3->isEmpty())
+            eventcreate.push_back((*eventposi3).getStrippedValue());
 
-	  //FOOTER
+ 	  //FOOTER
 	   cout <<"<div class=\"wrapper row4\">"<< endl;
           cout << "<footer id=\"footer\" class=\"clear\">" <<  endl;
              cout << "<p class=\"fl_left\">Copyright &copy; 2013 - All Rights Reserved - <a href=\"#\">Domain Name</a></p>" <<endl;

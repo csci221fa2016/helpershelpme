@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
 		cout << style() << comment() << endl;
 		cout << styles;
 		cout << comment() << style() <<endl;
-		cout << title() << "Home" << title() << endl;
+		cout << title() << "Login/Sign Up" << title() << endl;
 		cout << head() << endl;
 		cout << "<body class =\"index\">" << endl;
 		cout<<"<div id=\"page-wrapper\">"<<endl;
