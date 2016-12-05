@@ -70,6 +70,18 @@ login.cgi: login.o controller.o user.o event.o sqlite3.o eventposition.o creatio
 login.o: login.cpp controller.h styles.h
 	$(CXX) -std=c++11 -c login.cpp
 
+login_info.cgi: login_info.o user.o event.o sqlite3.o eventposition.o creation.o controller.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o login_info.cgi login_info.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
+
+login_info.o: login_info.cpp controller.h
+	$(CXX) -std=c++11 -c login_info.cpp
+
+sign_up_info.cgi:
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o sign_up_info.cgi sign_up_info.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
+	
+sign_up_info.o: sign_up_info.cpp
+	$(CXX) -std=c++11 -c sign_up_info.cpp
+
 userprofile.cgi: userprofile.o controller.o user.o event.o eventposition.o sqlite3.o creation.o
 	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o userprofile.cgi userprofile.o user.o event.o eventposition.o creation.o sqlite3.o
 

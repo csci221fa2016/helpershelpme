@@ -94,7 +94,10 @@ int main(int argc, char **argv) {
 		cout << "</div>"<< endl;
 		cout << "<div id = \"login\">"<< endl;
 		cout << "<h1>Welcome Back!</h1>"<< endl;
-		cout << "<form action = \"/view/jtoledo/login_info.cgi\" method = \"post\">"<< endl;
+//		cout << "<form action = \"/view/jtoledo/login_info.cgi\" method = \"post\">"<< endl;
+		cout << "<form action = \"/view/lulu/login_info.cgi\" method = \"post\">"<< endl;
+//		cout << "<form action = \"/view/isarmien/login_info.cgi\" method = \"post\">"<< endl;
+//		cout << "<form action = \"login_info.cgi\" method = \"post\">"<< endl;
 		cout << "<div class = \"field-wrap\">"<< endl;
 		cout << "<label>Phone Number<span class = \"req\">*</span></label>" << endl;
 		cout << "<input type = \"number\" name=\"user_phone_number\"required autocomplete = \"off\"/>" << endl;
@@ -111,6 +114,7 @@ int main(int argc, char **argv) {
 		cout << "</div>" << endl;
 		cout << "</div>" << endl;
 		cout << "</div>" << endl;
+        
 		//<=========================================FOOTER DON'T TOUCH=============================================================>
 		cout<<"</section>"<<endl;
 		cout<<"<footer id=\"footer\">"<<endl;
