@@ -1,10 +1,10 @@
 GTEST_DIR = /var/www/html/csci221fa2016/googletest/googletest
 CXX = g++
-CXXFLAGS = -ansi -Wall -ggdb3 -isystem $(GTEST_DIR)/include -Wextra -lpthread
+CXXFLAGS = -ansi -Wall -g -ggdb3 -isystem $(GTEST_DIR)/include -Wextra -lpthread
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
-all: user event eventposition creation controller userprofile.o eventpage.cgi login.cgi home.cgi eventcreation.cgi
+all: user event eventposition creation controller userprofile.cgi eventpage.cgi login.cgi home.cgi eventcreation.cgi
 
 test: testcontroller
 
@@ -20,14 +20,14 @@ gtest.a : gtest-all.o
 gtest_main.a : gtest-all.o gtest_main.o
 	$(AR) $(ARFLAGS) $@ $^
 
-event_test.o: event_test.cpp event.h $(GTEST_HEADERS)
-	$(CXX) $(CXXFLAGS) -c event_test.cpp
+user_test.o: user_test.cpp user.h $(GTEST_HEADERS)
+	$(CXX) $(CXXFLAGS) -v -c user_test.cpp
 
-event_test: event_test.o gtest_main.a
-	$(CXX) $(CXXFLAGS) -o event_test event_test.o gtest_main.a
+user_test: user_test.o gtest_main.a
+	$(CXX) $(CXXFLAGS) -v -o user_test user_test.o gtest_main.a
 
 testcontroller.o: testcontroller.cpp controller.h event.h user.h eventposition.h creation.h $(GTEST_HEADERS)
-	$(CXX) $(CXXFLAGS) -g -Wall -c testcontroller.cpp
+	$(CXX) $(CXXFLAGS) -c testcontroller.cpp
 
 testcontroller: testcontroller.o gtest_main.a
 	$(CXX) $(CXXFLAGS) -o testcontroller testcontroller.o gtest_main.a
