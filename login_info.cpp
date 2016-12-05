@@ -19,6 +19,13 @@ using namespace cgicc;
 int main () {
     Cgicc cgi;
     HTTPCookie c1;
+    cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
+    cout << "<html>\n";
+    cout << "<head>\n";
+    cout << "<title>Redirecting</title>\n";
+    cout << "</head>\n";
+    cout << "<body>\n";
+    //<==================================================================CGI DATA PROCESS======================================>    
     //retrieves form information and sends it to controller
     vector<string> loginfo;
     Controller control;
@@ -32,7 +39,7 @@ int main () {
     if(success[0] == "true") {
        string val;
        val.append(success[0]).append(";").append(success[1]);
-       c.setValue(val);
+//       c.setValue(val);
         cout << HTTPRedirectHeader("/view/lulu/home.cgi") <<endl;
         //cout << HTTPRedirectHeader("/view/isarmien/home.cgi") <<endl;
         //cout << HTTPRedirectHeader("/home.cgi") <<endl;
@@ -40,14 +47,6 @@ int main () {
         cout << "<p> Username or Password Invalid </p>" << endl;
         cout << HTTPRedirectHeader("/view/lulu/login.cgi") <<endl;
     }
-//    cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
-    cout << "<html>\n";
-    cout << "<head>\n";
-    cout << "<title>Redirecting</title>\n";
-    cout << "</head>\n";
-    cout << "<body>\n";
-    //<==================================================================CGI DATA PROCESS======================================>    
-    vector<string> login;
     //===========================================================Log in==============================================>
 /*    form_iterator it = cgi.getElement("user_phone_number");  
     if( !it->isEmpty() && it != (*cgi).end()) {  
