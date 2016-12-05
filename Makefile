@@ -26,6 +26,12 @@ event_test.o: event_test.cpp event.h $(GTEST_HEADERS)
 event_test: event_test.o gtest_main.a
 	$(CXX) $(CXXFLAGS) -o event_test event_test.o gtest_main.a
 
+testcontroller.o: testcontroller.cpp controller.o $(GTEST_HEADERS)
+	$(CXX) $(CXXFLAGS) -c testcontroller.cpp
+
+testcontroller: testcontroller.o gtest_main.a
+	$(CXX) $(CXXFLAGS) -o testcontroller testcontroller.o gtest_main.a
+
 main.o: main.cpp controller.h user.h event.h eventposition.h
 	g++ -ldl -g -Wall -c main.cpp
 
