@@ -64,7 +64,38 @@ int main(int /*argc*/, char** /*argv*/) {
         // add button to sign up for event
         // once cookies are done add the usability here
         cout << "<div class=\"form\" >" << endl;
-        Controller c;
+
+    cout << "<table>\n" << endl;
+
+    cout << "<tr><td class=\"title\">Event Name: ____________________ <td>"
+	 << "</td></tr>" << endl;
+
+    cout << "<tr><td class=\"title\">Event Location: ____________________ <td>"
+	 << "</td></tr>" << endl;
+
+
+    cout << "<tr><td class=\"title\">Event Description: ____________________ <td>"
+	 << "</td></tr>" << endl;
+
+
+    cout << "<tr><td class=\"title\">Event Start: ____________________ <td>"
+	 << "</td></tr>" << endl;
+
+
+    cout << "<tr><td class=\"title\">Event Finish: ____________________ <td>"
+	 << "</td></tr>" << endl;
+
+    cout << "<tr><td class=\"title\">Event Positions: ____________________ <td>"
+	 << "</td></tr>" << endl;
+
+    cout << "<tr><td class=\"title\">Event Available Positions: ______ <td>"
+	 << "</td></tr>" << endl;
+
+
+
+    cout << "</table\n" << endl;
+
+
  /*       vector<vector<string> > evinfo = c.showEventInfo(1);
         cout << "<dl><dt><b>" << evinfo[0][0] << " Organizer: "
             << evinfo[0][1] << "</b><dt>"
@@ -94,14 +125,14 @@ int main(int /*argc*/, char** /*argv*/) {
 		cout<<"</section>"<<endl;
 		cout<<"<footer id=\"footer\">"<<endl;
 		cout<<"<ul class=\"icons\">"<<endl;
-		cout<<"<li><a href=\"#\" class=\"icon circle fa-twitter\"><span class=\"label\">Twitter</span></a></li>"<<endl;
+/*		cout<<"<li><a href=\"#\" class=\"icon circle fa-twitter\"><span class=\"label\">Twitter</span></a></li>"<<endl;
 		cout<<"<li><a href=\"#\" class=\"icon circle fa-facebook\"><span class=\"label\">Facebook</span></a></li>"<<endl;
 		cout<<"<li><a href=\"#\" class=\"icon circle fa-google-plus\"><span class=\"label\">Google+</span></a></li>"<<endl;
 		cout<<"<li><a href=\"#\" class=\"icon circle fa-github\"><span class=\"label\">Github</span></a></li>"<<endl;
 		cout<<"<li><a href=\"#\" class=\"icon circle fa-dribbble\"><span class=\"label\">Dribbble</span></a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"<ul class=\"copyright\">"<<endl;
-		cout<<"<li>&copy; Helpers Help me</li><li>Design: <a href=\"http://html5up.net\">HTML5 UP</a></li>"<<endl;
+		cout<<"<li>&copy; Helpers Help me</li><li>Design: <a href=\"http://html5up.net\">HTML5 UP</a></li>"<<endl;*/
 		cout<<"</ul>"<<endl;
 		cout<<"</footer>"<<endl;
 		cout<<"</div>"<<endl;

@@ -7,7 +7,7 @@ GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
 test: testcontroller.cpp
 
-all: user event eventposition creation controller userprofile.o eventpage.cgi login.cgi home.cgi login_info.cgi sign_up_info.cgi eventcreation.cgi
+all: user event eventposition creation controller userprofile.cgi eventpage.cgi login.cgi home.cgi login_info.cgi sign_up_info.cgi eventcreation.cgi
 
 test: testcontroller
 
