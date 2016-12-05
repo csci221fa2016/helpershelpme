@@ -119,8 +119,7 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 		cout << "Error in binding SQL statement " << sql;
 		return -1;
 	}
-		return -1;
-	}
+	
 	retval = sqlite3_bind_text(s, 0, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		userid = sqlite3_column_int(s, 0);
