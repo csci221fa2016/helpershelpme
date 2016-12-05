@@ -88,6 +88,7 @@ int main () {
          const CgiEnvironment& env = cgi.getEnvironment();
          const_cookie_iterator iter;
 
+         if(!env.getCookieList().empty()){
          for(iter= env.getCookieList().begin(); iter!= env.getCookieList().end(); ++iter){
           if(iter->getName()=="Authenticated"){
           string namedCookie = iter->getName();
@@ -98,13 +99,15 @@ int main () {
          }
          break;
          }
-         }
+         }}
+         else { cout << "no cookies" << endl; }
 
-        if(uID>=0){
+       /* if(uID>=0){
         cout << "Not Possible" << endl;
-        } else{
-        control.sendUser(newuser,-1);
-        }
+        } else{*/
+        int ui = control.sendUser(newuser,-1);
+        cout << "id " << ui << endl;
+       // }
 //	cout<<"<p> You full name is/"<<signup[0]<<"/ and phone number/"<<signup[1]<<"/and pass/"<<signup[2]<<"/"<<endl;
 
     //-1 if there is no user creating a user. userid if otherwise. sendUser returns

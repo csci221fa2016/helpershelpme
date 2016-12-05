@@ -19,8 +19,11 @@ using namespace cgicc;
 int main () {
     Cgicc cgi;
     HTTPCookie c1;
-    //cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
-    cout << HTTPRedirectHeader("/view/jtoledo/home.cgi") <<endl;
+    cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
+ //   cout << HTTPRedirectHeader("/home.cgi") <<endl;
+ //   cout << HTTPRedirectHeader("/view/lulu/home.cgi") <<endl;
+//    cout << HTTPRedirectHeader("/view/isarmien/home.cgi") <<endl;
+//    cout << HTTPRedirectHeader("/view/jtoledo/home.cgi") <<endl;
     cout << html() << head() << endl;
     cout << "<title>Redirecting</title>\n";
     cout << head() << body() << endl;
@@ -59,7 +62,8 @@ int main () {
          if(passw!= (*cgi).end() && ! passw->isEmpty())
             user.push_back((*passw).getStrippedValue());
 
-	control.signIn(user);
+	    vector<string> success = control.signIn(user);
+        cout << success[0] << success[1] << endl;
 
 
 

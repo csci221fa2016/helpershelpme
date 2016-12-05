@@ -68,7 +68,10 @@ int main(int argc, char **argv) {
 		cout << "<div class = \"tab-content\">" << endl;
 		cout << "<div id = \"signup\">" << endl;
 		cout << "<h1>Sign Up for Free</h1>" << endl;
-		cout << "<form action = \"/view/isarmien/login.cgi\" method = \"post\">" << endl;
+//		cout << "<form action = \"/view/jtoledo/login.cgi\" method = \"post\">"<< endl;
+		cout << "<form action = \"/view/lulu/sign_up_info.cgi\" method = \"post\">"<< endl;
+	//	cout << "<form action = \"/view/isarmien/login.cgi\" method = \"post\">"<< endl;
+//		cout << "<form action = \"/login.cgi\" method = \"post\">"<< endl;
 		cout << "<div class = \"top-row\">" << endl;
 		cout << "<div class = \"field-wrap\">" << endl;
 		cout << "<label> First Name<span class = \"req\">*</span> </label>" << endl;
@@ -95,8 +98,8 @@ int main(int argc, char **argv) {
 		cout << "<div id = \"login\">"<< endl;
 		cout << "<h1>Welcome Back!</h1>"<< endl;
 //		cout << "<form action = \"/view/jtoledo/login_info.cgi\" method = \"post\">"<< endl;
-//		cout << "<form action = \"/view/lulu/login_info.cgi\" method = \"post\">"<< endl;
-		cout << "<form action = \"/view/isarmien/home.cgi\" method = \"post\">"<< endl;
+		cout << "<form action = \"/view/lulu/login_info.cgi\" method = \"post\">"<< endl;
+	//	cout << "<form action = \"/view/isarmien/home.cgi\" method = \"post\">"<< endl;
 //		cout << "<form action = \"login_info.cgi\" method = \"post\">"<< endl;
 		cout << "<div class = \"field-wrap\">"<< endl;
 		cout << "<label>Phone Number<span class = \"req\">*</span></label>" << endl;
@@ -178,7 +181,7 @@ int main(int argc, char **argv) {
 	control.sendUser(newuser,-1);
 	}
 
-	cout << "<form action = \"/view/isarmien/home.cgi\" method = \"post\">"<< endl;
+//	cout << "<form action = \"/view/isarmien/home.cgi\" method = \"post\">"<< endl;
 
  
 	} catch(exception& e) {
