@@ -6,7 +6,9 @@ GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
 all: user event eventposition creation controller userprofile.o eventpage.cgi login.cgi home.cgi eventcreation.cgi
 
-testviet-all.o: $(GTEST_SRCS)
+test: testcontroller
+
+gtest-all.o: $(GTEST_SRCS)
 	$(CXX) $(CXXFLAGS) -I$(GTEST_DIR) -c $(GTEST_DIR)/src/gtest-all.cc
 
 gtest_main.o: $(GTEST_SRCS)
@@ -25,7 +27,7 @@ event_test: event_test.o gtest_main.a
 	$(CXX) $(CXXFLAGS) -o event_test event_test.o gtest_main.a
 
 testcontroller.o: testcontroller.cpp controller.h event.h user.h eventposition.h creation.h $(GTEST_HEADERS)
-	$(CXX) $(CXXFLAGS) -c testcontroller.cpp
+	$(CXX) $(CXXFLAGS) -g -Wall -c testcontroller.cpp
 
 testcontroller: testcontroller.o gtest_main.a
 	$(CXX) $(CXXFLAGS) -o testcontroller testcontroller.o gtest_main.a
