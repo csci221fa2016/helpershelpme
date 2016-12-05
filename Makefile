@@ -1,4 +1,4 @@
-GTEST_DIR = /usr/local/home/cbaily/csci-221/helpershelpme/chadTest/ls/googletest
+GTEST_DIR = /var/www/html/csci221fa2016/googletest/googletest
 CXX = g++
 CXXFLAGS = -ansi -Wall -ggdb3 -isystem $(GTEST_DIR)/include -Wextra -lpthread
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
@@ -97,7 +97,7 @@ eventpage.o: eventpage.cpp styles.h controller.h
 	$(CXX) -std=c++11 -c eventpage.cpp
 
 eventcreation.cgi: eventcreation.o controller.o user.o event.o eventposition.o creation.o
-	$(CXX) -ldl -lpthreadi -lsqlite3 -lcgicc -o eventcreation.cgi eventcreation.o controller.o creation.o user.o event.o eventposition.o sqlite3.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o eventcreation.cgi eventcreation.o controller.o creation.o user.o event.o eventposition.o sqlite3.o
 
 eventcreation.o: eventcreation.cpp styles.h controller.h
 	$(CXX) -std=c++11 -c eventcreation.cpp
