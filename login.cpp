@@ -149,31 +149,32 @@ int main(int argc, char **argv) {
 	vector<string> newuser;
 	string id;
 	int uID;
-         const_form_iterator firstname = cgi.getElement("user_first_name");
-         if(firstname!= (*cgi).end() && ! firstname->isEmpty())
-            newuser.push_back((*firstname).getStrippedValue());
+    const_form_iterator firstname = cgi.getElement("user_first_name");
+    if(firstname!= (*cgi).end() && ! firstname->isEmpty())
+       newuser.push_back((*firstname).getStrippedValue());
 
-         const_form_iterator pnum = cgi.getElement("user_phone_number_s");
-         if(pnum!= (*cgi).end() && ! pnum->isEmpty())
-            newuser.push_back((*pnum).getStrippedValue());
-         const_form_iterator passw = cgi.getElement("user_password_s");
-         if(passw!= (*cgi).end() && ! passw->isEmpty())
-            newuser.push_back((*passw).getStrippedValue());
+    const_form_iterator pnum = cgi.getElement("user_phone_number_s");
+    if(pnum!= (*cgi).end() && ! pnum->isEmpty())
+       newuser.push_back((*pnum).getStrippedValue());
+    const_form_iterator passw = cgi.getElement("user_password_s");
+    if(passw!= (*cgi).end() && ! passw->isEmpty())
+       newuser.push_back((*passw).getStrippedValue());
 
-         const CgiEnvironment& env = cgi.getEnvironment();
-         const_cookie_iterator iter;
+    const CgiEnvironment& env = cgi.getEnvironment();
+    const_cookie_iterator iter;
 
-         for(iter= env.getCookieList().begin(); iter!= env.getCookieList().end(); ++iter){
-          if(iter->getName()=="Authenticated"){
+    for(iter= env.getCookieList().begin(); iter!= env.getCookieList().end(); ++iter){
+       if(iter->getName()=="Authenticated"){
           string namedCookie = iter->getName();
-         if(iter->getValue().find("true")){
-         size_t found = iter->getValue().find(";");
-         id = iter->getValue().substr(0,found);
-         uID = stoi(id);
-         }
-         break;
-         }
-         }
+          if(iter->getValue().find("true")){
+              size_t found = iter->getValue().find(";");
+              id = iter->getValue().substr(found);
+              uID = stoi(id);
+              cout << "I logged in " << uID << endl;
+          }
+          break;
+        }
+    }
 
 	if(uID>=0){
 	cout << "Not Possible" << endl;
