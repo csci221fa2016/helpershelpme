@@ -22,13 +22,12 @@ class EventPosition
 		string getDescription();
 		time_t getStartTime();
 		time_t getEndTime();
-		int getPosId();
 		void setDescription(string _description);
 		void setVolunteer(int _userId);
 		void setPosType(int _posid);
-		void setStartTime(string _start);
-		int getPoisId();
-		void setEndTime(string _end);
+		void setStartTime(time_t _start);
+		int getPosId();
+		void setEndTime(time_t _end);
 };
 
 #endif

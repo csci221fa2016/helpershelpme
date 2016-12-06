@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-//#include "controller.h"
+#include "controller.h"
 #include "cgicc/CgiDefs.h"
 #include "cgicc/Cgicc.h"
 #include "cgicc/HTTPHTMLHeader.h"
@@ -34,10 +34,6 @@ int main(int argc, char** argv){
 							cout<<"<li class=\"submenu\">"<<endl;
 								cout<<"<a href=\"#\">Menu</a>"<<endl;
 								cout<<"<ul>"<<endl;
-									cout<<"<li><a href=\"left-sidebar.html\">Rankings</a></li>"<<endl;
-									cout<<"<li><a href=\"right-sidebar.html\">News</a></li>"<<endl;
-									cout<<"<li><a href=\"no-sidebar.html\">Donate</a></li>"<<endl;
-									cout<<"<li><a href=\"contact.html\">Contact</a></li>"<<endl;
 									cout<<"<li class=\"submenu\">"<<endl;
 										cout<<"<a href=\"#\">Events</a>"<<endl;
 										cout<<"<ul>"<<endl;
@@ -48,9 +44,14 @@ int main(int argc, char** argv){
 											cout<<"<li><a href=\"#\">Past Events</a></li>"<<endl;
 										cout<<"</ul>"<<endl;
 									cout<<"</li>"<<endl;
+									cout<<"<li><a href=\"left-sidebar.html\">Rankings</a></li>"<<endl;
+									cout<<"<li><a href=\"right-sidebar.html\">News</a></li>"<<endl;
+									cout<<"<li><a href=\"no-sidebar.html\">Profile</a></li>"<<endl;
+									cout<<"<li><a href=\"contact.html\">Contact</a></li>"<<endl;
+									
 								cout<<"</ul>"<<endl;
 							cout<<"</li>"<<endl;
-							cout<<"<li><a href=\"#\" class=\"button special\">Login in/Sign Up</a></li>"<<endl;
+							cout<<"<li><a href=\"login.cgi\" class=\"button special\">Log in</a></li>"<<endl;
 						cout<<"</ul>"<<endl;
 					cout<<"</nav>"<<endl;
 				cout<<"</header>"<<endl;
@@ -60,11 +61,7 @@ int main(int argc, char** argv){
 						cout<<"<header>"<<endl;
 							cout<<"<h2>HELPERS HELP ME</h2>"<<endl;
 						cout<<"</header>"<<endl;
-						cout<<"<p>This is <strong>Twenty</strong>, a free\
-						<br />\
-						responsive template\
-						<br />\
-						by <a href=\"http://html5up.net\">HTML5 UP</a>.</p>"<<endl;
+						cout<<"<p>Create and Join volunteering events!</p>"<<endl;
 						cout<<"<footer>"<<endl;
 							cout<<"<ul class=\"buttons vertical\">"<<endl;
 								cout<<"<li><a href=\"#main\" class=\"button fit scrolly\">Tell Me More</a></li>"<<endl;
@@ -77,34 +74,20 @@ int main(int argc, char** argv){
 
 					cout<<"<header class=\"special container\">"<<endl;
 						cout<<"<span class=\"icon fa-bar-chart-o\"></span>"<<endl;
-						cout<<"<h2>As this is my <strong>twentieth</strong> freebie for HTML5 UP\
-						<br />\
-						I decided to give it a really creative name.</h2>"<<endl;
-						cout<<"<p>Turns out <strong>Twenty</strong> was the best I could come up with. Anyway, lame name aside,\
-						<br />\
-						it's minimally designed, fully responsive, built on HTML5/CSS3/<strong>skel</strong>,\
-						and, like all my stuff,\
-						<br />\
-						released for free under the <a href=\"http://html5up.net/license\">Creative Commons Attribution 3.0</a> license. Have fun!</p>"<<endl;
+						cout<<"<h2>The best website for volunteers and organizers\
+						<br />to come together.</h2>"<<endl;
+						cout<<"<p><strong>Helpers Help Me</strong> was designed to allow any volunteer to organize and get\
+						<br />involved in events.</p>"<<endl;
 					cout<<"</header>"<<endl;
 				//<!-- One -->
 						cout<<"<section class=\"wrapper style2 container special-alt\">"<<endl;
 							cout<<"<div class=\"row 50%\">"<<endl;
 								cout<<"<div class=\"8u 12u(narrower)\">"<<endl;
 									cout<<"<header>"<<endl;
-										cout<<"<h2>Behold the <strong>icons</strong> that visualize what \
-											you’re all about. or just take up space. your call bro.</h2>"<<endl;
+										cout<<"<h2>Joining is free and will give you access to many opportunities.</h2>"<<endl;
 									cout<<"</header>"<<endl;
-									cout<<"<p>Sed tristique purus vitae volutpat ultrices. Aliquam eu elit eget\
-										 arcu comteger ut fermentum lorem. Lorem ipsum dolor sit amet. Sed\
-										 tristique purus vitae volutpat ultrices. eu elit eget commodo. Sed\
-										 tristique purus vitae volutpat ultrices. Aliquam eu elit eget arcu\
-										 commodo.</p>"<<endl;
-									cout<<"<footer>"<<endl;
-										cout<<"<ul class=\"buttons\">"<<endl;
-											cout<<"<li><a href=\"#\" class=\"button\">Find Out More</a></li>"<<endl;
-										cout<<"</ul>"<<endl;
-									cout<<"</footer>"<<endl;
+									cout<<"<p>Once you register will have many options. Our tools and easy web design</br>\
+										will make everything for you</p>"<<endl;
 								cout<<"</div>"<<endl;
 								cout<<"<div class=\"4u 12u(narrower) important(narrower)\">"<<endl;
 									cout<<"<ul class=\"featured-icons\">"<<endl;
@@ -125,34 +108,31 @@ int main(int argc, char** argv){
 									cout<<"<section>"<<endl;
 										cout<<"<span class=\"icon featured fa-check\"></span>"<<endl;
 										cout<<"<header>"<<endl;
-											cout<<"<h3>This is Something</h3>"<<endl;
+											cout<<"<h3>Join Events</h3>"<<endl;
 										cout<<"</header>"<<endl;
-										cout<<"<p>Sed tristique purus vitae volutpat ultrices. Aliquam eu elit\
-											 eget arcu commodo suscipit dolor nec nibh. Proin a ullamcorper\
-											 elit, et sagittis turpis. Integer ut fermentum.</p>"<<endl;
+										cout<<"<p>Join events made by our users,\
+											 you will get the date, time and location of the event.</p>"<<endl;
 									cout<<"</section>"<<endl;
 							cout<<"</div>"<<endl;
 							cout<<"<div class=\"4u 12u()\">"<<endl;
 								cout<<"<section>"<<endl;
 									cout<<"<span class=\"icon featured fa-check\"></span>"<<endl;
 									cout<<"<header>"<<endl;
-										cout<<"<h3>Also Something</h3>"<<endl;
+										cout<<"<h3>Create Events</h3>"<<endl;
 									cout<<"</header>"<<endl;
-									cout<<"<p>Sed tristique purus vitae volutpat ultrices. Aliquam eu elit\
-										 eget arcu commodo suscipit dolor nec nibh. Proin a ullamcorper\
-										 elit, et sagittis turpis. Integer ut fermentum.</p>"<<endl;
+									cout<<"<p>Create you own event, set ht enumber of volunteers you\
+										 will need, time and location.</p>"<<endl;
 								cout<<"</section>"<<endl;
 							cout<<"</div>"<<endl;
 							cout<<"<div class=\"4u 12u(narrower)\">"<<endl;
 								cout<<"<section>"<<endl;
 									cout<<"<span class=\"icon featured fa-check\"></span>"<<endl;
 									cout<<"<header>"<<endl;
-										cout<<"<h3>Probably Something</h3>"<<endl;
+										cout<<"<h3>Rankings</h3>"<<endl;
 									cout<<"</header>"<<endl;
-									cout<<"<p>Sed tristique purus vitae volutpat ultrices.\
-										 Aliquam eu elit eget arcu commodo suscipit dolor \
-										nec nibh. Proin a ullamcorper elit, et sagittis\
-										 turpis. Integer ut fermentum.</p>"<<endl;
+									cout<<"<p>See how you are doing in the ranking table.\
+										Keep volunteering and gain points to climb\
+										on the table.</p>"<<endl;
 								cout<<"</section>"<<endl;
 							cout<<"</div>"<<endl;
 						cout<<"</div>"<<endl;
@@ -160,7 +140,7 @@ int main(int argc, char** argv){
 				//<!-- Three -->
 					cout<<"<section class=\"wrapper style3 container special\">"<<endl;
 						cout<<"<header class=\"major\">"<<endl;
-							cout<<"<h2>Next look at this <strong>cool stuff</strong></h2>"<<endl;
+							cout<<"<h2>Popular Events</strong></h2>"<<endl;
 						cout<<"</header>"<<endl;
 						cout<<"<div class=\"row\">"<<endl;
 							cout<<"<div class=\"6u 12u(narrower)\">"<<endl;
@@ -212,24 +192,56 @@ int main(int argc, char** argv){
 						cout<<"</div>"<<endl;
 						cout<<"<footer class=\"major\">"<<endl;
 							cout<<"<ul class=\"buttons\">"<<endl;
-								cout<<"<li><a href=\"#\" class=\"button\">See More</a></li>"<<endl;
+								cout<<"<li><a href=\"login.cgi\" class=\"button\">See More</a></li>"<<endl;
 							cout<<"</ul>"<<endl;
-						cout<<"</footer>"<<endl;
+
 					cout<<"</section>"<<endl;
 			cout<<"</article>"<<endl;
 			//<!-- CTA -->
 			cout<<"<section id=\"cta\">"<<endl;
 				cout<<"<header>"<<endl;
-					cout<<"<h2>Ready to do <strong>something</strong>?</h2>"<<endl;
-					cout<<"<p>Proin a ullamcorper elit, et sagittis turpis integer ut fermentum.</p>"<<endl;
+					cout<<"<h2>Ready to join our <strong>Community</strong>?</h2>"<<endl;
 				cout<<"</header>"<<endl;
 				cout<<"<footer>"<<endl;
 					cout<<"<ul class=\"buttons\">"<<endl;
-						cout<<"<li><a href=\"#\" class=\"button special\">Take My Money</a></li>"<<endl;
-						cout<<"<li><a href=\"#\" class=\"button\">LOL Wut</a></li>"<<endl;
+						cout<<"<li><a href=\"login.cgi#login\" class=\"button special\">Log In</a></li>"<<endl;
+						cout<<"<li><a href=\"login.cgi#signup\" class=\"button\">Sign Up</a></li>"<<endl;
 					cout<<"</ul>"<<endl;
 				cout<<"</footer>"<<endl;
 			cout<<"</section>"<<endl;
+
+	Controller control;
+	string id;
+	int uID;
+         const CgiEnvironment& env = cgi.getEnvironment();
+         const_cookie_iterator iter;
+
+
+         for(iter= env.getCookieList().begin(); iter!= env.getCookieList().end(); ++iter){
+          if(iter->getName()=="Authenticated"){
+          string namedCookie = iter->getName();
+         if(iter->getValue().find("true")){
+         size_t found = iter->getValue().find(";");
+         size_t found1 = iter->getValue().find("=");
+	 id = iter->getValue().substr(found1+1,found);
+         uID = stoi(id);
+         }
+         break;
+         }
+	}
+
+        if(uID>=0){
+        vector<string> logged = control.showUserInfo(uID);
+	
+	for(int i=0; i<logged.size(); i++){
+	cout<< logged[i] << endl;
+	}
+	
+        } else{
+	 cout<< "<p class=\"fl_left\"> NO User Found</a></p>" <<endl;
+       }
+
+
 
 		//<!-- Footer -->
 			cout<<"<footer id=\"footer\">"<<endl;

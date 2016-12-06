@@ -1,4 +1,6 @@
 language:   cpp
 compilier:  g++
-
+branches:
+  only:
+    - test-cases
 

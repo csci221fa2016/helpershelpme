@@ -36,11 +36,13 @@ void userID(string ui);
 //i.e personal information, events they have organized,
 //      volunteer positions they have held, etc.
 //Redirects to the login page if verification fails
-void printform(const Cgicc& cgi, Controller& c) {
+//void printform(const Cgicc& cgi, Controller& c) {
+void printform(const Cgicc& cgi) {
+
 //   if (evaluate(cgi)) {
-       vector<string> userinfo = c.showUserInfo(z);
+//       vector<string> userinfo = c.showUserInfo(z);
         //wait to see what type of vector
-       double stats = c.showStats(z);
+ /*      double stats = c.showStats(z);
        vector<int> eventinfo = c.showOrganizedEvents(z);
        vector<int> posinfo = c.showEventsWorked(z);
        cout   << "<table>\n"
@@ -60,10 +62,21 @@ void printform(const Cgicc& cgi, Controller& c) {
               << "<input type=\"submit\" value=\"Delete Event\"/>\n"
               << "</form>-->\n"
               << " <p><h3>Events created</h3></p>\n"
-              << " <dl>\n";
+              << " <dl>\n";*/
 
-       int x;
-    //***********IMPORTANT: go into controller later and verify the
+    cout << "<table>\n" << endl;
+    cout << "<tr><th>User's Name: ____________________ </th\n"
+
+	 << "<tr><th>Phone Number: ____________________ </th\n"
+
+	 << "<tr><th>User's Hours Volunteered: ____________________ </th\n"
+	<< endl;
+
+    cout << "</table\n" << endl;
+
+
+/*       int x;
+    ***********IMPORTANT: go into controller later and verify the
     //positions of the information AND function names.
        for( x = 0; x < eventinfo.size(); ++x){
            vector<string> einfo = c.showEvent(eventinfo[x]);
@@ -78,11 +91,11 @@ void printform(const Cgicc& cgi, Controller& c) {
            vector<string> pinfo = c.showEventPositions(posinfo[x]);
            cout << "<dt>Position: " << pinfo[x][0] 
                 << " " << "</dt>\n";
-                /*<< " in event " 
+                << " in event " 
                 << "<dd>Hours Worked: " <<  pinfo[x][2]
                 << "</dd>\n";*/
-       }
-       cout   << "</dl>" << endl;
+       
+//       cout   << "</dl>" << endl;
 /*   } else {
 //         cout << HTTPRedirectHeader("helpers-help.me/login.cgi")) << endl;
          cout << "<meta http-equiv=\"refresh\" content=\"0; url=helpers-help.me/view/lulu/login.cpp\"" << endl;
@@ -234,15 +247,18 @@ int main(int /*argc*/, char** /**/) {
        cout << " </nav>" << endl;
        cout << "</div>" << endl;
      
+//	Controller control;
+	printform(cgi);
+
        //Footer
-       cout << "<div class=\"wrapper row4\">"<< endl;
+/*       cout << "<div class=\"wrapper row4\">"<< endl;
        cout << "<footer id=\"footer\" class=\"clear\">" <<  endl;
        cout << "<p class=\"fl_left\">Copyright &copy; 2013 - All Rights Reserved - <a href=\"#\">Domain Name</a></p>" <<endl;
        cout << "<p class=\"fl_right\">Template by <a href=\"http://www.os-templates.com/\" title=\"Free Website Templates\">OS Templates</a></p>"<<endl;
        cout << "</footer>" <<endl;
        cout << "</div>" << endl;
        cout << body() << endl;
-       return EXIT_SUCCESS;
+       return EXIT_SUCCESS;*/
    } catch(exception& e) {
       cout << "<pre>" << e.what() << "</pre>";
       return EXIT_SUCCESS;

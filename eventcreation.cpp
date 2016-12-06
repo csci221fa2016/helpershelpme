@@ -1,3 +1,27 @@
+#include <new>
+#include <string>
+#include <vector>
+#include <stdexcept>
+#include <iostream>
+#include <cstdlib>
+
+#include "cgicc/CgiDefs.h"
+#include "cgicc/Cgicc.h"
+#include "cgicc/HTTPHTMLHeader.h"
+#include "cgicc/HTMLClasses.h"
+#include <cgicc/CgiEnvironment.h>
+
+#include "sqlite3.h"
+
+#if HAVE_SYS_UTSNAME_H
+#  include <sys/utsname.h>
+#endif
+
+#if HAVE_SYS_TIME_H
+#  include <sys/time.h>
+#endif
+
+/*
 #include <iostream>
 #include <vector>
 #include <string>
@@ -5,65 +29,89 @@
 #include "cgicc/CgiDefs.h"
 #include "cgicc/Cgicc.h"
 #include "cgicc/HTTPHTMLHeader.h"
-#include "cgicc/HTMLClasses.h"
+#include "cgicc/HTMLClasses.h"*/
 #include "styles.h"
 #include "controller.h"
+
 
 using namespace std;
 using namespace cgicc;
 
-void
-printForm(const Cgicc& cgi)
+//bool evaluate(const Cgicc& cgi);
+
+void printForm(const Cgicc& cgi)
 {
-
-	const CgiEnvironment& env = cgi.CgiEnvironment();
-	const_cookie_iterator iter;
-
-   for(iter= env.getCookieList().begin(); iter!= env.getCookierList().end(); ++iter){
-   
-   if(iter->getName()=="Authenticated"){
-	string namedCookie = iter->getName();
-	
-	if(iter->getValue().find("true")){
+//  if(evaluate(cgi)){
 
    cout << "<table>" << endl;
 
    cout << "<tr><td class=\"title\">Event Name</td>"
         << "<td class=\"form\">"
-        << "<input type=\"text\" name=\"ename\" value=\"fundraiser\""
+        << "<input type=\"text\" name=\"ename\" value=\"\""
         << "</td></tr>" << endl;
 
    cout << "<tr><td class=\"title\">Event Description</td>"
         << "<td class=\"form\">"
-        << "<input type=\"text\" name=\"edescription\" value=\"What is it about? What will people do at it?\""
+        << "<input type=\"text\" name=\"edescription\" value=\"\""
         << "</td></tr>" << endl;
 
    cout << "<tr><td class=\"title\">Event Location</td>"
         << "<td class=\"form\">"
-        << "<input type=\"text\" name=\"elocation\" value=\"Where will it be at?\""
+        << "<input type=\"text\" name=\"elocation\" value=\"\""
         << "</td></tr>" << endl;
 
    cout << "<tr><td class=\"title\">Event Date Start</td>"
         << "<td class=\"form\">"
-        << "<input type=\"text\" name=\"estart\" value=\"When does it start? (DD/MM/YYYY)\""
-        << "</td></tr>" 
+        << "<input type=\"text\" name=\"estart\" value=\"YYYY-MM-DD HH:MM\""
+        << "</td></tr>" << endl;
  
    cout << "<tr><td class=\"title\">Event Date End</td>"
         << "<td class=\"form\">"
-        << "<input type=\"text\" name=\"efinish\" value=\"When does it end? (YYYY/MM/DD)\""
-        << "</td></tr>"
+        << "<input type=\"text\" name=\"efinish\" value=\"YYYY-MM-DD HH:MM\""
+        << "</td></tr>" << endl;
 
-   << endl;  cout << "</table>" << endl;
+   cout << "<tr><td class=\"title\">Event Position 1</td>"
+        << "<td class=\"form\">"
+        << "<input type=\"text\" name=\"epos1\" value=\"\""
+        << "</td></tr>" << endl;
+
+   cout << "<tr><td class=\"title\">Event Position 1 Number</td>"
+        << "<td class=\"form\">"
+        << "<input type=\"text\" name=\"epos1num\" value=\"\""
+        << "</td></tr>" << endl;
+
+   cout << "<tr><td class=\"title\">Event Position 2</td>"
+        << "<td class=\"form\">"
+        << "<input type=\"text\" name=\"epos2\" value=\"\""
+        << "</td></tr>" << endl;
+ 
+   cout << "<tr><td class=\"title\">Event Position 2 Number</td>"
+        << "<td class=\"form\">"
+        << "<input type=\"text\" name=\"epos2num\" value=\"\""
+        << "</td></tr>" << endl;
+ 
+   cout << "<tr><td class=\"title\">Event Position 3</td>"
+        << "<td class=\"form\">"
+        << "<input type=\"text\" name=\"epos3\" value=\"\""
+        << "</td></tr>" << endl;
+ 
+   cout << "<tr><td class=\"title\">Event Position 3 Number</td>"
+        << "<td class=\"form\">"
+        << "<input type=\"text\" name=\"epos3num\" value=\"\""
+        << "</td></tr>" << endl;
+ 
+   cout << "</table>" << endl;
+
+/*   cout << "<div class=\"center\"><p>"
+        << "<input type=\"submit\" name=\"epos\"  value=\"Add Event Position\" />"
+        << "</p></div></form>" << endl;*/
 
    cout << "<div class=\"center\"><p>"
-        << "<input type=\"button\" name=\"epos\"  value=\"Add Event Position\" />"
-        << "</p></div></form>" << endl;
-
-   cout << "<div class=\"center\"><p>"
-        << "<input type=\"submit\" name=\"login\"  value=\"Log In\" />"
-        << "</p></div></form>" << endl;
+        << "<input type=\"submit\" name=\"subEvent\"  value=\"Submit Event\" />"
+//        << "</p></div></form>" << endl;
+    << "<form action = \"/view/isarmien/home.cgi\" method = \"post\">"<< endl;
 	
-	}
+/*	}
 	else
 	{
 //	cout << HTTPRedirectHeader(string("helpers-help.me/userprofile.cgi?id=").append(success[1])) << endl;
@@ -73,8 +121,30 @@ printForm(const Cgicc& cgi)
 	}
 	break;
    }
-   }
+   }*/
 }
+
+/*
+bool evaluate(Cgicc& cgi)
+{
+	const CgiEnvironment& env = cgi.CgiEnvironment();
+	const_cookie_iterator iter;
+
+   for(iter= env.getCookieList().begin(); iter!= env.getCookierList().end(); ++iter){
+   
+   if(iter->getName()=="Authenticated"){
+	string namedCookie = iter->getName();
+	
+	if(iter->getValue().find("true")){
+	return true;
+	}
+    break;
+    }
+    }
+
+    return false;
+
+}*/
 
 int main(int argc, char **argv) {
    try{
@@ -192,9 +262,67 @@ int main(int argc, char **argv) {
    	  cout << hr().set("class", "half") << endl;
 	 
 	 //EventCreation Code
-	
+	 int uID =-10;
+	 string id;
+         Controller control;
+	 vector<string> eventinfo;
+	 vector<string> eventpos;
+	 vector<vector<string>> eventcreate;
+	 const_form_iterator eventname = cgi.getElement("ename");
+         if(eventname!= (*cgi).end() && ! eventname ->isEmpty())
+             eventinfo.push_back((*eventname).getStrippedValue());
+         const_form_iterator eventdesc = cgi.getElement("edescrition");
+         if(eventdesc!= (*cgi).end() && ! eventdesc ->isEmpty())
+            eventinfo.push_back((*eventdesc).getStrippedValue());
+         const_form_iterator eventloc = cgi.getElement("elocation");
+         if(eventloc!= (*cgi).end() && ! eventloc ->isEmpty())
+            eventinfo.push_back((*eventloc).getStrippedValue());
+         const_form_iterator eventst = cgi.getElement("estart");
+         if(eventst!= (*cgi).end() && ! eventst ->isEmpty())
+            eventinfo.push_back((*eventst).getStrippedValue());
+         const_form_iterator eventfin = cgi.getElement("efinish");
+         if(eventfin!= (*cgi).end() && ! eventfin ->isEmpty())
+            eventinfo.push_back((*eventfin).getStrippedValue());
+         const_form_iterator eventposi1 = cgi.getElement("epos1");
+         if(eventposi1!= (*cgi).end() && ! eventposi1 ->isEmpty())
+            eventpos.push_back((*eventposi1).getStrippedValue());
+         const_form_iterator eventposi2 = cgi.getElement("epos2");
+         if(eventposi2!= (*cgi).end() && ! eventposi2->isEmpty())
+            eventpos.push_back((*eventposi2).getStrippedValue());
+         const_form_iterator eventposi3 = cgi.getElement("epos3");
+         if(eventposi3!= (*cgi).end() && ! eventposi3->isEmpty())
+            eventpos.push_back((*eventposi3).getStrippedValue());
+         const_form_iterator eventposi1n = cgi.getElement("epos1num");
+         if(eventposi1n!= (*cgi).end() && ! eventposi1n->isEmpty())
+            eventpos.push_back((*eventposi1).getStrippedValue());
+         const_form_iterator eventposi2n = cgi.getElement("epos2num");
+         if(eventposi2n!= (*cgi).end() && ! eventposi2n->isEmpty())
+            eventpos.push_back((*eventposi2n).getStrippedValue());
+         const_form_iterator eventposi3n = cgi.getElement("epos3num");
+         if(eventposi3n!= (*cgi).end() && ! eventposi3n->isEmpty())
+            eventpos.push_back((*eventposi3n).getStrippedValue());
 
-	  //FOOTER
+	 const CgiEnvironment& env = cgi.getEnvironment();
+	 const_cookie_iterator iter;
+
+	 for(iter= env.getCookieList().begin(); iter!= env.getCookieList().end(); ++iter){
+	  if(iter->getName()=="Authenticated"){
+	  string namedCookie = iter->getName();
+	 if(iter->getValue().find("true")){
+	 size_t found = iter->getValue().find(";");
+	 id = iter->getValue().substr(0,found);
+	 uID = stoi(id);
+	 }
+	 break;
+	 }
+	 }
+
+	 control.sendEvent(eventcreate,uID);
+
+//         cout << "<form action = \"/view/isarmien/home.cgi\" method = \"post\">"<< endl;
+
+
+ 	  //FOOTER
 	   cout <<"<div class=\"wrapper row4\">"<< endl;
           cout << "<footer id=\"footer\" class=\"clear\">" <<  endl;
              cout << "<p class=\"fl_left\">Copyright &copy; 2013 - All Rights Reserved - <a href=\"#\">Domain Name</a></p>" <<endl;

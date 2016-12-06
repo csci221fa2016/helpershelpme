@@ -20,7 +20,7 @@
 			$body = $('body'),
 			$header = $('#header'),
 			$banner = $('#banner');
-
+	
 		// Disable animations/transitions until the page has loaded.
 			$body.addClass('is-loading');
 

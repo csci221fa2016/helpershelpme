@@ -5,6 +5,7 @@
 #include "sqlite3.h"
 #include <iostream>
 #include <string>
+#include <ctime>
 #include "creation.h"
 #include "string.h"
 using namespace std;
@@ -65,7 +66,7 @@ int Creation::searchUser(string _phoneNumber) {
 bool Creation::findUser(int _userid) {
 	bool found = false;
 	sqlite3_stmt *s;
-	const char *sql = "select count(id) from users where id = " + _userid;
+	const char *sql = "select count(id) from users where id = " + (char)_userid;
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK){
 		cout << "Error in SQL statement " << sql;
@@ -76,6 +77,25 @@ bool Creation::findUser(int _userid) {
 		else if (sqlite3_column_int(s, 0) > 1) {
 			cout << "Multiple entries with the same primary key (userid) in the users table.";
 			return true;
+		}
+	}
+	return found;
+}
+
+bool Creation::findEvent(int _eventid) {
+	sqlite3_stmt *s;
+	bool found = false;
+	const char *sql = "SELECT count(eventid) FROM events WHERE eventid = " + (char)_eventid;
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	if (retval != SQLITE_OK){
+		cout << "Error in SQL statement " << sql;
+		return false;
+	}
+	while (sqlite3_step(s) == SQLITE_ROW) {
+		if (sqlite3_column_int(s, 0) == 1) found = true;
+		else if (sqlite3_column_int(s, 0) > 1) {
+			cout << "Multiple entries with the same primary key (eventid) in the events table.";
+			found = true;
 		}
 	}
 	return found;
@@ -149,12 +169,12 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 		cout << "Error in binding SQL statement " << sql;
 		return -1;
 	}
-	retval = sqlite3_bind_text(s, 2, _start.c_str(), _start.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_int(s, 2, (int)_start);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
 		return -1;
 	}
-	retval = sqlite3_bind_text(s, 3, _end.c_str(), _end.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_int(s, 3, (int)_end);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
 		return -1;
@@ -298,3 +318,22 @@ int Creation::createEventPosition(int eventid, int posid, string _description, i
 	}
 	return eposid;
 }
+
+vector<int> Creation::getUpcoming(){
+	sqlite3_stmt *s;
+	time_t timer = time(NULL);
+	vector<int> upcoming;
+	
+	const char *sql = "SELECT eventid FROM events WHERE start > timer";
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
+		return upcoming;
+	}
+	while(sqlite3_step(s) == SQLITE_ROW) {
+		upcoming.push_back(sqlite3_column_int(s,0));
+	}
+	sqlite3_reset(s);
+	return upcoming;
+}
+

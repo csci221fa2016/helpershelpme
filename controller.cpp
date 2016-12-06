@@ -18,10 +18,12 @@
 using namespace std;
 using tr1::hash;
 
+class Creation;
+
 Controller::Controller() {}
 
 int Controller::sendUser(vector<string> v, int id) {
-	if (id == 0) {
+	if (id == -1) {
 		// make a new user
 		Creation* c = new Creation();
 		// 0 -name, 1 - phone#, 2-pass
@@ -48,6 +50,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 	if (userId == -1) {
 		// runtime error. no one is making an event.
 		throw runtime_error("No active user is making the event.");
+		return -1;
 	}else{
 
 		Creation* c = new Creation();
@@ -107,14 +110,22 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 			c->createEventPosition(eventId, i,  v[i][0], value, userId);
 
 		}
+		return eventId;
 	}
 }
 
 vector<string> Controller::showUserInfo(int id) {
 	vector<string> v;
-	User* u = new User(id);
-	v.push_back(u->getName());
-	v.push_back(u->getPhoneNumber());
+	Creation* c = new Creation();
+	if(c->findUser(id)){
+		User* u = new User(id);
+		v.push_back(u->getName());
+		v.push_back(u->getPhoneNumber());
+		return v;
+	}else{
+		throw runtime_error("Not a user.");
+		return v;
+	}
 	return v;
 }
 
@@ -243,7 +254,7 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 		//convert v[1], v[2] to times
 		e->setDescription(v[0][3]);
 		e->setLocation(v[0][4]);
-		for(int i = 1; i<v.size();++i){
+		for(unsigned int i = 1; i<v.size();++i){
 			EventPosition* ep = new EventPosition(id, userId, i);
 			ep->setDescription(v[i][0]);
 			// ep->setDescription(v[i][1]);
@@ -257,13 +268,11 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 }
 
 vector<string> Controller::signIn(vector<string> v) {
-	hash<string> pw_hash;
-	const size_t dbPass = pw_hash(v[1]);
-	//send to database to verify
-	tr1::hash<string> str_hash;
-	vector<string> ret;
 	Creation* c = new Creation();
-	if(str_hash(v[1]) == dbPass){
+	string dbPass = c->logIn(v[0]);
+	//send to database to verify
+	vector<string> ret;
+	if(v[1] == dbPass){
 		int uId = c->searchUser(v[0]);
 		ret.push_back("true");
 		string Result;
@@ -298,7 +307,7 @@ double Controller::showStats(int id) {//convert to datetime for calculations
 	// show the user profile to the view. (hours, etc.)
 	User* u = new User(id);
 	double total_hours;
-	for (int i = 0; i < u->getEventsWorked().size(); i++) {
+	for (unsigned int i = 0; i < u->getEventsWorked().size(); i++) {
 		total_hours += difftime(u->getEventsWorked()[i]->getEndTime(), u->getEventsWorked()[i]->getStartTime())/360;
 	}
 	return total_hours;
@@ -352,7 +361,7 @@ vector<int> Controller::showOrganizedEvents(int id){
 	User* u = new User(id);
 	vector<int> num_organized_events;
 	vector<Event*> e = u->getOrganizedEvents();
-	for (int i = 0; i < e.size(); i++) {
+	for (unsigned int i = 0; i < e.size(); i++) {
 		num_organized_events.push_back(e[i]->getEventId());
 	}
 	return num_organized_events;	
@@ -362,7 +371,7 @@ vector<int> Controller::showEventsWorked(int id){
 	User* u = new User(id);
 	vector<int> num_events_worked;
 	vector<EventPosition*> ep = u->getEventsWorked();
-	for (int i = 0; i < ep.size(); i++) {
+	for (unsigned int i = 0; i < ep.size(); i++) {
 		num_events_worked.push_back(ep[i]->getEvent()->getEventId());
 	}
 	return num_events_worked;
