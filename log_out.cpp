@@ -19,10 +19,10 @@ using namespace cgicc;
 int main () {
 
 	Cgicc cgi;
-	cout << HTTPHTMLHeader().setCookie(HTTPCookie("user_id","6767","","",-1,"/",true)).setCookie(HTTPCookie("logged_in","true","","",-1,"/",true))<<endl;
+	cout << HTTPHTMLHeader().setCookie(HTTPCookie("user_id","6767","","",-1,"/view/jtoledo",true)).setCookie(HTTPCookie("logged_in","true","","",-1,"/view/jtoledo",true))<<endl;
 	cout<< html()<<endl;
 	cout<<head()<<title("Redirecting")<<endl;
-	cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"5;URL=http://helpers-help.me/home.cgi\">"<<endl;
+	cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"5;URL=home.cgi\">"<<endl;
 	cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
 	cout <<"<link rel=\"stylesheet\" href=\"css/main2.css\" />"<<endl;
 

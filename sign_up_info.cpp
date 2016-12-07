@@ -46,7 +46,7 @@ int main () {
 	cout<<html()<<endl;
 	cout << head()<<title("Log in") << endl;
 	if(returned_id!=0){
-		cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"6;URL=http://helpers-help.me/login.cgi\">"<<endl;
+		cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"6;URL=login.cgi\">"<<endl;
 
 	}
 	cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;

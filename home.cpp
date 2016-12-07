@@ -15,7 +15,6 @@ int main(int argc, char** argv){
 		Cgicc cgi;
 		const CgiEnvironment& env = cgi.getEnvironment();
 		vector<string> id;
-		int counter=0;
 		const_cookie_iterator iter;
 		if(env.getCookieList().empty()){
 		id.push_back(" NO COOKIES YET");
@@ -56,8 +55,8 @@ int main(int argc, char** argv){
 		cout<<"<li><a href=\"#\">See All Events</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">Upcoming Events</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">Closed Events</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">New Events</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">Past Events</a></li>"<<endl;
+		cout<<"<li><a href=\"eventcreation.cgi\">Create Event</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">My Events</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"</li>"<<endl;
 		cout<<"<li><a href=\"left-sidebar.html\">Rankings</a></li>"<<endl;

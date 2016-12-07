@@ -39,7 +39,7 @@ int main () {
 		cout << HTTPHTMLHeader().setCookie(HTTPCookie("user_id","6767")).setCookie(HTTPCookie("logged_in","true"))<<endl;
 		cout<< html()<<endl;
 		cout<<head()<<title("Redirecting")<<endl;
-		cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"0;URL=http://helpers-help.me/home.cgi\">"<<endl;
+		cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"0;URL=home.cgi\">"<<endl;
 	}else{
 		cout << HTTPHTMLHeader();
 		cout<<html()<<endl;
