@@ -38,7 +38,6 @@ int main () {
 	if( !it->isEmpty() &&it != (*cgi).end()) { 
 		signup.push_back(**it);
 	}
-	int returned_id =123;;
 	int returned_id = myController.sendUser(signup , -1);
 
 	cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
