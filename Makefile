@@ -111,4 +111,4 @@ sqlite3.o: sqlite3.h sqlite3.c
 
 .PHONY: clean
 clean:
-	rm -f *.o *.cgi controller user event eventposition user
+	rm -f *.o *.cgi controller user event eventposition
