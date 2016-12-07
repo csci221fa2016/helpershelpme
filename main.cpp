@@ -4,6 +4,6 @@
 #include "controller.h"
 
 int main() {
-    User* chad = new User(0);
+	User* u = new User(1);
     return 0;
 }
