@@ -5,7 +5,7 @@ CXXFLAGS = -ansi -Wall -g -ggdb3 -isystem $(GTEST_DIR)/include -Wextra -lpthread
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
-all: user event eventposition creation controller userprofile.o eventpage.cgi login.cgi home.cgi login_info.cgi sign_up_info.cgi eventcreation.cgi
+all: user event eventposition creation controller userprofile.o eventpage.cgi login.cgi home.cgi log_out.cgi login_info.cgi sign_up_info.cgi eventcreation.cgi
 
 .PHONY: test
 test: testcontroller user_test
@@ -75,6 +75,12 @@ login.cgi: login.o controller.o user.o event.o sqlite3.o eventposition.o creatio
 
 login.o: login.cpp controller.h styles.h
 	$(CXX) -std=c++11 -c login.cpp
+
+log_out.cgi: log_out.o user.o event.o sqlite3.o eventposition.o creation.o controller.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o log_out.cgi log_out.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
+
+log_out.o: log_out.cpp controller.h
+	$(CXX) -std=c++11 -c log_out.cpp
 
 login_info.cgi: login_info.o user.o event.o sqlite3.o eventposition.o creation.o controller.o
 	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o login_info.cgi login_info.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
