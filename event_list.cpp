@@ -1,74 +1,18 @@
-#include <new>
-#include <string>
-#include <vector>
-#include <stdexcept>
 #include <iostream>
-#include <cstdlib>
+#include <vector>
+#include <string>
 
 #include "cgicc/CgiDefs.h"
 #include "cgicc/Cgicc.h"
-#include "cgicc/HTTPCookie.h"
-#include "cgicc/HTTPRedirectHeader.h"
 #include "cgicc/HTTPHTMLHeader.h"
 #include "cgicc/HTMLClasses.h"
-#include <cgicc/CgiEnvironment.h>
+#include <cgicc/HTTPRedirectHeader.h>
 
-#include "sqlite3.h"
 #include "styles.h"
 #include "controller.h"
 
-
 using namespace std;
 using namespace cgicc;
-
-
-void printForm(const Cgicc& cgi)
-{
-
-	cout << "<div class = \"form\">" << endl;
-	cout << "<h1>Create your own Event!</h1>"<< endl;
-	cout << "<form action = \"eventcreation_info.cgi\" method = \"post\">"<< endl;	
-	cout << "<div class = \"field-wrap\">"<< endl;
-	cout << "<label>Event Name<span class = \"req\">*</span></label>" << endl;
-	cout << "<input type = \"text\" name=\"e_name\" required autocomplete = \"off\"/>" << endl;
-	cout << "</div>" << endl;
-	cout << "<div class = \"field-wrap\">"<< endl;
-	cout << "<label>Event Description (20 Character Max)<span class = \"req\">*</span></label>" << endl;
-	cout << "<input type = \"text\" name=\"e_descrip\" required autocomplete = \"off\"/>" << endl;
-	cout << "</div>" << endl;
-	cout << "<div class = \"field-wrap\">"<< endl;
-	cout << "<label>Event Location<span class = \"req\">*</span></label>" << endl;
-	cout << "<input type = \"text\" name=\"e_location\" required autocomplete = \"off\"/>" << endl;
-	cout << "</div>" << endl;
-	cout << "<div class = \"field-wrap\">"<< endl;
-	cout << "<label>___________________________Event Date Start<span class = \"req\">*</span></label>" << endl;
-	cout << "<input type = \"datetime-local\" name=\"e_date_start\" required autocomplete = \"off\"/>" << endl;
-	cout << "</div>" << endl;
-	cout << "<div class = \"field-wrap\">"<< endl;
-	cout << "<label>___________________________Event Date End<span class = \"req\">*</span></label>" << endl;
-	cout << "<input type = \"datetime-local\" name=\"e_date_end\" required autocomplete = \"off\"/>" << endl;
-	cout << "</div>" << endl;
-	cout << "<div id =\"new-field\">"<<endl;
-	cout<<"<div>"<<endl;
-	cout << "<div class = \"field-wrap\">"<< endl;
-	cout << "<label>____________Position number 1:</label>" << endl;
-	cout << "<input type = \"text\" name=\"e_position_1\" required autocomplete = \"off\"/>" << endl;
-	cout << "</div>" << endl;
-	cout << "<div class = \"field-wrap\">"<< endl;
-	cout << "<label>____________# of volunteers for position 1:<span class = \"req\">*</span></label>" << endl;
-	cout << "<input type = \"number\" name=\"e_position_1_number\" required autocomplete = \"off\"/>" << endl;
-	cout << "</div>" << endl;
-	cout << "</div>" <<endl;
-	cout <<"</div>"<<endl;	
-	cout<<"<input type=\"button\" id=\"new-field\" onclick=\"add_fields();\" value=\"Add More Positions\" />"<<endl;
-	cout << "<button type = \"submit\" class = \"button button-block\">Submit</button>" << endl;
-	cout<<"</form>"<<endl;
-	cout << "</div>"<<endl;
-	cout<<"</div>"<<endl;
-
-}
-
-
 int main(int argc, char **argv) {
 	try{
 		Cgicc cgi;
@@ -91,7 +35,7 @@ int main(int argc, char **argv) {
 		}
 		else{
 			cout<<HTTPRedirectHeader("login.cgi")<<endl;
-		}	
+		}
 		cout << html().set("lang", "en").set("dir", "ltr") << endl;
 		cout << html() <<endl;
 		cout << head() << endl;
@@ -100,7 +44,7 @@ int main(int argc, char **argv) {
 		cout << style() << comment() << endl;
 		cout << styles;
 		cout << comment() << style() <<endl;
-		cout << title() << "Login/Sign Up" << title() << endl;
+		cout << title() <<"Events" << title() << endl;
 		cout << head() << endl;
 		cout << "<body class =\"index\">" << endl;
 		cout<<"<div id=\"page-wrapper\">"<<endl;
@@ -133,8 +77,18 @@ int main(int argc, char **argv) {
 		cout<<"</ul>"<<endl;
 		cout<<"</nav>"<<endl;
 		cout<<"</header>"<<endl;
-		cout<<"<section id=\"banner\">"<<endl;
-		printForm(cgi);
+		cout<<"<section id=\"banner\">"<<endl;	
+		//<=======================WORK HERE=========================================>	
+		
+		
+
+
+
+
+
+
+
+
 		//<=========================================FOOTER DON'T TOUCH=============================================================>
 		cout<<"</section>"<<endl;
 		cout<<"<footer id=\"footer\">"<<endl;
@@ -158,11 +112,10 @@ int main(int argc, char **argv) {
 		cout<<"<script src=\"js/skel.min.js\"></script>"<<endl;
 		cout<<"<script src=\"js/util.js\"></script>"<<endl;
 		cout<<"<script src=\"js/main.js\"></script>"<<endl;
-		cout<<"<script src=\"js/add_field.js\"></script>"<<endl;
 		cout << body() <<endl;
 		cout << html() <<endl; 
-
 	} catch(exception& e) {
+
 	}
 }
 
