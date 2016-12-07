@@ -112,4 +112,4 @@ main: main.cpp user.o event.o eventposition.o
 	$(CXX) $(CXXFLAGS) -lsqlite3 -o main main.cpp user.o event.o eventposition.o
 .PHONY: clean
 clean:
-	rm -f *.o *.cgi controller user event eventposition creation main
+	rm -f *.o *.cgi controller user event eventposition creation main user_test testcontroller
