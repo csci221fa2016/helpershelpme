@@ -27,14 +27,14 @@ void printForm(const Cgicc& cgi)
 
 	cout << "<div class = \"form\">" << endl;
 	cout << "<h1>Create your own Event!</h1>"<< endl;
-	cout << "<form action = \"eventcreation.cgi\" method = \"post\">"<< endl;	
+	cout << "<form action = \"eventcreation_info.cgi\" method = \"post\">"<< endl;	
 	cout << "<div class = \"field-wrap\">"<< endl;
 	cout << "<label>Event Name<span class = \"req\">*</span></label>" << endl;
 	cout << "<input type = \"text\" name=\"e_name\" required autocomplete = \"off\"/>" << endl;
 	cout << "</div>" << endl;
 	cout << "<div class = \"field-wrap\">"<< endl;
 	cout << "<label>Event Description (20 Character Max)<span class = \"req\">*</span></label>" << endl;
-	cout << "<input type = \"text\" name=\"e_decription\" required autocomplete = \"off\"/>" << endl;
+	cout << "<input type = \"text\" name=\"e_descrip\" required autocomplete = \"off\"/>" << endl;
 	cout << "</div>" << endl;
 	cout << "<div class = \"field-wrap\">"<< endl;
 	cout << "<label>Event Location<span class = \"req\">*</span></label>" << endl;
