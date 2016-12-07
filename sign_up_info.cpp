@@ -39,14 +39,14 @@ int main () {
 		signup.push_back(**it);
 	}
 	int returned_id =123;;
-	//	int returned_id = myController.sendUser(signup , -1);
+	int returned_id = myController.sendUser(signup , -1);
 
 	cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
 
 	cout<<html()<<endl;
 	cout << head()<<title("Log in") << endl;
 	if(returned_id!=0){
-		cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"6;URL=login.cgi\">"<<endl;
+		cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"8;URL=login.cgi\">"<<endl;
 
 	}
 	cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
