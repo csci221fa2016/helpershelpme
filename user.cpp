@@ -8,11 +8,19 @@
 #include <iostream>
 using namespace std;
 
-User::User(int _userid) {
-	userid = _userid;
+User::User(int _userid) : userid(_userid){
 	char *errmsg;
 	retval=sqlite3_open("/tmp/csci221_dmcmahon.db", &db);
-	retval = sqlite3_exec(db, "create table if not exists users (id integer primary key, name text, phone text primary key, eventid integer, password text);", NULL, NULL, &errmsg);
+	if(retval != 0) {
+		cout<< "cannnot open test.db: " << sqlite3_errcode(db) << endl;
+		return;
+	}
+	retval = sqlite3_exec(db, "create table if not exists users (id integer primary key, name text, phone text, eventid integer, password text);", NULL, NULL, &errmsg);
+	cout <<"retval = " <<retval <<endl;
+	if(retval != SQLITE_OK) {
+		cout << "error in previous command: " <<errmsg <<endl;
+		sqlite3_free(errmsg);
+	}	
 }	
 string User::getName() {	
 	sqlite3_stmt *s;

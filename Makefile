@@ -5,7 +5,7 @@ CXXFLAGS = -ansi -Wall -g -ggdb3 -isystem $(GTEST_DIR)/include -Wextra -lpthread
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
-all: user event eventposition creation controller userprofile.o eventpage.cgi login.cgi home.cgi login_info.cgi sign_up_info.cgi eventcreation.cgi
+all: main user event eventposition creation controller userprofile.o eventpage.cgi login.cgi home.cgi login_info.cgi sign_up_info.cgi eventcreation.cgi
 
 .PHONY: test
 test: testcontroller user_test
@@ -108,7 +108,8 @@ eventcreation.o: eventcreation.cpp styles.h controller.h
 
 sqlite3.o: sqlite3.h sqlite3.c
 	gcc -c sqlite3.c
-
+main: main.cpp user.o event.o eventposition.o
+	$(CXX) $(CXXFLAGS) -lsqlite3 -o main main.cpp user.o event.o eventposition.o
 .PHONY: clean
 clean:
-	rm -f *.o *.cgi controller user event eventposition creation
+	rm -f *.o *.cgi controller user event eventposition creation main
