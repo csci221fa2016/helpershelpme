@@ -9,48 +9,24 @@
 #include <cgicc/HTTPHTMLHeader.h> 
 #include <cgicc/HTMLClasses.h>  
 #include <cgicc/HTTPRedirectHeader.h>
+#include <cgicc/HTTPCookie.h>
+
 #include "controller.h"
 #include "styles.h"
 using namespace std;
 using namespace cgicc;
 
 int main () {
-	Controller myController;
+
 	Cgicc cgi;
-	//<==================================================================CGI DATA PROCESS======================================>	
-	vector<string> signup;
-	string full_name;
-	//<=========================================Sign Up=========================================>
-	const_form_iterator it = cgi.getElement("user_first_name");  
-	if(!it->isEmpty() && it != (*cgi).end()) {  
-		full_name=**it;	  
-	}
-	it = cgi.getElement("user_last_name"); 
-	if( !it->isEmpty() && it != (*cgi).end()) {  
-		full_name=full_name+" "+**it; 
-		signup.push_back(full_name);
-	}
-	it = cgi.getElement("user_phone_number_s"); 
-	if( !it->isEmpty() &&it != (*cgi).end()) {  
-		signup.push_back(**it);
-	}
-	it = cgi.getElement("user_password_s"); 
-	if( !it->isEmpty() &&it != (*cgi).end()) { 
-		signup.push_back(**it);
-	}
-	int returned_id =123;;
-	//	int returned_id = myController.sendUser(signup , -1);
-
-	cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
-
-	cout<<html()<<endl;
-	cout << head()<<title("Log in") << endl;
-	if(returned_id!=0){
-		cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"6;URL=http://helpers-help.me/login.cgi\">"<<endl;
-
-	}
+	cout << HTTPHTMLHeader().setCookie(HTTPCookie("user_id","6767","","",-1,"/",true)).setCookie(HTTPCookie("logged_in","true","","",-1,"/",true))<<endl;
+	cout<< html()<<endl;
+	cout<<head()<<title("Redirecting")<<endl;
+	cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"5;URL=http://helpers-help.me/home.cgi\">"<<endl;
 	cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
 	cout <<"<link rel=\"stylesheet\" href=\"css/main2.css\" />"<<endl;
+
+
 	cout << style() << comment() << endl;
 	cout << styles;
 	cout << comment() << style() <<endl;
@@ -58,14 +34,7 @@ int main () {
 	cout << "<body class =\"index\">" << endl;
 	cout<<"<div id=\"page-wrapper\">"<<endl;
 	cout<<"<section id=\"banner\">"<<endl;
-
-	cout<<"<p> Your full name is:"<<signup[0]<<"</br> Your phone number is:"<<signup[1]<<"</br> Your password is:"<<signup[2]<<"</br>"<<endl;
-	if (returned_id!=0){
-		cout<<"<p>You were registered successfully and the user id is: "<<returned_id<<" You will be redirected to the login page,if not click <a href=\"login.cgi\">HERE<a></p>"<<endl;
-	}else{
-		cout<<"<p> Registration was unsuccesfull</p>"<<endl;
-	} 
-
+	cout<<"<p> Logout successfull, you will be redirected now! If your browser doesn't redirect please click <a href=\"home.cgi\">HERE</a></p>"<<endl;
 	cout<<"</section>"<<endl;
 	cout<<"<footer id=\"footer\">"<<endl;
 	cout<<"<ul class=\"icons\">"<<endl;
@@ -88,11 +57,8 @@ int main () {
 	cout<<"<script src=\"js/skel.min.js\"></script>"<<endl;
 	cout<<"<script src=\"js/util.js\"></script>"<<endl;
 	cout<<"<script src=\"js/main.js\"></script>"<<endl;
-	cout << "</body>" <<endl;
-	cout << html() <<endl; 
-
-
-	return 0;
-
+	cout<<body()<<endl;
+	cout<<html()<<endl;
 
 }
+

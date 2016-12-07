@@ -62,16 +62,30 @@ int main(int argc, char **argv) {
 		//<=======================LOGIN WORK HERE=========================================>	
 		cout << "<div class = \"form\">" << endl;
 		cout << "<ul class = \"tab-group\">" << endl;
-		cout<<"<li class=\"tab active\"><a href=\"#signup\">Sign Up</a></li>"<<endl;
-		cout<<"<li class=\"tab\"><a href=\"#login\">Log In</a></li>"<<endl;
+		cout << "<li class=\"tab active\"><a href=\"#login\">Log In</a></li>"<<endl;
+		cout << "<li class=\"tab\"><a href=\"#signup\">Sign Up</a></li>"<<endl;
 		cout << "</ul>" << endl;
 		cout << "<div class = \"tab-content\">" << endl;
+		cout << "<div id = \"login\">"<< endl;
+		cout << "<h1>Welcome Back!</h1>"<< endl;
+		cout << "<form action = \"login_info.cgi\" method = \"post\">"<< endl;	
+		cout << "<div class = \"field-wrap\">"<< endl;
+		cout << "<label>Phone Number<span class = \"req\">*</span></label>" << endl;
+		cout << "<input type = \"number\" name=\"user_phone_number\" value=\"\" required autocomplete = \"off\"/>" << endl;
+		cout << "</div>" << endl;
+		cout << "<div class = \"field-wrap\">" << endl;
+		cout << "<label> Password<span class = \"req\">*</span></label>" << endl;
+		cout << "<input type = \"password\" name=\"user_password\" value=\"\" required autocomplete = \"off\"/>" << endl;
+		cout << "</div>" << endl;
+		cout << "<p class = \"forgot\"><a href = \"#\">Forgot Password ?</a></p>" << endl;
+		cout << "<button class = \"button button-block\"/>" << endl;
+		cout << "Log In" << endl;
+		cout << "</button>" << endl;
+		cout << "</form>" << endl;
+		cout << "</div>" << endl;
 		cout << "<div id = \"signup\">" << endl;
 		cout << "<h1>Sign Up for Free</h1>" << endl;
-//		cout << "<form action = \"/view/jtoledo/login.cgi\" method = \"post\">"<< endl;
-		cout << "<form action = \"/view/lulu/sign_up_info.cgi\" method = \"post\">"<< endl;
-	//	cout << "<form action = \"/view/isarmien/login.cgi\" method = \"post\">"<< endl;
-//		cout << "<form action = \"/login.cgi\" method = \"post\">"<< endl;
+		cout << "<form action = \"sign_up_info.cgi\" method = \"post\">"<< endl;
 		cout << "<div class = \"top-row\">" << endl;
 		cout << "<div class = \"field-wrap\">" << endl;
 		cout << "<label> First Name<span class = \"req\">*</span> </label>" << endl;
@@ -94,27 +108,7 @@ int main(int argc, char **argv) {
 		cout << "Get Started"<< endl;
 		cout << "</button>"<< endl;
 		cout << "</form>"<< endl;
-		cout << "</div>"<< endl;
-		cout << "<div id = \"login\">"<< endl;
-		cout << "<h1>Welcome Back!</h1>"<< endl;
-//		cout << "<form action = \"/view/jtoledo/login_info.cgi\" method = \"post\">"<< endl;
-		cout << "<form action = \"/view/lulu/login_info.cgi\" method = \"post\">"<< endl;
-	//	cout << "<form action = \"/view/isarmien/home.cgi\" method = \"post\">"<< endl;
-//		cout << "<form action = \"login_info.cgi\" method = \"post\">"<< endl;
-		cout << "<div class = \"field-wrap\">"<< endl;
-		cout << "<label>Phone Number<span class = \"req\">*</span></label>" << endl;
-		cout << "<input type = \"number\" name=\"user_phone_number\" value=\"\" required autocomplete = \"off\"/>" << endl;
-		cout << "</div>" << endl;
-		cout << "<div class = \"field-wrap\">" << endl;
-		cout << "<label> Password<span class = \"req\">*</span></label>" << endl;
-		cout << "<input type = \"password\" name=\"user_password\" value=\"\" required autocomplete = \"off\"/>" << endl;
-		cout << "</div>" << endl;
-		cout << "<p class = \"forgot\"><a href = \"#\">Forgot Password ?</a></p>" << endl;
-		cout << "<button class = \"button button-block\"/>" << endl;
-		cout << "Log In" << endl;
-		cout << "</button>" << endl;
-		cout << "</form>" << endl;
-		cout << "</div>" << endl;
+		cout << "</div>"<< endl;	
 		cout << "</div>" << endl;
 		cout << "</div>" << endl;
         
@@ -133,7 +127,6 @@ int main(int argc, char **argv) {
 		cout<<"</ul>"<<endl;
 		cout<<"</footer>"<<endl;
 		cout<<"</div>"<<endl;
-
 		cout<<"<script src=\"js/jquery.min.js\"></script>"<<endl;
 		cout<<"<script src=\"js/login.js\"></script>"<<endl;
 		cout<<"<script src=\"js/jquery.dropotron.min.js\"></script>"<<endl;
@@ -143,47 +136,7 @@ int main(int argc, char **argv) {
 		cout<<"<script src=\"js/util.js\"></script>"<<endl;
 		cout<<"<script src=\"js/main.js\"></script>"<<endl;
 		cout << body() <<endl;
-		cout << html() <<endl;
-
-	Controller control;
-	vector<string> newuser;
-	string id;
-	int uID;
-         const_form_iterator firstname = cgi.getElement("user_first_name");
-         if(firstname!= (*cgi).end() && ! firstname->isEmpty())
-            newuser.push_back((*firstname).getStrippedValue());
-
-         const_form_iterator pnum = cgi.getElement("user_phone_number_s");
-         if(pnum!= (*cgi).end() && ! pnum->isEmpty())
-            newuser.push_back((*pnum).getStrippedValue());
-         const_form_iterator passw = cgi.getElement("user_password_s");
-         if(passw!= (*cgi).end() && ! passw->isEmpty())
-            newuser.push_back((*passw).getStrippedValue());
-
-         const CgiEnvironment& env = cgi.getEnvironment();
-         const_cookie_iterator iter;
-
-         for(iter= env.getCookieList().begin(); iter!= env.getCookieList().end(); ++iter){
-          if(iter->getName()=="Authenticated"){
-          string namedCookie = iter->getName();
-         if(iter->getValue().find("true")){
-         size_t found = iter->getValue().find(";");
-         id = iter->getValue().substr(0,found);
-         uID = stoi(id);
-         }
-         break;
-         }
-         }
-
-	if(uID>=0){
-	cout << "Not Possible" << endl;
-	} else{
-	control.sendUser(newuser,-1);
-	}
-
-//	cout << "<form action = \"/view/isarmien/home.cgi\" method = \"post\">"<< endl;
-
- 
+		cout << html() <<endl; 
 	} catch(exception& e) {
 
 	}
