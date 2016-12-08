@@ -28,14 +28,18 @@ int main () {
 	if( !it->isEmpty() &&it != (*cgi).end()) {  
 		login.push_back(**it);
 	}
-	//vector<string> login_answer = myController.signIn(login);
-
+/*
+	vector<string> login_answer;
+	login_answer=myController.signIn(login);
+*/	
+	//login_answer=myController.signIn(login);
 	if(login[0]=="4545"&&login[1]=="1234"){
 		login.push_back("true");
 	}else{
 		login.push_back("false");
 	}
-	if(login[2]=="true") { 
+
+	if(login.at(2)=="true") { 
 		cout << HTTPHTMLHeader().setCookie(HTTPCookie("user_id","6767")).setCookie(HTTPCookie("logged_in","true"))<<endl;
 		cout<< html()<<endl;
 		cout<<head()<<title("Redirecting")<<endl;

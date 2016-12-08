@@ -8,7 +8,7 @@
 #include "cgicc/HTMLClasses.h"
 #include <cgicc/HTTPRedirectHeader.h>
 
-#include "styles.h"
+#include "styles2.h"
 #include "controller.h"
 
 using namespace std;
@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
 		cout << html() <<endl;
 		cout << head() << endl;
 		cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
-		cout <<"<link rel=\"stylesheet\" href=\"css/main2.css\" />"<<endl;
+		cout <<"<link rel=\"stylesheet\" href=\"css/main.css\" />"<<endl;
 		cout << style() << comment() << endl;
 		cout << styles;
 		cout << comment() << style() <<endl;
@@ -77,20 +77,99 @@ int main(int argc, char **argv) {
 		cout<<"</ul>"<<endl;
 		cout<<"</nav>"<<endl;
 		cout<<"</header>"<<endl;
-		cout<<"<section id=\"banner\">"<<endl;	
+		
 		//<=======================WORK HERE=========================================>	
 		
-		
-
-
-
-
-
-
-
-
+			cout<<"<article id=\"main\">"<<endl;
+			cout<<"<header class=\"special container\">"<<endl;
+			cout<<"<span class=\"icon fa-laptop\"></span>"<<endl;
+			cout<<"<h2>All<strong> Events</strong></h2>"<<endl;
+			cout<<"</header>"<<endl;	
+			cout<<"<section class=\"wrapper style1 container special\">"<<endl;
+			cout<<"<div class=\"row\">"<<endl;
+			cout<<"<div class=\"4u 12u(narrower)\">"<<endl;
+			cout<<"<section>"<<endl;
+			cout<<"<header>"<<endl;
+			cout<<"<h3>This is Something</h3>"<<endl;
+			cout<<"</header>"<<endl;
+			cout<<"<p>Sed tristique purus vitae volutpat ultrices. Aliquam eu elit eget arcu commodo suscipit dolor nec nibh. Proin a ullamcorper elit, et sagittis turpis. Integer ut fermentum.</p>"<<endl;
+			cout<<"<footer>"<<endl;
+			cout<<"<ul class=\"buttons\">"<<endl;
+			cout<<"<li><a href=\"#\" class=\"button small\">Learn More</a></li>"<<endl;
+			cout<<"</ul>"<<endl;
+			cout<<"</footer>"<<endl;
+			cout<<"</section>"<<endl;
+			cout<<"</div>"<<endl;
+			cout<<"<div class=\"4u 12u(narrower)\">"<<endl;
+			cout<<"<section>"<<endl;
+			cout<<"<header>"<<endl;
+			cout<<"<h3>Also Something</h3>"<<endl;
+			cout<<"</header>"<<endl;
+			cout<<"<p>Sed tristique purus vitae volutpat ultrices. Aliquam eu elit eget arcu commodo suscipit dolor nec nibh. Proin a ullamcorper elit, et sagittis turpis. Integer ut fermentum.</p>"<<endl;
+			cout<<"<footer>"<<endl;
+			cout<<"<ul class=\"buttons\">"<<endl;
+			cout<<"<li><a href=\"#\" class=\"button small\">Learn More</a></li>"<<endl;
+			cout<<"</ul>"<<endl;
+			cout<<"</footer>"<<endl;
+			cout<<"</section>"<<endl;
+			cout<<"</div>"<<endl;
+			cout<<"<div class=\"4u 12u(narrower)\">"<<endl;
+			cout<<"<section>"<<endl;
+			cout<<"<header>"<<endl;
+			cout<<"<h3>Probably Something</h3>"<<endl;
+			cout<<"</header>"<<endl;
+			cout<<"<p>Sed tristique purus vitae volutpat ultrices. Aliquam eu elit eget arcu commodo suscipit dolor nec nibh. Proin a ullamcorper elit, et sagittis turpis. Integer ut fermentum.</p>"<<endl;
+			cout<<"<footer>"<<endl;
+			cout<<"<ul class=\"buttons\">"<<endl;
+			cout<<"<li><a href=\"#\" class=\"button small\">Learn More</a></li>"<<endl;
+			cout<<"</ul>"<<endl;
+			cout<<"</footer>"<<endl;
+			cout<<"</section>"<<endl;
+			cout<<"</div>"<<endl;
+			cout<<"<div class=\"4u 12u(narrower)\">"<<endl;
+			cout<<"<section>"<<endl;
+			cout<<"<header>"<<endl;
+			cout<<"<h3>Probably Something</h3>"<<endl;
+			cout<<"</header>"<<endl;
+			cout<<"<p>Sed tristique purus vitae volutpat ultrices. Aliquam eu elit eget arcu commodo suscipit dolor nec nibh. Proin a ullamcorper elit, et sagittis turpis. Integer ut fermentum.</p>"<<endl;
+			cout<<"<footer>"<<endl;
+			cout<<"<ul class=\"buttons\">"<<endl;
+			cout<<"<li><a href=\"#\" class=\"button small\">Learn More</a></li>"<<endl;
+			cout<<"</ul>"<<endl;
+			cout<<"</footer>"<<endl;
+			cout<<"</section>"<<endl;
+			cout<<"</div>"<<endl;
+			cout<<"<div class=\"4u 12u(narrower)\">"<<endl;
+			cout<<"<section>"<<endl;
+			cout<<"<header>"<<endl;
+			cout<<"<h3>Probably Something</h3>"<<endl;
+			cout<<"</header>"<<endl;
+			cout<<"<p>Sed tristique purus vitae volutpat ultrices. Aliquam eu elit eget arcu commodo suscipit dolor nec nibh. Proin a ullamcorper elit, et sagittis turpis. Integer ut fermentum.</p>"<<endl;
+			cout<<"<footer>"<<endl;
+			cout<<"<ul class=\"buttons\">"<<endl;
+			cout<<"<li><a href=\"#\" class=\"button small\">Learn More</a></li>"<<endl;
+			cout<<"</ul>"<<endl;
+			cout<<"</footer>"<<endl;
+			cout<<"</section>"<<endl;
+			cout<<"</div>"<<endl;
+			cout<<"<div class=\"4u 12u(narrower)\">"<<endl;
+			cout<<"<section>"<<endl;
+			cout<<"<header>"<<endl;
+			cout<<"<h3>Probably Something</h3>"<<endl;
+			cout<<"</header>"<<endl;
+			cout<<"<p>Sed tristique purus vitae volutpat ultrices. Aliquam eu elit eget arcu commodo suscipit dolor nec nibh. Proin a ullamcorper elit, et sagittis turpis. Integer ut fermentum.</p>"<<endl;
+			cout<<"<footer>"<<endl;
+			cout<<"<ul class=\"buttons\">"<<endl;
+			cout<<"<li><a href=\"#\" class=\"button small\">Learn More</a></li>"<<endl;
+			cout<<"</ul>"<<endl;
+			cout<<"</footer>"<<endl;
+			cout<<"</section>"<<endl;
+			cout<<"</div>"<<endl;
+			
+			cout<<"</div>"<<endl;
+			cout<<"</section>"<<endl;
+			cout<<"</article>"<<endl;
 		//<=========================================FOOTER DON'T TOUCH=============================================================>
-		cout<<"</section>"<<endl;
 		cout<<"<footer id=\"footer\">"<<endl;
 		cout<<"<ul class=\"icons\">"<<endl;
 		cout<<"<li><a href=\"#\" class=\"icon circle fa-twitter\"><span class=\"label\">Twitter</span></a></li>"<<endl;
