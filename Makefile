@@ -5,7 +5,7 @@ CXXFLAGS = -ansi -Wall -g -ggdb3 -isystem $(GTEST_DIR)/include -Wextra -lpthread
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
-all: main user event eventposition creation controller userprofile.o eventpage.cgi login.cgi home.cgi log_out.cgi event_list.cgi login_info.cgi eventcreation_info.cgi sign_up_info.cgi eventcreation.cgi
+all: main user event eventposition creation controller home.cgi login.cgi log_out.cgi login_info.cgi event_list.cgi eventcreation_info.cgi sign_up_info.cgi userprofile.cgi eventpage.cgi eventcreation.cgi
 
 .PHONY: test
 test: testcontroller user_test
