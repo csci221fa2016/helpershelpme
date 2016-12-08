@@ -17,8 +17,8 @@
 #include "cgicc/Cgicc.h"
 #include "cgicc/CgiDefs.h"
 #include "cgicc/HTTPHTMLHeader.h"
-#include "cgicc/HTMLClasses.h"
 #include "cgicc/HTTPRedirectHeader.h"
+#include "cgicc/HTMLClasses.h"
 
 #include "controller.h"
 #include "styles.h"
@@ -26,7 +26,7 @@
 using namespace std;
 using namespace cgicc;
 
-
+int z;
 void userID(string ui);
 
 //show all the information relating to the user if they are logged in
@@ -37,11 +37,34 @@ void userID(string ui);
 void printform(const Cgicc& cgi) {
     //***********IMPORTANT: go into controller later and verify the
     //positions of the information AND function names.
-       Controller c;
+       /*Controller c;
        vector<string> userinfo = c.showUserInfo(z);
        double stats = c.showStats(z);
        vector<int> eventinfo = c.showOrganizedEvents(z);
        vector<int> posinfo = c.showEventsWorked(z);
+
+       int x;
+       for( x = 0; x < eventinfo.size(); ++x){
+           vector<string> einfo = c.showEvent(eventinfo[x]);
+           cout   << "<dt><a href=\"\">" << einfo[x][0] << " in " << einfo[x][1] << "</a></dt>\n"
+                  << "<dd>1a" << einfo[x][2] << "</dd>\n";
+       }
+       cout  << "</dl>\n";
+       cout << "<p><h3>Previous Positions</h3></p>\n"
+            << dl();
+       for( x = 0; x < posinfo.size(); ++x){
+//          do Position name, event name, hours worked
+           vector<string> pinfo = c.showEventPositions(posinfo[x]);
+           cout << "<dt>Position: " << pinfo[x][0] 
+                << " " << "</dt>\n";
+                << " in event " 
+                << "<dd>Hours Worked: " <<  pinfo[x][2]
+                << "</dd>\n";
+       }
+       
+       cout   << dl() << endl;*/
+
+//     Dummy Info in case of malfunction
        cout   << "<table>\n"
               << "<tr><th>User Name</th>\n"
               << "<td>User Name</td></tr>\n"
@@ -51,62 +74,20 @@ void printform(const Cgicc& cgi) {
               << "<td>12</td></tr>\n"
               << "</table>\n";
        
-       cout   << "<hr>\n <form action=\"helpers-help.me/createEvent.cgi\">\n"
+       cout   << "<hr><form action=\"helpers-help.me/createEvent.cgi\">\n"
               << "<input type=\"submit\" value=\"Create Event\"/>\n"
               << " </form>\n";
-       cout   << hr() << endl;
+       cout   << "<hr>" << endl;
                
        cout   << "<!--<form name=\"delete event\">\n"
               << "<input type=\"submit\" value=\"Delete Event\"/>\n"
-              << "</form>-->\n"
-              << " <p><h3>Events created</h3></p>\n"
-              << "<table>\n"
-              << tr() << th() << "Dog Party" << th() << tr()
-              << tr() << td() << "January 20, 3020
-              << " <dl>\n";
-
-/*       int x;
-       for( x = 0; x < eventinfo.size(); ++x){
-           vector<string> einfo = c.showEvent(eventinfo[x]);
-           cout   << "<dt><a href=\"\">" << einfo[x][0] << " in " << einfo[x][1] << "</a></dt>\n"
-                  << "<dd>1a" << einfo[x][2] << "</dd>\n";
-       }
-       cout  << "</dl>\n";
-       cout << "<p><h3>Previous Positions</h3></p>\n"
-            << "<dl>\n";
-       for( x = 0; x < posinfo.size(); ++x){
-//          do Position name, event name, hours worked
-           vector<string> pinfo = c.showEventPositions(posinfo[x]);
-           cout << "<dt>Position: " << pinfo[x][0] 
-                << " " << "</dt>\n";
-                << " in event " 
-                << "<dd>Hours Worked: " <<  pinfo[x][2]
-                << "</dd>\n";*/
-       
-//       cout   << "</dl>" << endl;
-}
-
-/*
- * Determines whether the person accessing
- * the page is signed in
- * */
-bool evaluate(const Cgicc& cgi) {
-   const CgiEnvironment& env = cgi.getEnvironment();
-
-   if(!env.getCookieList().empty()) {
-       const_cookie_iterator it;
-       for (it = env.getCookieList().begin();
-            it != env.getCookieList().end(); ++it) {
-           if(it->getName() == "Authenticated") {
-               if(it->getValue().find("true")) {
-                  userID(it->getValue());
-                  return true;
-               }
-               break;
-           }
-       }
-   }
-   return false;
+              << "</form>-->"
+              << "<div>"
+              << "<p><h2> Events Created </h2></p>"
+              << "<p> Dog Party </p>"
+              << "<p> 3020 January 20 4:50 am </p>"
+              << "<p>Mars, Volcanic Base </p>"
+              << "</div>" << endl;
 }
 
 /*
@@ -114,22 +95,38 @@ bool evaluate(const Cgicc& cgi) {
  * a global variable
  * @author: Luisa Molina
  * */
-void userID(string ui) {
+/*void userID(string ui) {
     int x = ui.find(";");
     ui = ui.substr(x);
     x = ui.find(";");
     ui = ui.substr(0, x);
     z = stoi(ui);
-}
+}*/
 
 int main(int /*argc*/, char** /**/) {
    try{
        Cgicc cgi;
-     
-//    Controller control;
-    printform(cgi);
   
-       cout << HTTPHTMLHeader() << endl;
+		const CgiEnvironment& env = cgi.getEnvironment();
+		vector<string> id;
+		const_cookie_iterator iter;
+		if(env.getCookieList().empty()){
+		id.push_back(" NO COOKIES YET");
+		id.push_back(" NO COOKIES YET");
+		id.push_back(" NO COOKIES YET");
+		id.push_back(" NO COOKIES YET");
+		}else{
+		for(iter = env.getCookieList().begin(); iter != env.getCookieList().end(); ++iter) {
+			id.push_back(iter->getName());
+			id.push_back(iter->getValue());
+		}
+		}
+		if(id[3]=="true"){
+		cout<<HTTPHTMLHeader()<<endl;
+		}
+		else{
+			cout<<HTTPRedirectHeader("login.cgi")<<endl;
+		}	
        cout << html().set("lang", "en").set("dir", "ltr") << endl;
        cout << head() << endl;
         cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
@@ -171,7 +168,7 @@ int main(int /*argc*/, char** /**/) {
         cout<<"</nav>"<<endl;
         cout<<"</header>"<<endl;
         cout<<"<section id=\"banner\">"<<endl;
-
+        printform(cgi);
         //<=========================================FOOTER DON'T TOUCH=============================================================>
         cout<<"</section>"<<endl;
         cout<<"<footer id=\"footer\">"<<endl;

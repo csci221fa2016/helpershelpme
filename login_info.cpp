@@ -17,34 +17,37 @@ using namespace std;
 using namespace cgicc;
 
 int main () {
-    Controller myController;
-    Cgicc cgi;
-    vector<string> login;
-    form_iterator it = cgi.getElement("user_phone_number");  
-    if( !it->isEmpty() && it != (*cgi).end()) {  
-        login.push_back(**it);      
-    }
-    it = cgi.getElement("user_password"); 
-    if( !it->isEmpty() &&it != (*cgi).end()) {  
-        login.push_back(**it);
-    }
-    //vector<string> login_answer = myController.signIn(login);
+	Controller myController;
+	Cgicc cgi;
+	vector<string> login;
+	form_iterator it = cgi.getElement("user_phone_number");  
+	if( !it->isEmpty() && it != (*cgi).end()) {  
+		login.push_back(**it);      
+	}
+	it = cgi.getElement("user_password"); 
+	if( !it->isEmpty() &&it != (*cgi).end()) {  
+		login.push_back(**it);
+	}
+/*
+	vector<string> login_answer;
+	login_answer=myController.signIn(login);
+*/	
+	//login_answer=myController.signIn(login);
+	if(login[0]=="4545"&&login[1]=="1234"){
+		login.push_back("true");
+	}else{
+		login.push_back("false");
+	}
 
-    if(login[0]=="4545"&&login[1]=="1234"){
-        login.push_back("true");
-    }else{
-        login.push_back("false");
-    }
-    if(login[2]=="true") { 
-        cout << HTTPHTMLHeader().setCookie(HTTPCookie("user_id","6767")).setCookie(HTTPCookie("logged_in","true"))<<endl;
-        cout<< html()<<endl;
-        cout<<head()<<title("Redirecting")<<endl;
-        cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"0;URL=home.cgi\">"<<endl;
-    }else{
-        cout << HTTPHTMLHeader();
-        cout<<html()<<endl;
-        cout << head()<<title("Log in") << endl;
-
+	if(login.at(2)=="true") { 
+		cout << HTTPHTMLHeader().setCookie(HTTPCookie("user_id","6767")).setCookie(HTTPCookie("logged_in","true"))<<endl;
+		cout<< html()<<endl;
+		cout<<head()<<title("Redirecting")<<endl;
+		cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"0;URL=home.cgi\">"<<endl;
+	}else{
+		cout << HTTPHTMLHeader();
+		cout<<html()<<endl;
+		cout << head()<<title("Log in") << endl;
     }
         cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
         cout <<"<link rel=\"stylesheet\" href=\"css/main2.css\" />"<<endl;
