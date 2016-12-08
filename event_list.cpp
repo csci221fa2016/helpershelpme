@@ -8,7 +8,7 @@
 #include "cgicc/HTMLClasses.h"
 #include <cgicc/HTTPRedirectHeader.h>
 
-#include "styles.h"
+#include "styles2.h"
 #include "controller.h"
 
 using namespace std;
@@ -165,7 +165,46 @@ int main(int argc, char **argv) {
 			cout<<"</footer>"<<endl;
 			cout<<"</section>"<<endl;
 			cout<<"</div>"<<endl;
-			
+			cout<<"<div class=\"4u 12u(narrower)\">"<<endl;
+			cout<<"<section>"<<endl;
+			cout<<"<header>"<<endl;
+			cout<<"<h3>Probably Something</h3>"<<endl;
+			cout<<"</header>"<<endl;
+			cout<<"<p>Sed tristique purus vitae volutpat ultrices. Aliquam eu elit eget arcu commodo suscipit dolor nec nibh. Proin a ullamcorper elit, et sagittis turpis. Integer ut fermentum.</p>"<<endl;
+			cout<<"<footer>"<<endl;
+			cout<<"<ul class=\"buttons\">"<<endl;
+			cout<<"<li><a href=\"#\" class=\"button small\">Learn More</a></li>"<<endl;
+			cout<<"</ul>"<<endl;
+			cout<<"</footer>"<<endl;
+			cout<<"</section>"<<endl;
+			cout<<"</div>"<<endl;		
+			cout<<"<div class=\"4u 12u(narrower)\">"<<endl;
+			cout<<"<section>"<<endl;
+			cout<<"<header>"<<endl;
+			cout<<"<h3>Probably Something</h3>"<<endl;
+			cout<<"</header>"<<endl;
+			cout<<"<p>Sed tristique purus vitae volutpat ultrices. Aliquam eu elit eget arcu commodo suscipit dolor nec nibh. Proin a ullamcorper elit, et sagittis turpis. Integer ut fermentum.</p>"<<endl;
+			cout<<"<footer>"<<endl;
+			cout<<"<ul class=\"buttons\">"<<endl;
+			cout<<"<li><a href=\"#\" class=\"button small\">Learn More</a></li>"<<endl;
+			cout<<"</ul>"<<endl;
+			cout<<"</footer>"<<endl;
+			cout<<"</section>"<<endl;
+			cout<<"</div>"<<endl;
+			cout<<"<div class=\"4u 12u(narrower)\">"<<endl;
+			cout<<"<section>"<<endl;
+			cout<<"<header>"<<endl;
+			cout<<"<h3>Probably Something</h3>"<<endl;
+			cout<<"</header>"<<endl;
+			cout<<"<p>Sed tristique purus vitae volutpat ultrices. Aliquam eu elit eget arcu commodo suscipit dolor nec nibh. Proin a ullamcorper elit, et sagittis turpis. Integer ut fermentum.</p>"<<endl;
+			cout<<"<footer>"<<endl;
+			cout<<"<ul class=\"buttons\">"<<endl;
+			cout<<"<li><a href=\"#\" class=\"button small\">Learn More</a></li>"<<endl;
+			cout<<"</ul>"<<endl;
+			cout<<"</footer>"<<endl;
+			cout<<"</section>"<<endl;
+			cout<<"</div>"<<endl;
+	
 			cout<<"</div>"<<endl;
 			cout<<"</section>"<<endl;
 			cout<<"</article>"<<endl;

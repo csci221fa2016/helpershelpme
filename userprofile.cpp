@@ -21,7 +21,7 @@
 #include "cgicc/HTMLClasses.h"
 
 #include "controller.h"
-#include "styles.h"
+#include "styles2.h"
 
 using namespace std;
 using namespace cgicc;
@@ -131,7 +131,7 @@ int main(int /*argc*/, char** /**/) {
        cout << html().set("lang", "en").set("dir", "ltr") << endl;
        cout << head() << endl;
         cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
-        cout <<"<link rel=\"stylesheet\" href=\"css/main2.css\" />"<<endl;
+        cout <<"<link rel=\"stylesheet\" href=\"css/main.css\" />"<<endl;
         cout << style() << comment() << endl;
         cout << styles;
         cout << comment() << style() <<endl;
@@ -165,19 +165,29 @@ int main(int /*argc*/, char** /**/) {
         cout<<"</ul>"<<endl;
         cout<<"</li>"<<endl;
         cout<<"<li><a href=\"#\" class=\"button special\">Log In</a></li>"<<endl;
-        cout<<"</ul>"<<endl;
-        cout<<"</nav>"<<endl;
-        cout<<"</header>"<<endl;
-        cout<<"<section id=\"banner\">"<<endl;
-        printform(cgi);
-        //<=========================================FOOTER DON'T TOUCH=============================================================>
-        cout<<"</section>"<<endl;
-        cout<<"<footer id=\"footer\">"<<endl;
-        cout<<"<ul class=\"icons\">"<<endl;
-        cout<<"<li><a href=\"#\" class=\"icon circle fa-twitter\"><span class=\"label\">Twitter</span></a></li>"<<endl;
-        cout<<"<li><a href=\"#\" class=\"icon circle fa-facebook\"><span class=\"label\">Facebook</span></a></li>"<<endl;
-        cout<<"<li><a href=\"#\" class=\"icon circle fa-google-plus\"><span class=\"label\">Google+</span></a></li>"<<endl;
-        cout<<"<li><a href=\"#\" class=\"icon circle fa-github\"><span class=\"label\">Github</span></a></li>"<<endl;
+	cout<<"</ul>"<<endl;
+	cout<<"</nav>"<<endl;
+	cout<<"</header>"<<endl;
+	cout<<"<article id=\"main\">"<<endl;
+	cout<<"<header class=\"special container\">"<<endl;
+	cout<<"<span class=\"icon fa-laptop\"></span>"<<endl;
+	cout<<"<h2>All<strong> Events</strong></h2>"<<endl;
+	cout<<"</header>"<<endl;	
+	cout<<"<section class=\"wrapper style1 container special\">"<<endl;
+	cout<<"<div class=\"row\">"<<endl;
+
+	printform(cgi);
+	cout<<"</div>"<<endl;
+	cout<<"</section>"<<endl;
+	cout<<"</article>"<<endl;
+
+	//<=========================================FOOTER DON'T TOUCH=============================================================>
+	cout<<"<footer id=\"footer\">"<<endl;
+	cout<<"<ul class=\"icons\">"<<endl;
+	cout<<"<li><a href=\"#\" class=\"icon circle fa-twitter\"><span class=\"label\">Twitter</span></a></li>"<<endl;
+	cout<<"<li><a href=\"#\" class=\"icon circle fa-facebook\"><span class=\"label\">Facebook</span></a></li>"<<endl;
+	cout<<"<li><a href=\"#\" class=\"icon circle fa-google-plus\"><span class=\"label\">Google+</span></a></li>"<<endl;
+	cout<<"<li><a href=\"#\" class=\"icon circle fa-github\"><span class=\"label\">Github</span></a></li>"<<endl;
         cout<<"<li><a href=\"#\" class=\"icon circle fa-dribbble\"><span class=\"label\">Dribbble</span></a></li>"<<endl;
         cout<<"</ul>"<<endl;
         cout<<"<ul class=\"copyright\">"<<endl;

@@ -41,7 +41,8 @@ int main(int /*argc*/, char** /*argv*/) {
         cout << html().set("lang", "en").set("dir", "ltr") << endl;
         cout << html() << head() << endl;
         cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" << endl;
-        cout << style() << comment() << endl;
+        //cout <<"<link rel=\"stylesheet\" href=\"css/main2.css\" />"<<endl;
+	cout << style() << comment() << endl;
         cout << styles;
         cout << comment() << style() <<endl;
         cout << title() << "Event Page" << title() << endl;
@@ -144,14 +145,14 @@ int main(int /*argc*/, char** /*argv*/) {
         cout<<"</section>"<<endl;
         cout<<"<footer id=\"footer\">"<<endl;
         cout<<"<ul class=\"icons\">"<<endl;
-        /*  cout<<"<li><a href=\"#\" class=\"icon circle fa-twitter\"><span class=\"label\">Twitter</span></a></li>"<<endl;
-          cout<<"<li><a href=\"#\" class=\"icon circle fa-facebook\"><span class=\"label\">Facebook</span></a></li>"<<endl;
-          cout<<"<li><a href=\"#\" class=\"icon circle fa-google-plus\"><span class=\"label\">Google+</span></a></li>"<<endl;
-          cout<<"<li><a href=\"#\" class=\"icon circle fa-github\"><span class=\"label\">Github</span></a></li>"<<endl;
-          cout<<"<li><a href=\"#\" class=\"icon circle fa-dribbble\"><span class=\"label\">Dribbble</span></a></li>"<<endl;
-          cout<<"</ul>"<<endl;
-          cout<<"<ul class=\"copyright\">"<<endl;
-          cout<<"<li>&copy; Helpers Help me</li><li>Design: <a href=\"http://html5up.net\">HTML5 UP</a></li>"<<endl;*/
+        cout<<"<li><a href=\"#\" class=\"icon circle fa-twitter\"><span class=\"label\">Twitter</span></a></li>"<<endl;
+        cout<<"<li><a href=\"#\" class=\"icon circle fa-facebook\"><span class=\"label\">Facebook</span></a></li>"<<endl;
+        cout<<"<li><a href=\"#\" class=\"icon circle fa-google-plus\"><span class=\"label\">Google+</span></a></li>"<<endl;
+        cout<<"<li><a href=\"#\" class=\"icon circle fa-github\"><span class=\"label\">Github</span></a></li>"<<endl;
+        cout<<"<li><a href=\"#\" class=\"icon circle fa-dribbble\"><span class=\"label\">Dribbble</span></a></li>"<<endl;
+        cout<<"</ul>"<<endl;
+        cout<<"<ul class=\"copyright\">"<<endl;
+        cout<<"<li>&copy; Helpers Help me</li><li>Design: <a href=\"http://html5up.net\">HTML5 UP</a></li>"<<endl;
         cout<<"</ul>"<<endl;
         cout<<"</footer>"<<endl;
         cout<<"</div>"<<endl;
