@@ -38,12 +38,13 @@ int main () {
 	if( !it->isEmpty() &&it != (*cgi).end()) { 
 		signup.push_back(**it);
 	}
-	int returned_id = myController.sendUser(signup , -1);
-
+	
 	cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
 
 	cout<<html()<<endl;
 	cout << head()<<title("Log in") << endl;
+	int returned_id = myController.sendUser(signup,-1);
+
 	if(returned_id!=0){
 		cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"8;URL=login.cgi\">"<<endl;
 
@@ -59,11 +60,11 @@ int main () {
 	cout<<"<section id=\"banner\">"<<endl;
 
 	cout<<"<p> Your full name is:"<<signup[0]<<"</br> Your phone number is:"<<signup[1]<<"</br> Your password is:"<<signup[2]<<"</br>"<<endl;
-	if (returned_id!=0){
+	//if (returned_id!=0){
 		cout<<"<p>You were registered successfully and the user id is: "<<returned_id<<" You will be redirected to the login page,if not click <a href=\"login.cgi\">HERE<a></p>"<<endl;
-	}else{
-		cout<<"<p> Registration was unsuccesfull</p>"<<endl;
-	} 
+//	}else{
+//		cout<<"<p> Registration was unsuccesfull</p>"<<endl;
+//	} 
 
 	cout<<"</section>"<<endl;
 	cout<<"<footer id=\"footer\">"<<endl;
