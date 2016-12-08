@@ -61,7 +61,7 @@ int main(int argc, char** argv){
 		cout<<"</li>"<<endl;
 		cout<<"<li><a href=\"left-sidebar.html\">Rankings</a></li>"<<endl;
 		cout<<"<li><a href=\"right-sidebar.html\">News</a></li>"<<endl;
-		cout<<"<li><a href=\"no-sidebar.html\">Profile</a></li>"<<endl;
+		cout<<"<li><a href=\"userprofile.cgi\">Profile</a></li>"<<endl;
 		cout<<"<li><a href=\"contact.html\">Contact</a></li>"<<endl;
 
 		cout<<"</ul>"<<endl;
@@ -225,7 +225,7 @@ int main(int argc, char** argv){
 		cout<<"</header>"<<endl;
 		cout<<"<footer>"<<endl;
 		cout<<"<ul class=\"buttons\">"<<endl;
-			cout<<"<li><a href=\"#\" class=\"button special\">My Profile</a></li>"<<endl;
+			cout<<"<li><a href=\"userprofile.cgi\" class=\"button special\">My Profile</a></li>"<<endl;
 			cout<<"<li><a href=\"#\" class=\"button\">My Events</a></li>"<<endl;
 
 		}else{

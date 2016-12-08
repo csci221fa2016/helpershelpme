@@ -17,6 +17,26 @@ int main(int /*argc*/, char** /*argv*/) {
     try {
         Cgicc cgi;
 
+/*		const CgiEnvironment& env = cgi.getEnvironment();
+		vector<string> id;
+		const_cookie_iterator iter;
+		if(env.getCookieList().empty()){
+            id.push_back(" NO COOKIES YET");
+            id.push_back(" NO COOKIES YET");
+            id.push_back(" NO COOKIES YET");
+            id.push_back(" NO COOKIES YET");
+		}else{
+		for(iter = env.getCookieList().begin(); iter != env.getCookieList().end(); ++iter) {
+			id.push_back(iter->getName());
+			id.push_back(iter->getValue());
+		}
+		}
+		if(id[3]=="true"){
+            cout<<HTTPHTMLHeader()<<endl;
+		}
+		else{
+			cout<<HTTPRedirectHeader("login.cgi")<<endl;
+		)*/
         cout << HTTPHTMLHeader() << endl;
         cout << html().set("lang", "en").set("dir", "ltr") << endl;
         cout << html() << head() << endl;
@@ -24,7 +44,7 @@ int main(int /*argc*/, char** /*argv*/) {
         cout << style() << comment() << endl;
         cout << styles;
         cout << comment() << style() <<endl;
-        cout << title() << "Login/Sign Up" << title() << endl;
+        cout << title() << "Event Page" << title() << endl;
         cout << head() << endl;
         cout << "<body class =\"index\">" << endl;
         cout<<"<div id=\"page-wrapper\">"<<endl;
@@ -44,7 +64,7 @@ int main(int /*argc*/, char** /*argv*/) {
         cout<<"<li class=\"submenu\">"<<endl;
         cout<<"<a href=\"#\">Events</a>"<<endl;
         cout<<"<ul>"<<endl;
-        cout<<"<li><a href=\"#\">See All Events</a></li>"<<endl;
+        cout<<"<li><a href=\"event_list.cgi\">See All Events</a></li>"<<endl;
         cout<<"<li><a href=\"#\">Upcoming Events</a></li>"<<endl;
         cout<<"<li><a href=\"#\">Closed Events</a></li>"<<endl;
         cout<<"<li><a href=\"#\">New Events</a></li>"<<endl;
