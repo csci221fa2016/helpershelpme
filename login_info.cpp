@@ -28,11 +28,21 @@ int main () {
 	if( !it->isEmpty() &&it != (*cgi).end()) {  
 		login.push_back(**it);
 	}
-/*
-	vector<string> login_answer;
-	login_answer=myController.signIn(login);
-*/	
-	//login_answer=myController.signIn(login);
+
+	vector<string> login_answer = myController.signIn(login);
+	
+	if(login_answer[0].find("true")) { 
+		cout << HTTPHTMLHeader().setCookie(HTTPCookie("user_id",login_answer[1])).setCookie(HTTPCookie("logged_in","true"))<<endl;
+		cout<< html()<<endl;
+		cout<<head()<<title("Redirecting")<<endl;
+		cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"0;URL=home.cgi\">"<<endl;
+	}else{
+		cout << HTTPHTMLHeader();
+		cout<<html()<<endl;
+		cout << head()<<title("Log in") << endl;
+    }
+	
+	/*//login_answer=myController.signIn(login);
 	if(login[0]=="4545"&&login[1]=="1234"){
 		login.push_back("true");
 	}else{
@@ -48,7 +58,7 @@ int main () {
 		cout << HTTPHTMLHeader();
 		cout<<html()<<endl;
 		cout << head()<<title("Log in") << endl;
-    }
+    }*/
         cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
         cout <<"<link rel=\"stylesheet\" href=\"css/main2.css\" />"<<endl;
         cout << style() << comment() << endl;

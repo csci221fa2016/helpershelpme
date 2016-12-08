@@ -45,9 +45,8 @@ int main () {
 	cout << head()<<title("Log in") << endl;
 	int returned_id = myController.sendUser(signup,-1);
 
-	if(returned_id!=0){
+	if(returned_id != 0 || returned_id != -1){
 		cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"8;URL=login.cgi\">"<<endl;
-
 	}
 	cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
 	cout <<"<link rel=\"stylesheet\" href=\"css/main2.css\" />"<<endl;

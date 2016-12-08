@@ -8,7 +8,7 @@
 #include "cgicc/HTMLClasses.h"
 #include <cgicc/HTTPRedirectHeader.h>
 
-#include "styles2.h"
+#include "styles.h"
 #include "controller.h"
 
 using namespace std;
