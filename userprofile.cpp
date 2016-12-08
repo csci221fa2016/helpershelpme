@@ -107,14 +107,14 @@ int main(int /*argc*/, char** /**/) {
    try{
        Cgicc cgi;
   
-		const CgiEnvironment& env = cgi.getEnvironment();
+/*		const CgiEnvironment& env = cgi.getEnvironment();
 		vector<string> id;
 		const_cookie_iterator iter;
 		if(env.getCookieList().empty()){
-		id.push_back(" NO COOKIES YET");
-		id.push_back(" NO COOKIES YET");
-		id.push_back(" NO COOKIES YET");
-		id.push_back(" NO COOKIES YET");
+            id.push_back(" NO COOKIES YET");
+            id.push_back(" NO COOKIES YET");
+            id.push_back(" NO COOKIES YET");
+            id.push_back(" NO COOKIES YET");
 		}else{
 		for(iter = env.getCookieList().begin(); iter != env.getCookieList().end(); ++iter) {
 			id.push_back(iter->getName());
@@ -122,11 +122,12 @@ int main(int /*argc*/, char** /**/) {
 		}
 		}
 		if(id[3]=="true"){
-		cout<<HTTPHTMLHeader()<<endl;
+            cout<<HTTPHTMLHeader()<<endl;
 		}
 		else{
 			cout<<HTTPRedirectHeader("login.cgi")<<endl;
-		}	
+		)*/
+       cout<<HTTPHTMLHeader()<<endl;
        cout << html().set("lang", "en").set("dir", "ltr") << endl;
        cout << head() << endl;
         cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
@@ -193,7 +194,7 @@ int main(int /*argc*/, char** /**/) {
         cout<<"<script src=\"js/skel.min.js\"></script>"<<endl;
         cout<<"<script src=\"js/util.js\"></script>"<<endl;
         cout<<"<script src=\"js/main.js\"></script>"<<endl;
-        cout << body() <<endl;
+        cout << "</body>" <<endl;
         cout << html() <<endl;
        return EXIT_SUCCESS;
    } catch(exception& e) {
