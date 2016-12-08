@@ -41,8 +41,7 @@ int Controller::sendUser(vector<string> v, int id) {
 	}
 	else {
 		// runtime error
-		throw runtime_error("User attempted invalid signup.");
-		return 0;
+		return -1;
 	}
 }
 
@@ -123,7 +122,7 @@ vector<string> Controller::showUserInfo(int id) {
 		v.push_back(u->getPhoneNumber());
 		return v;
 	}else{
-		throw runtime_error("Not a user.");
+		v.push_back("-1");
 		return v;
 	}
 	return v;
