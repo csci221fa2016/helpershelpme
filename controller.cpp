@@ -61,7 +61,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 
 		// char date[] = v[0][2];
 
-		tm *stm;
+		tm *stm = new tm();
 
 		char* start_pch;
 		start_pch = strtok(date, " ,.-:");
@@ -82,7 +82,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		char * date1 = new char[s1.size()+1]; //mutable string
 		strcpy(date1, s1.c_str());
 		//char date1[] = v[0][3];
-		tm *etm;
+		tm *etm = new tm();
 
 		char* end_pch;
 		end_pch = strtok(date1, " ,.-:");
@@ -100,7 +100,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		int eventId = c->createEvent(v[0][0], v[0][1],mktime (stm), mktime (etm), userId, v[0][4]);
 		string Result;
 		ostringstream Convert;
-		for(int i = 1; i <v.size(); ++i){ 
+		for(unsigned int i = 1; i <v.size(); ++i){ 
 
 			string myStream = v[i][1];
 			istringstream buffer(myStream);
@@ -136,7 +136,7 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 
 	vector<EventPosition*> ep_arr = e->getVolunteers();
 	vector<vector<string> > a;
-	for (int i = 0; i < ep_arr.size()+1; ++i) {
+	for (unsigned int i = 0; i < ep_arr.size()+1; ++i) {
 		a.push_back(vector<string>());
 	}
 
@@ -164,7 +164,7 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 	Result = Convert.str();
 	a[0].push_back(Result);
 
-	for (int i = 0; i < ep_arr.size(); ++i ) {
+	for (unsigned int i = 0; i < ep_arr.size(); ++i ) {
 		a[i+1].push_back(ep_arr[i]->getVolunteer()->getName());
 		a[i+1].push_back(ep_arr[i]->getDescription());
 
@@ -215,7 +215,7 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 		strcpy(date, s.c_str());
 
 		//char date[] = v[0][2];
-		tm *stm;
+		tm *stm = new tm();
 
 		char* start_pch;
 		start_pch = strtok(date, " ,.-:");
@@ -226,7 +226,7 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 		stm->tm_min = atoi(strtok(NULL, " ,.-:")); //get the min value
 		stm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value			
 
-		// This coverts the tm* ltm to time_t
+		// This coverts the tm* stm to time_t
 
 		// This is the end time that the view is passing to us
 
@@ -234,7 +234,7 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 		char * date1 = new char[s1.size()+1]; //mutable string
 		strcpy(date1, s1.c_str());
 		// char date1[] = v[0][3];
-		tm *etm;
+		tm *etm = new tm();
 
 		char* end_pch;
 		end_pch = strtok(date1, " ,.-:");
@@ -295,7 +295,7 @@ void Controller::addVolunteer(int eventId, int userId, int posId) {
 	Creation* c = new Creation();
 	if(c->findUser(userId) && c->findEvent(eventId)){
 		EventPosition* ep = new EventPosition(eventId, userId, posId);
-		// Does this add a user to an event or adds an event position to a event?
+		// Does this add a user to an event or adds an event position to an event?
 	}else{
 		throw runtime_error("User/Event is invalid");
 	}
