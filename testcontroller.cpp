@@ -13,7 +13,7 @@ TEST(Controller, sendUser)
 	v.push_back("Tierney Irwin");
 	v.push_back("8888888888");
 	v.push_back("JoePass2");
-	ASSERT_EQ(true, c->sendUser(v, id) != 0);
+	ASSERT_EQ(false, c->sendUser(v, id) == -1);
 }
 
 TEST(Controller, sendUser2)
