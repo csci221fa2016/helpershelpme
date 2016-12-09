@@ -43,18 +43,18 @@ string Creation::logIn(string _phoneNumber) {
 
 int Creation::searchUser(string _phoneNumber) {
 	sqlite3_stmt *s;
-	int userid;
+	int userid = -1;
 	string phone = _phoneNumber;
 	const char *sql = "select id from users where phone = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return -1;
+		return userid;
 	}
 	retval = sqlite3_bind_text(s, 1, phone.c_str(), phone.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return userid;
 	}
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		userid = sqlite3_column_int(s, 0);
@@ -103,32 +103,31 @@ bool Creation::findEvent(int _eventid) {
 }
 
 int Creation::createUser(string _name, string _phoneNumber, string _password) {
-	int userid;
+	int userid = -1;
 	sqlite3_stmt *s;
 	const char *sql = "insert into users (name, phone, password) values (?, ?, ?)";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return -1;
+		return userid;
 	}
 	retval = sqlite3_bind_text(s, 1, _name.c_str(), _name.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement 1 " << sql;
-		return -1;
+		return userid;
 	}
 	retval = sqlite3_bind_text(s, 2, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement 2 " << sql;
-		return -1;
+		return userid;
 	}
 	retval = sqlite3_bind_text(s, 3, _password.c_str(), _password.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement 3 " << sql;
-		return -1;
+		return userid;
 	}
 	if (sqlite3_step(s) != SQLITE_DONE) {
 		cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
-		return -1;
 	}
 	sqlite3_reset(s);
 	//Finished creating new User, now getting userid to return.
@@ -138,7 +137,7 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement 4 " << sql;
-		return -1;
+		return userid;
 	}
 	
 	retval = sqlite3_bind_text(s, 1, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
@@ -152,48 +151,47 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 }
 
 int Creation::createEvent(string _name, string _description, time_t _start, time_t _end, int userid, string _location) {
-	int eventid;
+	int eventid = -1;
 	sqlite3_stmt *s;
 	const char *sql = "insert into events (name, description, start, end, organizer, location) values (?, ?, ?, ?, ?, ?)";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in the SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
 	retval = sqlite3_bind_text(s, 1, _name.c_str(), _name.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
 	retval = sqlite3_bind_text(s, 2, _description.c_str(), _description.size(), SQLITE_STATIC);
         if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
 	retval = sqlite3_bind_int(s, 3, (int)_start);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
 	retval = sqlite3_bind_int(s, 4, (int)_end);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
 	retval = sqlite3_bind_int(s, 5, userid);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
 	retval = sqlite3_bind_text(s, 6, _location.c_str(), _location.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
 	
 	if (sqlite3_step(s) != SQLITE_DONE) {
 		cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
-		return -1;
 	}
 	sqlite3_reset(s);
 
@@ -203,22 +201,22 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
 	retval = sqlite3_bind_text(s, 1, _name.c_str(), _name.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
 	retval = sqlite3_bind_text(s, 2, _description.c_str(), _description.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error is binding SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
 	retval = sqlite3_bind_int(s, 3, userid);
 	if (retval != SQLITE_OK) {
 		cout << "Error is binding SQL statment " << sql;
-		return -1;
+		return eventid;
 	}
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		eventid = sqlite3_column_int(s, 0);
@@ -228,27 +226,26 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 }
 
 int Creation::createEventPosition(int eventid, int posid, string _description, int _openings, int userid) {
-	int eposid;
+	int eposid = -1;
 	sqlite3_stmt *s;
 	const char *sql = "insert into eventpositions (eventid, posid) values (?, ?)";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return -1;
+		return eposid;
 	}
 	retval = sqlite3_bind_int(s, 1, posid);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eposid;
 	}
 	retval = sqlite3_bind_int(s, 2, eventid);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eposid;
 	}
 	if (sqlite3_step(s) != SQLITE_DONE) {
 		cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
-		return -1;
 	}
 	//Finished putting values into eventpositions table, now need to put values into vacancies table.
 
@@ -256,31 +253,30 @@ int Creation::createEventPosition(int eventid, int posid, string _description, i
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return -1;
+		return eposid;
 	}
 	retval = sqlite3_bind_int(s, 1, eventid);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eposid;
 	}
 	retval = sqlite3_bind_int(s, 2, posid);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eposid;
 	}	
 	retval = sqlite3_bind_text(s, 3, _description.c_str(), _description.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eposid;
 	}
 	retval = sqlite3_bind_int(s, 4, _openings);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eposid;
 	}
 	if (sqlite3_step(s) != SQLITE_DONE) {
 		cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
-		return -1;
 	}
 	sqlite3_reset(s);
 
@@ -291,22 +287,22 @@ int Creation::createEventPosition(int eventid, int posid, string _description, i
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return -1;
+		return eposid;
 	}
 	retval = sqlite3_bind_int(s, 1, eventid);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eposid;
 	}
 	retval = sqlite3_bind_int(s, 2, userid);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eposid;
 	}
 	retval = sqlite3_bind_int(s, 3, posid);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eposid;
 	}
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		eposid = sqlite3_column_int(s, 0);
