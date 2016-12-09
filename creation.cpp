@@ -66,8 +66,9 @@ int Creation::searchUser(string _phoneNumber) {
 bool Creation::findUser(int _userid) {
 	bool found = false;
 	sqlite3_stmt *s;
-	const char *sql = "select count(id) from users where id = " + (char)_userid;
+	const char *sql = "select count(id) from users where id = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval = sqlite3_bind_int(s,1,_userid);
 	if (retval != SQLITE_OK){
 		cout << "Error in SQL statement " << sql;
 		return false;
@@ -110,19 +111,19 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 		cout << "Error in SQL statement " << sql;
 		return -1;
 	}
-	retval = sqlite3_bind_text(s, 0, _name.c_str(), _name.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 1, _name.c_str(), _name.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
+		cout << "Error in binding SQL statement 1 " << sql;
 		return -1;
 	}
-	retval = sqlite3_bind_text(s, 1, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 2, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
+		cout << "Error in binding SQL statement 2 " << sql;
 		return -1;
 	}
-	retval = sqlite3_bind_text(s, 2, _password.c_str(), _password.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 3, _password.c_str(), _password.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
+		cout << "Error in binding SQL statement 3 " << sql;
 		return -1;
 	}
 	if (sqlite3_step(s) != SQLITE_DONE) {
@@ -136,11 +137,11 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 	sql = "select id from users where phone = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
+		cout << "Error in binding SQL statement 4 " << sql;
 		return -1;
 	}
 	
-	retval = sqlite3_bind_text(s, 0, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 1, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		userid = sqlite3_column_int(s, 0);
 		if (userid == -1) {
