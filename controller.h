@@ -35,7 +35,7 @@ class Controller {
 		// This shows the events that the user worked at
 		vector<int> showEventsWorked(int id);
 		
-		vector<string> showEventPositions(int id);
+		string showEventPosition(int userid,int eventid);
 
 };
 
