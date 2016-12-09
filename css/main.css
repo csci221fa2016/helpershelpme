@@ -2465,7 +2465,7 @@
 		background-position: top left, top right, bottom left, bottom right;
 		background-repeat: no-repeat;
 		background-size: 25em;
-		padding: 0em 0;
+		padding: 7em 0;
 	}
 
 		#main > :last-child {
@@ -2486,7 +2486,6 @@
 
 	body.index #main {
 		padding-top: 5em;
-		padding-bottom: 5em;
 	}
 
 /* CTA */

@@ -21,6 +21,18 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {\
 }\
 .button {border: 0;outline: none;border-radius: 0;padding:0;font-size: 2rem;font-weight: 600;text-transform: uppercase;letter-spacing: .1em;background: #83d3c9;color: #ffffff;-webkit-transition: all 0.5s ease;transition: all 0.5s ease;-webkit-appearance: none;}\
 .button:hover, .button:focus {background: #179b77;}\
-.button-block {display: block;width: 100%;}"
+.button-block {display: block;width: 100%;}\
+.row > * {\
+    float: none;\
+    -moz-box-sizing: border-box;\
+    -webkit-box-sizing: border-box;\
+    box-sizing: border-box;\
+}\
+.button.small {\
+    font-size: 0.7em;\
+    min-width: 14em;\
+    padding: 0.0em 0;\
+	margin: 10px;\
+}\n"
 ;
 #endif

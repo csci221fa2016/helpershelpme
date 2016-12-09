@@ -124,7 +124,7 @@ int main(int argc, char **argv) {
 		cout<<"</li>"<<endl;
 		cout<<"<li><a href=\"#\">Rankings</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">News</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">Donate</a></li>"<<endl;
+		cout<<"<li><a href=\"userprofile.cgi\">Profile</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">Contact</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"</li>"<<endl;
@@ -132,7 +132,7 @@ int main(int argc, char **argv) {
 		cout<<"</ul>"<<endl;
 		cout<<"</nav>"<<endl;
 		cout<<"</header>"<<endl;
-		cout<<"<section id=\"banner\">"<<endl;
+		cout<<"<section id=\"main\">"<<endl;
 		printForm(cgi);
 		//<=========================================FOOTER DON'T TOUCH=============================================================>
 		cout<<"</section>"<<endl;

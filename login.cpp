@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
 		cout<<"</li>"<<endl;
 		cout<<"<li><a href=\"#\">Rankings</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">News</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">Donate</a></li>"<<endl;
+		cout<<"<li><a href=\"userprofile.cgi\">Profile</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">Contact</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"</li>"<<endl;
@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
 		cout<<"</ul>"<<endl;
 		cout<<"</nav>"<<endl;
 		cout<<"</header>"<<endl;
-		cout<<"<section id=\"banner\">"<<endl;
+		cout<<"<section id=\"main\">"<<endl;
 		//<=======================LOGIN WORK HERE=========================================>	
 		cout << "<div class = \"form\">" << endl;
 		cout << "<ul class = \"tab-group\">" << endl;
@@ -110,9 +110,8 @@ int main(int argc, char **argv) {
 		cout << "</div>"<< endl;	
 		cout << "</div>" << endl;
 		cout << "</div>" << endl;
-        
+		cout << "</section>"<<endl; 
 		//<=========================================FOOTER DON'T TOUCH=============================================================>
-		cout<<"</section>"<<endl;
 		cout<<"<footer id=\"footer\">"<<endl;
 		cout<<"<ul class=\"icons\">"<<endl;
 		cout<<"<li><a href=\"#\" class=\"icon circle fa-twitter\"><span class=\"label\">Twitter</span></a></li>"<<endl;
