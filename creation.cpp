@@ -112,17 +112,17 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 	}
 	retval = sqlite3_bind_text(s, 0, _name.c_str(), _name.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
+		cout << "Error in first binding SQL statement " << sql;
 		return -1;
 	}
 	retval = sqlite3_bind_text(s, 1, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
+		cout << "Error in second binding SQL statement " << sql;
 		return -1;
 	}
 	retval = sqlite3_bind_text(s, 2, _password.c_str(), _password.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
+		cout << "Error in third binding SQL statement " << sql;
 		return -1;
 	}
 	if (sqlite3_step(s) != SQLITE_DONE) {
