@@ -21,7 +21,7 @@
 #include "cgicc/HTMLClasses.h"
 
 #include "controller.h"
-#include "styles2.h"
+#include "styles3.h"
 
 using namespace std;
 using namespace cgicc;
@@ -65,7 +65,7 @@ void printform(const Cgicc& cgi) {
 	cout   << dl() << endl;*/
 
 	//     Dummy Info in case of malfunction
-	cout   << "<table>\n"
+	/*cout   << "<table>\n"
 		<< "<tr><th>User Name</th>\n"
 		<< "<td>User Name</td></tr>\n"
 		<< "<tr><th>Phone Number</th>\n"
@@ -87,7 +87,24 @@ void printform(const Cgicc& cgi) {
 		<< "<p> Dog Party </p>"
 		<< "<p> 3020 January 20 4:50 am </p>"
 		<< "<p>Mars, Volcanic Base </p>"
-		<< "</div>" << endl;
+		<< "</div>" << endl;*/
+			cout<<"<section>"<<endl;
+			cout<<"<header>"<<endl;
+			cout<<"<h3>My Information</h3>"<<endl;
+			cout<<"</header>"<<endl;
+			cout<<"<p><strong>User Name:</strong> User Name</br><strong>Phone Number:</strong> 888-999-000  </br><strong>Hours Volunteering:</strong> 123 </p>"<<endl;
+			cout<<"<footer>"<<endl;
+			cout<<"<ul class=\"buttons\">"<<endl;
+			cout<<"<form name=\"my-events\" action=\"home.cgi\">"<<endl;
+			cout<<"<button class = \"button small\"/>My Events</button>" << endl;
+			cout<<"</form>"<<endl;
+			cout<<"<form name=\"my-events\" action=\"home.cgi\">"<<endl;
+			cout<<"<button class = \"button small\"/>Create Event</button>" << endl;
+			cout<<"</form>"<<endl;
+			cout<<"</ul>"<<endl;
+			cout<<"</footer>"<<endl;
+			cout<<"</section>"<<endl;
+
 }
 
 /*
@@ -148,20 +165,20 @@ int main(int /*argc*/, char** /**/) {
 		cout<<"<li class=\"submenu\">"<<endl;
 		cout<<"<a href=\"#\">Menu</a>"<<endl;
 		cout<<"<ul>"<<endl;
-		cout<<"<li><a href=\"#\">Rankings</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">News</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">Donate</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">Contact</a></li>"<<endl;
 		cout<<"<li class=\"submenu\">"<<endl;
 		cout<<"<a href=\"#\">Events</a>"<<endl;
 		cout<<"<ul>"<<endl;
-		cout<<"<li><a href=\"#\">See All Events</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">Upcoming Events</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">Closed Events</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">New Events</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">Past Events</a></li>"<<endl;
+		cout<<"<li><a href=\"event_list.cgi\">See All Events</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">Upcoming Events</a></li>"<<endl;	
+		cout<<"<li><a href=\"my_events.cgi\">My Events</a></li>"<<endl;
+		cout<<"<li><a href=\"eventcreation.cgi\">Create Event</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"</li>"<<endl;
+
+		cout<<"<li><a href=\"#\">Rankings</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">News</a></li>"<<endl;
+		cout<<"<li><a href=\"userprofile.cgi\">Profile</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">Contact</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"</li>"<<endl;
 		cout<<"<li><a href=\"log_out.cgi\" class=\"button special\">Log Out</a></li>"<<endl;

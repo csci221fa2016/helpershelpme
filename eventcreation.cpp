@@ -132,7 +132,7 @@ int main(int argc, char **argv) {
 		cout<<"</ul>"<<endl;
 		cout<<"</nav>"<<endl;
 		cout<<"</header>"<<endl;
-		cout<<"<section id=\"banner\">"<<endl;
+		cout<<"<section id=\"main\">"<<endl;
 		printForm(cgi);
 		//<=========================================FOOTER DON'T TOUCH=============================================================>
 		cout<<"</section>"<<endl;

@@ -53,7 +53,7 @@ textarea {border: 2px solid #a0b3b0;resize: vertical;}\
 .top-row:after {content: \"\";display: table;clear: both;}\
 .top-row > div {float: left;width: 48%;margin-right: 4%;}\
 .top-row > div:last-child {margin: 0;}\
-.button {border: 0;outline: none;border-radius: 0;padding:0;font-size: 2rem;font-weight: 600;text-transform: uppercase;letter-spacing: .1em;background: #1ab188;color: #ffffff;-webkit-transition: all 0.5s ease;transition: all 0.5s ease;-webkit-appearance: none;}\
+.button {border: 0;outline: none;border-radius: 0;padding:0;font-size: 2rem;font-weight: 600;text-transform: uppercase;letter-spacing: .1em;background: #83d3c9;color: #ffffff;-webkit-transition: all 0.5s ease;transition: all 0.5s ease;-webkit-appearance: none;}\
 .button:hover, .button:focus {background: #179b77;}\
 .button-block {display: block;width: 100%;}\
 .forgot {margin-top: -20px;text-align: right;}"
