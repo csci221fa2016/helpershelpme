@@ -33,9 +33,9 @@ int main(int argc, char** argv){
 		cout << html() <<endl;                
 		cout << head() << endl;
 		cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
-		cout << style() << comment() << endl;
-		cout << styles;
-		cout << comment() << style() <<endl;
+		//cout << style() << comment() << endl;
+		//cout << styles;
+		//cout << comment() << style() <<endl;
 		cout << title() << "Home" << title() << endl;
 		cout <<"<link rel=\"stylesheet\" href=\"css/main.css\" />"<<endl;
 		cout << head() << endl; 

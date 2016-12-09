@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
 		cout<<"</li>"<<endl;
 		cout<<"<li><a href=\"#\">Rankings</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">News</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">Donate</a></li>"<<endl;
+		cout<<"<li><a href=\"userprofile.cgi\">Profile</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">Contact</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"</li>"<<endl;
@@ -85,7 +85,7 @@ int main(int argc, char **argv) {
 			cout<<"<span class=\"icon fa-laptop\"></span>"<<endl;
 			cout<<"<h2>All<strong> Events</strong></h2>"<<endl;
 			cout<<"</header>"<<endl;	
-			cout<<"<section class=\"wrapper style1 container special\">"<<endl;
+			cout<<"<section class=\"wrapper style3 container special\">"<<endl;
 			cout<<"<div class=\"row\">"<<endl;
 			vector<string> info;
 			info.push_back("Computer work");
