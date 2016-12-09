@@ -164,7 +164,14 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 	Result = Convert.str();
 	a[0].push_back(Result);
 
+	vector<string> v = e->getVacancies();	
+
 	for (int i = 0; i < ep_arr.size(); ++i ) {
+	
+		vector<string> pos;
+				
+		// string parser is neded here.
+
 		a[i+1].push_back(ep_arr[i]->getVolunteer()->getName());
 		a[i+1].push_back(ep_arr[i]->getDescription());
 
