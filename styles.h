@@ -17,7 +17,7 @@ html {overflow-y: scroll;}\
 body {background:#E8EEF4;font-family: 'Lato', sans-serif;}\
 a {text-decoration: none;color: #1ab188;-webkit-transition: .5s ease;transition: .5s ease;}\
 a:hover {color: #179b77;}\
-.form {background: rgba(19, 35, 47, 0.9);padding: 40px;max-width: 600px;margin: 0px auto;border-radius: 4px;box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);}\
+.form {background: rgba(28, 62, 88, 0.9);padding: 40px;max-width: 600px;margin: 0px auto;border-radius: 4px;box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);}\
 .tab-group {list-style: none;padding: 0;margin: 0 0 40px 0;}\
 .tab-group:after {content: \"\";display: table;clear: both;}\
 .tab-group li a {display: block;text-decoration: none;padding: 15px;background: rgba(160, 179, 176, 0.25);color: #a0b3b0;font-size: 20px;float: left;width: 50%;text-align: center;cursor: pointer;-webkit-transition: .5s ease;transition: .5s ease;}\

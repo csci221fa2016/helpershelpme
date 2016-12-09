@@ -43,7 +43,6 @@ int main(int argc, char **argv) {
 		cout<<"<ul>"<<endl;
 		cout<<"<li><a href=\"event_list.cgi\">See All Events</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">Upcoming Events</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">Closed Events</a></li>"<<endl;
 		cout<<"<li><a href=\"eventcreation.cgi\">Create Event</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">My Events</a></li>"<<endl;
 		cout<<"</ul>"<<endl;

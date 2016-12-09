@@ -57,7 +57,7 @@ int main () {
 	}else{
 		cout << HTTPHTMLHeader();
 		cout<<html()<<endl;
-		cout << head()<<title("Log in") << endl;
+		cout << head()<<title("Incorrect Password") << endl;
     }
         cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
         cout <<"<link rel=\"stylesheet\" href=\"css/main2.css\" />"<<endl;
@@ -67,13 +67,11 @@ int main () {
         cout << head() << endl;
         cout << "<body class =\"index\">" << endl;
         cout<<"<div id=\"page-wrapper\">"<<endl;
-        cout<<"<section id=\"banner\">"<<endl;
     if(login[2]=="true"){
         cout<<"<p> Login successfull, you will be redirected now! If your browser doesn't redirect please click <a href=\"home.cgi\">HERE</a></p>"<<endl;
     }else{
         cout<<"<p>Wrong username or password, click <a href=\"login.cgi\">HERE</a> to try again.</p>"<<endl;
     }
-        cout<<"</section>"<<endl;
         cout<<"<footer id=\"footer\">"<<endl;
         cout<<"<ul class=\"icons\">"<<endl;
         cout<<"<li><a href=\"#\" class=\"icon circle fa-twitter\"><span class=\"label\">Twitter</span></a></li>"<<endl;
