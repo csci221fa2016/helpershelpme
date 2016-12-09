@@ -316,7 +316,7 @@ void Controller::addVolunteer(int eventId, int userId, int posId) {
 	if(c->findUser(userId) && c->findEvent(eventId)){
 		EventPosition* ep = new EventPosition(eventId, userId, posId);
 		// Does this add a user to an event or adds an event position to an event?
-		// Erace after use, remember that this causes memory leaks
+		delete ep;
 	}else{
 		throw runtime_error("User/Event is invalid");
 	}
@@ -404,8 +404,9 @@ vector<int> Controller::showEventsWorked(int id){
 	return num_events_worked;
 }
 
-vector<string> Controller::showEventPositions(int id){
-	vector<string> c;
+vector<string> Controller::showEventPosition(int userid,int eventid){
+	User* u = new User(userid);
+	vector<EventPosition*> ep = 
 	return c;
 }
 
