@@ -95,10 +95,10 @@ void printform(const Cgicc& cgi) {
 			cout<<"<p><strong>User Name:</strong> User Name</br><strong>Phone Number:</strong> 888-999-000  </br><strong>Hours Volunteering:</strong> 123 </p>"<<endl;
 			cout<<"<footer>"<<endl;
 			cout<<"<ul class=\"buttons\">"<<endl;
-			cout<<"<form name=\"my-events\" action=\"home.cgi\">"<<endl;
+			cout<<"<form name=\"my-events\" action=\"my_events.cgi\">"<<endl;
 			cout<<"<button class = \"button small\"/>My Events</button>" << endl;
 			cout<<"</form>"<<endl;
-			cout<<"<form name=\"my-events\" action=\"home.cgi\">"<<endl;
+			cout<<"<form name=\"my-events\" action=\"eventcreation.cgi\">"<<endl;
 			cout<<"<button class = \"button small\"/>Create Event</button>" << endl;
 			cout<<"</form>"<<endl;
 			cout<<"</ul>"<<endl;
