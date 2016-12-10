@@ -81,6 +81,7 @@ TEST(Controller, showEventInfo)
 	//a.push_back(event);
 	//a.push_back(eposinfo);
 	//int eId = cont->sendEvent(a, 13);
+	Event* event = new Event(eventId);
 	string name = ep->getDescription();
 	vector<vector<string> > check = cont->showEventInfo(eventId);
 	ASSERT_EQ(true, check.at(1).at(0) == ep->getDescription());	
