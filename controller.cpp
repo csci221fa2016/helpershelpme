@@ -183,19 +183,21 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 	for (unsigned int i = 0; i < ep_arr.size(); ++i ) {
 
 		//write test case for parser
-		vector<string> pos;
-		istringstream ss(v[i]);
-		string str;
-		getline(ss,str, ";");
-		pos[0] = str;
-		getline(ss,str, ";");
-		pos[1] = str;
-		getline(ss,str, ";");//need database to put ; at end of long string hopeful to work
-		pos[2] = str;
+		string str = v[i];
+		char* info = new char[str.size()+1];
+		strcpy(info, str.c_str());
+		char* start;
+		start = strtok(info,";");
 		//name;posid;openings
-		a[i+1].push_back(pos[0]);
-		a[i+1].push_back(pos[1]);
-		a[i+1].push_back(pos[2]);
+		a[i+1].push_back(s);
+		ss << start[1];
+		ss >> s;
+		a[i+1].push_back(s);
+		ss << start[2];
+		ss >> s;
+		a[i+1].push_back(s);
+		
+		delete info; delete start;
 		//string Result;
 		//ostringstream Convert;
 		//Convert << (ep_arr[i]->getPosId());
