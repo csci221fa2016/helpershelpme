@@ -12,7 +12,7 @@ using namespace std;
 TEST(Controller, sendUser)
 {
 	Controller* c = new Controller();
-	
+
 	int id = -1;
 	vector<string> v;
 	v.push_back("Tierney Irwin");
@@ -79,7 +79,68 @@ TEST(Controller, showUserInfo)
 	Creation* c = new Creation();
 	int id = c->createUser("Tierney Irwin", "8887776666", "JoePass2");
 	vector<string> v = cont->showUserInfo(id);
-	ASSERT_EQ(true, v.at(0) == "Tierney Irwin");
+	ASSERT_EQ(true, v.at(0) == "Tierney Irwin" && v.at(1) == "8887776666");
+}
+
+TEST(Controller, updateProfile) 
+{
+	Controller* cont = new Controller();
+	Creation* c = new Creation();
+	int id = c->createUser("Tierney Irwin", "8887776666", "JoePass2");
+	User* u = new User(id);
+	vector<string> v;
+	v.push_back("Tierney Irwin2");
+	v.push_back("1112225555");
+	v.push_back("JoePass2");
+
+	cont->updateProfile(v, id);	
+
+	ASSERT_EQ(true, u->getName() == "Tierney Irwin2" && u->getPhoneNumber() == "1112225555");
+
+}
+
+// TEST(Controller, updateEvent)
+
+
+TEST(Controller, signInPass)
+{
+	Controller* cont = new Controller();
+	//	Creation* c = new Creation();
+
+	vector<string> v;
+	v.push_back("8887776666");
+	v.push_back("JoesPass2");
+
+	vector<string> result;
+	result = cont->signIn(v);
+	ASSERT_EQ(true, result.at(0) == "true");
+}
+
+TEST(Controller, signInFail)
+{
+	Controller* cont = new Controller();
+	//	Creation* c = new Creation();
+
+	vector<string> v;
+	v.push_back("8887776666");
+	v.push_back("JoesPa2");
+
+	vector<string> result;
+	result = cont->signIn(v);
+	ASSERT_EQ(true, result.at(0) == "false");
+
+}
+
+// Need to finish this
+TEST(Controller, addVolunteer)
+{
+	//Controller* cont = new Controller();		
+}
+
+TEST(Controller, showStats)
+{
+	//Controller* cont = new Controller();
+	
 }
 
 TEST(Controller, showEventInfo)
