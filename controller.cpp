@@ -97,7 +97,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		// This coverts the tm* ltm to time_t
 
 
-		//need to set start time end time 0 -name, 1 -description, 2-openings		
+		//need to set start time end time 0 -name, 1 -description, 2-openings
 		int eventId = c->createEvent(v[0][0], v[0][1],mktime (stm), mktime (etm), userId, v[0][4]);
 		string Result;
 		ostringstream Convert;
