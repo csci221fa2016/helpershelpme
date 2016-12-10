@@ -145,15 +145,32 @@ vector<Event*> User::getOrganizedEvents() {
 }
 
 bool User::leaveEvent(Event* _event) {
+	int tposid;
 	Event* e = _event;
 	sqlite3_stmt *s;
-	const char *sql = "delete from eventpositions where userid = ? and eventid = ?";
+	const char *sql = "select posid from events where eventid = ? and userid = ?";
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+		
+	retval = sqlite3_bind_int(s, 1,e->getEventId());
+	retval = sqlite3_bind_int(s,2,userid);
+	while(sqlite3_step(s) == SQLITE_ROW) {
+		tposid=sqlite3_column_int(s,0);
+	}
+
+	sql = "delete from eventpositions where userid = ? and eventid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	retval = sqlite3_bind_int(s, 1, userid);
 	retval = sqlite3_bind_int(s,2,e->getEventId());
 	if(sqlite3_step(s) != SQLITE_DONE) {
 		cout <<"error";
 		return false;	
+	}
+	sql = "update vacancies set openings = openings + 1 where eventid = ? and posid = ?)";
+	retval=sqlite3_prepare(db, sql, strlen(sql), &s, NULL);;
+	retval = sqlite3_bind_int(s, 1, e->getEventId());
+	retval = sqlite3_bind_int(s, 2, tposid);
+	if(sqlite3_step(s) != SQLITE_DONE) {
+		cout << "cannnot exec sql stmt in leave event" <<sql;
 	}
 	return true;
 }
