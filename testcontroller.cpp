@@ -99,7 +99,44 @@ TEST(Controller, updateProfile)
 
 }
 
-// TEST(Controller, updateEvent)
+TEST(Controller, updateEvent)
+{
+	Controller* cont = new Controller();
+	Creation* c = new Creation();
+	int eventId = c->createEvent("EName","Desc.",2222222222222222222222222222222222222, 2222222222222222222222222222223, "Stetsoon");
+	c->createEventPosition(eventId, 1, "Name", 2, 13);
+	EventPosition* ep = new EventPosition(eventId, 12, 1);
+	
+	vector<vector<string> > event;
+	event.push_back(vector<string>());
+	event.push_back(vector<string>());
+
+	Event* e = new Event(eId);
+	
+	event[0].push_back(e->getName());
+	event[0].push_back(e->getDescription());
+	event[0].push_back(e->getStartDate());
+	event[0].push_back(e->getEndDate());
+	event[0].push_back(e->getLocation());
+	
+	// make event position and add it to event 1.
+	
+	vector<vector<string> > v;
+	v.push_back(vector<string>());
+	v.push_back(vector<string>());
+	v[0].push_back("Newname");
+	v[0].push_back("NewDesc");
+	v[0].push_back("2222222222222222");
+	v[0].push_back("2222222222222222");
+	v[0].push_back("Stetson.");
+	v[1].push_back("meep");
+	v[1].push_back("1");
+	v[1].push_back("3");
+
+	cont->updateEvent(v, eventId, 12);
+
+	ASSERT_EQ(true, e->getName() == "Newname");
+}
 
 
 TEST(Controller, signInPass)
