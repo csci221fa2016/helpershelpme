@@ -31,8 +31,8 @@ Event::Event(int _eventid) : eventid(_eventid) {
 		sqlite3_free(errmsg);
 	}
 
-	make sure that event exists in db
-		bool exists = false;
+//	make sure that event exists in db
+	bool exists = false;
 	sqlite3_stmt *s;
 	const char *sql = "select * from events where eventid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);

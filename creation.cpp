@@ -221,6 +221,9 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		eventid = sqlite3_column_int(s, 0);
 		//TODO make some error checkers here!
+		if (eventid == -1) {
+			cout << "Bad eventid.";
+		}	
 	}
 	return eventid;
 }
