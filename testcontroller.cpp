@@ -54,8 +54,8 @@ TEST(Controller, sendEvent)
 	event[0].push_back("Desc");
 	event[0].push_back("2016-05-03 10:00");
 	event[0].push_back("2016-05-03 12:00");
-	event[0].push_back("Location");
-	event[0].push_back(uId);
+	//event[0].push_back(uId);
+	event[0].push_back("location");
 	event[0].push_back("1");
 
 	event[1].push_back("name");
