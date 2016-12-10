@@ -88,7 +88,7 @@ TEST(Controller, showEventInfo)
 	Creation* c = new Creation();
 	//vector<vector<string> > a;
 	//vector<string> event;
-	int eventId = c->createEvent("EName","Desc.",2222222222222222222222222222222222222, 2222222222222222222222222222223, 13, "1");
+	int eventId = c->createEvent("EName","Desc.",2222222222222222222222222222222222222, 2222222222222222222222222222223, "1");
 	c->createEventPosition(eventId, 1, "Name", 2, 13);
 	EventPosition* ep = new EventPosition(eventId, 12, 1);
 	//vector<string> eposinfo;
