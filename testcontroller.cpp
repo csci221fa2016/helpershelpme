@@ -104,14 +104,16 @@ TEST(Controller, updateEvent)
 /*	Controller* cont = new Controller();
 	Creation* c = new Creation();
 	int eventId = c->createEvent("EName","Desc.",2222222222222222222222222222222222222, 2222222222222222222222222222223, "Stetsoon");
-	c->createEventPosition(eventId, 1, "Name", 2, 13);
-	EventPosition* ep = new EventPosition(eventId, 12, 1);
+//	c->createEventPosition(eventId, 1, "Name", 2, 13);
+//	EventPosition* ep = new EventPosition(eventId, 12, 1);
 	
 	vector<vector<string> > event;
 	event.push_back(vector<string>());
 	event.push_back(vector<string>());
 
 	Event* e = new Event(eId);
+	
+	c->createVacancy(eId, 1, "Vacancy", 5);
 	
 	event[0].push_back(e->getName());
 	event[0].push_back(e->getDescription());
@@ -135,7 +137,8 @@ TEST(Controller, updateEvent)
 
 	cont->updateEvent(v, eventId, 12);
 
-	ASSERT_EQ(true, e->getName() == "Newname"); */
+	ASSERT_EQ(true, e->getName() == "Newname"); 
+*/
 }
 
 
@@ -176,7 +179,41 @@ TEST(Controller, addVolunteer)
 
 TEST(Controller, showStats)
 {
-	//Controller* cont = new Controller();
+	Controller* cont = new Controller();
+	Creation* c = new Creation();
+	
+	int uId = c->createUser("Tierney I.", "8049997777", "Password");
+	ASSERT_EQ(true, cont->showStats(uId) == 0);
+}
+
+TEST(Controller, showStats2)
+{
+	Controller* cont = new Controller();
+	Creation* c = new Creation();
+	
+	vector<vector<string> > event;
+	event.push_back(vector<string>());
+	event.push_back(vector<string>());
+
+	event[0].push_back("EventName");
+	event[0].push_back("Desc");
+	event[0].push_back("2016-05-03 10:00");
+	event[0].push_back("2016-05-03 12:00");
+	event[0].push_back("location");
+	event[0].push_back("1");
+
+	event[1].push_back("name");
+	event[1].push_back("3");
+
+	int eId = c->sendEvent(event, 11);
+	
+	cont->addVolunteer(eId, 11, 1);
+	
+	ASSERT_EQ(true, cont->showStats(11) == 2);
+}
+
+TEST(Controller, showAllUpcoming)
+{
 	
 }
 
@@ -187,7 +224,7 @@ TEST(Controller, showEventInfo)
 	//vector<vector<string> > a;
 	//vector<string> event;
 	int eventId = c->createEvent("EName","Desc.",2222222222222222222222222222222222222, 2222222222222222222222222222223, "1");
-	c->createEventPosition(eventId, 1, "Name", 2, 13);
+	c->createEventPosition(eventId, 1, 13);
 	EventPosition* ep = new EventPosition(eventId, 12, 1);
 	//vector<string> eposinfo;
 	//eposinfo.push_back("Name");
