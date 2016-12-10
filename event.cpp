@@ -11,7 +11,7 @@ using namespace std;
 
 Event::Event(int _eventid) : eventid(_eventid) {
 	char *errmsg;
-	retval = sqlite3_open("/tmp/csci221_dmcmahon.db", &db);
+	retval = sqlite3_open("/tmp/csci221.db", &db);
 	if(retval != 0)
 	{
 		cout << "Cannot open test.db: " << sqlite3_errcode(db) << endl;
