@@ -99,7 +99,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 
 
 		//need to set start time end time 0 -name, 1 -description, 2-openings
-		int eventId = c->createEvent(v.at(0).at(0), v.at(0).at(1), mktime (stm), mktime (etm), userId, v.at(0).at(4));
+		int eventId = c->createEvent(v.at(0).at(0), v.at(0).at(1), mktime (stm), mktime (etm), v.at(0).at(4));
 		string Result;
 		ostringstream Convert;
 		for(unsigned int i = 1; i <v.size(); ++i){ 
