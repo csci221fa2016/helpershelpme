@@ -275,10 +275,10 @@ int Creation::createEventPosition(int eventid, int posid, int userid) {
 	return eposid;
 }
 
-vector<int>* Creation::getUpcoming(){
+vector<int> Creation::getUpcoming(){
 	sqlite3_stmt *s;
 	time_t timer = time(NULL);
-	vector<int>* upcoming = new vector<int>();
+	vector<int> upcoming;
 	
 	const char *sql = "SELECT eventid FROM events WHERE start > timer";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
@@ -287,7 +287,7 @@ vector<int>* Creation::getUpcoming(){
 		return upcoming;
 	}
 	while(sqlite3_step(s) == SQLITE_ROW) {
-		upcoming->push_back(sqlite3_column_int(s,0));
+		upcoming.push_back(sqlite3_column_int(s,0));
 	}
 	sqlite3_reset(s);
 	return upcoming;
@@ -295,7 +295,7 @@ vector<int>* Creation::getUpcoming(){
 
 vector<int>* Creation::getAllEvents() {
 	sqlite3_stmt *s;
-	vector<int>* allEvents = new vector<int>();
+	vector<int> allEvents;
 
 	const char *sql = "SELECT eventid FROM events";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
@@ -304,7 +304,7 @@ vector<int>* Creation::getAllEvents() {
 		return allEvents;
 	}
 	while (sqlite3_step(s) == SQLITE_ROW) {
-		allEvents->push_back(sqlite3_column_int(s, 0));
+		allEvents.push_back(sqlite3_column_int(s, 0));
 	}
 	sqlite3_reset(s);
 	return allEvents;
