@@ -153,7 +153,7 @@ vector<string> Event::getVacancies(){
 		newvac = newvac + string(reinterpret_cast<const char*>(sqlite3_column_text(s,0)));
 		newvac = newvac + ";" + string(reinterpret_cast<const char*>(sqlite3_column_text(s,1)));
 		stringstream stm;
-		stm << ";" << sqlite3_column_int(s,2) << ";" << sqlite3_column_int(s,3);
+		stm << ";" << sqlite3_column_int(s,2) << ";" << sqlite3_column_int(s,3) << ";";
 		newvac = newvac + stm.str();
 		vacs.push_back(newvac);
 	}
