@@ -20,10 +20,10 @@ Creation::Creation() {
 	}
 }
 
-string Creation::logIn(string _phoneNumber) {
+bool Creation::logIn(string _phoneNumber, string _pass) {
+	bool success = false;
 	sqlite3_stmt *s;
 	string phone = _phoneNumber;
-	string password;
 	const char *sql = "select password from users where phone = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
@@ -39,7 +39,9 @@ string Creation::logIn(string _phoneNumber) {
 		password = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 4)));
 	}	
 	sqlite3_reset(s);
-	return password;
+	
+	
+	return success;
 }
 
 int Creation::searchUser(string _phoneNumber) {
@@ -104,6 +106,27 @@ bool Creation::findEvent(int _eventid) {
 }
 
 int Creation::createUser(string _name, string _phoneNumber, string _password) {
+	//Hashing and salting the password.
+
+	SHA256_CTX context;
+	unsigned char md[SHA256_DIGEST_LENGTH];
+	int saltlen = rand() % (50 - 21) + 20;
+	unsigned char salt[saltlen];
+	RAND_bytes(salt, saltlen);
+	unsigned char md[SHA256_DIGEST_LENGTH]; //This is the password hash!
+
+	SHA256_Init(&context);
+	string saltString(reinterpret_cast<char*>(salt));
+	string saltedPass = saltString + _password;
+	//Hash of password + salt.
+	SHA256_Update(&context, (unsigned char*)saltedPass, saltedPass.size());
+	SHA256_Final(md, &context);
+
+	//Prepending salt to the hash.
+	string hash(reinterpret_cast<char*>(md));
+	string saltAndHash = saltString + "$" + hash;
+
+
 	int userid = -1;
 	sqlite3_stmt *s;
 	const char *sql = "insert into users (name, phone, password) values (?, ?, ?)";
@@ -122,7 +145,7 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 		cout << "Error in binding SQL statement 2 " << sql;
 		return userid;
 	}
-	retval = sqlite3_bind_text(s, 3, _password.c_str(), _password.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 3, saltAndHash.c_str(), saltAndHash.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement 3 " << sql;
 		return userid;

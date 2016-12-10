@@ -13,7 +13,7 @@ class Creation {
 	sqlite3 *db; 
     public:
 	Creation();
-	string logIn(string _phoneNumber);
+	string logIn(string _phoneNumber, string _pass);
 	int searchUser(string _phoneNumber);
 	bool findUser(int _userid);
 	bool findEvent(int _eventid);
@@ -23,7 +23,6 @@ class Creation {
 	vector<int> getUpcoming();
 	vector<int> getAllEvents();
 	void createVacancy(int eventid, int posid, string name, int openings);
-	
 };
 
 #endif
