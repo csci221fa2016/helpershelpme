@@ -150,10 +150,10 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 	return userid;
 }
 
-int Creation::createEvent(string _name, string _description, time_t _start, time_t _end, int userid, string _location) {
+int Creation::createEvent(string _name, string _description, time_t _start, time_t _end, string _location) {
 	int eventid = -1;
 	sqlite3_stmt *s;
-	const char *sql = "insert into events (name, description, start, end, organizer, location) values (?, ?, ?, ?, ?, ?)";
+	const char *sql = "insert into events (name, description, start, end, location) values (?, ?, ?, ?, ?)";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in the SQL statement " << sql;
@@ -179,17 +179,13 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 		cout << "Error in binding SQL statement " << sql;
 		return eventid;
 	}
-	retval = sqlite3_bind_int(s, 5, userid);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return eventid;
-	}
-	retval = sqlite3_bind_text(s, 6, _location.c_str(), _location.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 5, _location.c_str(), _location.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
 		return eventid;
 	}
 	
+
 	if (sqlite3_step(s) != SQLITE_DONE) {
 		cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
 	}
