@@ -87,7 +87,12 @@ int main(int argc, char **argv) {
 			cout<<"</header>"<<endl;	
 			cout<<"<section class=\"wrapper style3 container special\">"<<endl;
 			cout<<"<div class=\"row\">"<<endl;
-			vector<string> info;
+			Controller control;
+			vector<int> eventNum = control.showAllUpcoming();
+			for(unsigned i=0; i<eventNum.size(); i++){
+			   print_event(control.showEvent(eventNum.at(i)),eventNum.at(i));
+			}
+/*			vector<string> info;
 			info.push_back("Computer work");
 			info.push_back("12/12/32 12:00 pm");
 			info.push_back("Stetson University");
@@ -97,7 +102,7 @@ int main(int argc, char **argv) {
 			print_event(info,n);
 			print_event(info,n);
 			print_event(info,n);
-			print_event(info,n);
+			print_event(info,n);*/
 			cout<<"</div>"<<endl;
 			cout<<"</section>"<<endl;
 			cout<<"</article>"<<endl;
