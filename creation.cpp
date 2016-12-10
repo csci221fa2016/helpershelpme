@@ -293,7 +293,7 @@ vector<int> Creation::getUpcoming(){
 	return upcoming;
 }
 
-vector<int>* Creation::getAllEvents() {
+vector<int> Creation::getAllEvents() {
 	sqlite3_stmt *s;
 	vector<int> allEvents;
 
