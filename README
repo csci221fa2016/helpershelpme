@@ -1,1 +1,50 @@
-Readme file, the picture is thanks to Malak
+# Helpers Help Me
+
+CSCI 221 Fall 2016 class project to provide an easy way to find, organize, and join events. During the completion of the website, we followed these user stories:
+    -- Easily join/leave an event at specific dates and times and location
+    -- See your listing of events
+    -- See the listing of all events
+    -- Easily view profile stats
+    -- I would like to easily select dates and times for which the event is to be held
+    -- Location based events
+    -- Description of event
+    -- Detail positions that volunteer need to fill
+
+
+## Live demo
+
+helpers-help.me
+
+## Building
+
+Requirements:
+
+- CGICC etc.
+
+
+Then run `make`.
+
+## Apache setup
+
+(TBD)
+
+## Authors
+
+Manager:
+    Chad Baily
+
+View:
+    Luisa
+    Isaac
+    Juan
+
+Controller:
+    Erica
+    Tierny
+    Austin
+
+Database:
+    Hayden
+    Chris
+    Duncan
+

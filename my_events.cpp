@@ -8,24 +8,44 @@
 #include "cgicc/HTMLClasses.h"
 #include <cgicc/HTTPRedirectHeader.h>
 
-#include "styles.h"
+#include "styles2.h"
 #include "controller.h"
 
 using namespace std;
 using namespace cgicc;
+void print_event(vector<string> info, int e_id);
 int main(int argc, char **argv) {
 	try{
 		Cgicc cgi;
-		cout << HTTPHTMLHeader() << HTMLDoctype(HTMLDoctype::eStrict) << endl;
+		const CgiEnvironment& env = cgi.getEnvironment();
+		vector<string> id;
+		const_cookie_iterator iter;
+		if(env.getCookieList().empty()){
+		id.push_back(" NO COOKIES YET");
+		id.push_back(" NO COOKIES YET");
+		id.push_back(" NO COOKIES YET");
+		id.push_back(" NO COOKIES YET");
+		}else{
+		for(iter = env.getCookieList().begin(); iter != env.getCookieList().end(); ++iter) {
+			id.push_back(iter->getName());
+			id.push_back(iter->getValue());
+		}
+		}
+		if(id[3]=="true"){
+		cout<<HTTPHTMLHeader()<<endl;
+		}
+		else{
+			cout<<HTTPRedirectHeader("login.cgi")<<endl;
+		}
 		cout << html().set("lang", "en").set("dir", "ltr") << endl;
 		cout << html() <<endl;
 		cout << head() << endl;
 		cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
-		cout <<"<link rel=\"stylesheet\" href=\"css/main2.css\" />"<<endl;
+		cout <<"<link rel=\"stylesheet\" href=\"css/main.css\" />"<<endl;
 		cout << style() << comment() << endl;
 		cout << styles;
 		cout << comment() << style() <<endl;
-		cout << title() << "Login/Sign Up" << title() << endl;
+		cout << title() <<"My Events" << title() << endl;
 		cout << head() << endl;
 		cout << "<body class =\"index\">" << endl;
 		cout<<"<div id=\"page-wrapper\">"<<endl;
@@ -44,7 +64,7 @@ int main(int argc, char **argv) {
 		cout<<"<li><a href=\"event_list.cgi\">See All Events</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">Upcoming Events</a></li>"<<endl;
 		cout<<"<li><a href=\"eventcreation.cgi\">Create Event</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">My Events</a></li>"<<endl;
+		cout<<"<li><a href=\"my_events.cgi\">My Events</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"</li>"<<endl;
 		cout<<"<li><a href=\"#\">Rankings</a></li>"<<endl;
@@ -53,64 +73,34 @@ int main(int argc, char **argv) {
 		cout<<"<li><a href=\"#\">Contact</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"</li>"<<endl;
-		cout<<"<li><a href=\"#\" class=\"button special\">Log In</a></li>"<<endl;
+		cout<<"<li><a href=\"log_out.cgi\" class=\"button special\">Log Out</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"</nav>"<<endl;
 		cout<<"</header>"<<endl;
-		cout<<"<section id=\"main\">"<<endl;
-		//<=======================LOGIN WORK HERE=========================================>	
-		cout << "<div class = \"form\">" << endl;
-		cout << "<ul class = \"tab-group\">" << endl;
-		cout << "<li class=\"tab active\"><a href=\"#login\">Log In</a></li>"<<endl;
-		cout << "<li class=\"tab\"><a href=\"#signup\">Sign Up</a></li>"<<endl;
-		cout << "</ul>" << endl;
-		cout << "<div class = \"tab-content\">" << endl;
-		cout << "<div id = \"login\">"<< endl;
-		cout << "<h1>Welcome Back!</h1>"<< endl;
-		cout << "<form action = \"login_info.cgi\" method = \"post\">"<< endl;	
-		cout << "<div class = \"field-wrap\">"<< endl;
-		cout << "<label>Phone Number<span class = \"req\">*</span></label>" << endl;
-		cout << "<input type = \"number\" name=\"user_phone_number\" value=\"\" required autocomplete = \"off\"/>" << endl;
-		cout << "</div>" << endl;
-		cout << "<div class = \"field-wrap\">" << endl;
-		cout << "<label> Password<span class = \"req\">*</span></label>" << endl;
-		cout << "<input type = \"password\" name=\"user_password\" value=\"\" required autocomplete = \"off\"/>" << endl;
-		cout << "</div>" << endl;
-		cout << "<p class = \"forgot\"><a href = \"#\">Forgot Password ?</a></p>" << endl;
-		cout << "<button class = \"button button-block\"/>" << endl;
-		cout << "Log In" << endl;
-		cout << "</button>" << endl;
-		cout << "</form>" << endl;
-		cout << "</div>" << endl;
-		cout << "<div id = \"signup\">" << endl;
-		cout << "<h1>Sign Up for Free</h1>" << endl;
-		cout << "<form action = \"sign_up_info.cgi\" method = \"post\">"<< endl;
-		cout << "<div class = \"top-row\">" << endl;
-		cout << "<div class = \"field-wrap\">" << endl;
-		cout << "<label> First Name<span class = \"req\">*</span> </label>" << endl;
-		cout << "<input type = \"text\" name=\"user_first_name\" required autocomplete = \"off\"/>" << endl;
-		cout << "</div>" << endl;
-		cout << "<div class =\"field-wrap\">" << endl;
-		cout << "<label> Last Name<span class = \"req\">*</span> </label>" << endl;
-		cout << "<input type = \"text\" name= \"user_last_name\" required autocomplete = \"off\"/>" << endl;
-		cout << "</div>" << endl;
-		cout << "</div>" << endl;
-		cout << "<div class = \"field-wrap\">" << endl;
-		cout << "<label>Phone Number<span class = \"req\">*</span> </label>" << endl;
-		cout << "<input type = \"number\"name=\"user_phone_number_s\"required autocomplete=\"off\"/>" << endl;
-		cout << "</div>" << endl;
-		cout << "<div class = \"field-wrap\">" << endl;
-		cout << "<label> Set A Password<span class = \"req\">*</span> </label>" << endl;
-		cout << "<input type = \"password\"name=\"user_password_s\"required autocomplete = \"off\"/>" << endl;
-		cout << "</div>" << endl;
-		cout << "<button type = \"submit\" class = \"button button-block\"/>" << endl;
-		cout << "Get Started"<< endl;
-		cout << "</button>"<< endl;
-		cout << "</form>"<< endl;
-		cout << "</div>"<< endl;	
-		cout << "</div>" << endl;
-		cout << "</div>" << endl;
-		cout << "</section>"<<endl; 
+		
+		//<=======================WORK HERE=========================================>	
+		
+			cout<<"<article id=\"main\">"<<endl;
+			cout<<"<header class=\"special container\">"<<endl;
+			cout<<"<span class=\"icon fa-laptop\"></span>"<<endl;
+			cout<<"<h2>All<strong> Events</strong></h2>"<<endl;
+			cout<<"</header>"<<endl;	
+			cout<<"<section class=\"wrapper style3 container special\">"<<endl;
+			cout<<"<div class=\"row\">"<<endl;
+			vector<string> info;
+			info.push_back("Computer work");
+			info.push_back("12/12/32 12:00 pm");
+			info.push_back("Stetson University");
+			int n =3123;
+			print_event(info,n);
+			print_event(info,n);
+			print_event(info,n);
+			print_event(info,n);
+			print_event(info,n);
+			print_event(info,n);
+			cout<<"</div>"<<endl;
+			cout<<"</section>"<<endl;
+			cout<<"</article>"<<endl;
 		//<=========================================FOOTER DON'T TOUCH=============================================================>
 		cout<<"<footer id=\"footer\">"<<endl;
 		cout<<"<ul class=\"icons\">"<<endl;
@@ -139,7 +129,22 @@ int main(int argc, char **argv) {
 
 	}
 }
+void print_event(vector<string> info,int event_id) {
+			cout<<"<div class=\"4u 12u(narrower)\">"<<endl;
+			cout<<"<section>"<<endl;
+			cout<<"<header>"<<endl;
+			cout<<"<h3>"<<info[0]<<"</h3>"<<endl;
+			cout<<"</header>"<<endl;
+			cout<<"<p>Date: "<<info[1]<<"</br>Location: "<<info[2]<<"</p>"<<endl;
+			cout<<"<footer>"<<endl;
+			cout<<"<ul class=\"buttons\">"<<endl;
+			cout<<"<form name=\"event\" method=\"get\" action=\"home.cgi\">"<<endl;
+			cout<<"<input type=\"hidden\" name=\"event_id\" value=\""<<event_id<<"\">"<<endl; 
+			cout<<"<button class = \"button small\"/>Learn More</button>" << endl;
+			cout<<"</form>"<<endl;
+			cout<<"</ul>"<<endl;
+			cout<<"</footer>"<<endl;
+			cout<<"</section>"<<endl;
+			cout<<"</div>"<<endl;
 
-//<==============================================================TESTING FUNCTIONS===============================================================>
-
-
+}
