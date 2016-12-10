@@ -1,6 +1,7 @@
 #ifndef CREATION_H
 #define CREATION_H
 
+#include <openssl/sha.h>
 #include <string>
 #include <vector>
 #include "sqlite3.h"
@@ -22,6 +23,7 @@ class Creation {
 	vector<int> getUpcoming();
 	vector<int> getAllEvents();
 	void createVacancy(int eventid, int posid, string name, int openings);
+	
 };
 
 #endif
