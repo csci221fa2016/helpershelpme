@@ -347,7 +347,7 @@ vector<string> Controller::showEvent(int id) {
 
 vector<int> Controller::showAllEvents() {
 	Creation* c = new Creation();
-	vector<int> all = c->getAllEvent();
+	vector<int> all = c->getAllEvents();
 	return all;
 }
 
