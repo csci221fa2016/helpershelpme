@@ -87,8 +87,9 @@ bool Creation::findUser(int _userid) {
 bool Creation::findEvent(int _eventid) {
 	sqlite3_stmt *s;
 	bool found = false;
-	const char *sql = "SELECT count(eventid) FROM events WHERE eventid = " + (char)_eventid;
+	const char *sql = "SELECT count(eventid) FROM events WHERE eventid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval =sqlite3_bind_int(s,1,_eventid);
 	if (retval != SQLITE_OK){
 		cout << "Error in SQL statement " << sql;
 		return false;
