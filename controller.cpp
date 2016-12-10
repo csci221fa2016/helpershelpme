@@ -108,8 +108,8 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 			istringstream buffer(myStream);
 			int value;
 			buffer >> value;
-			c->createEventPosition(eventId, i,  v.at(i).at(0), value, userId);
-
+			//c->createEventPosition(eventId, i,  v.at(i).at(0), value, userId);
+			c->createVacancy(eventId, i, v.at(i).at(0), value);
 		}
 //		delete c;
 //		delete date;
@@ -218,8 +218,7 @@ void Controller::updateProfile(vector<string> v, int id) {
 	if (!v[0].empty() && !v[1].empty() && !v[2].empty())
 	{
 		u->setName(v[0]);
-		u->setPhoneNumber(v[1]);
-		// tr1::hash<string> str_hash;  
+		u->setPhoneNumber(v[1]);  
 		u->setPassword(v[2]);
 	}
 	else {
@@ -237,11 +236,11 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 	}else {
 
 		// This is the start time that the view is passing to us
-		string s = v[0][2];
+		string s = v.at(0).at(2);
 		char * date = new char[s.size()+1]; //mutable string
 		strcpy(date, s.c_str());
 
-		//char date[] = v[0][2];
+	
 		tm *stm = new tm();
 
 		char* start_pch;
@@ -256,10 +255,10 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 
 		// This is the end time that the view is passing to us
 
-		string s1 = v[0][3];
+		string s1 = v.at(0).at(3);
 		char * date1 = new char[s1.size()+1]; //mutable string
 		strcpy(date1, s1.c_str());
-		// char date1[] = v[0][3];
+		
 		tm *etm = new tm();
 
 		char* end_pch;
@@ -275,25 +274,14 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 
 
 		// third and fourth thing passed in here should be time_t's now
-		e->setName(v[0][0]);
+		e->setName(v.at(0).at(0));
 		//convert v[1], v[2] to times
-		e->setDescription(v[0][3]);
-		e->setLocation(v[0][4]);
+		e->setDescription(v.at(0).at(1));
+		e->setLocation(v.at(0).at(4));
 		for(unsigned int i = 1; i<v.size();++i){
-			EventPosition* ep = new EventPosition(id, userId, i);
-			ep->setDescription(v[i][0]);
-			// ep->setDescription(v[i][1]);
-			//set openings?
-			// ****  remember to delete the ep variable *****
+			//set vacancies without user input, needs creation here
 		}
-		// Think this is not needed anymore???
-		/*for(int i = 0; i < (v.size()-1); ++i){
-		//	c->createEventPosition
-		}*/
-		delete e; delete date;
-		delete stm; delete start_pch;
-		delete date1; delete end_pch;
-		delete etm;
+	
 	}
 }
 
@@ -326,6 +314,7 @@ void Controller::addVolunteer(int eventId, int userId, int posId) {
 	// add Volunteer to event
 	Creation* c = new Creation();
 	if(c->findUser(userId) && c->findEvent(eventId)){
+	//HERE
 		EventPosition* ep = new EventPosition(eventId, userId, posId);
 		// Does this add a user to an event or adds an event position to an event?
 		delete ep;
