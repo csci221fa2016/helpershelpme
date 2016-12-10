@@ -13,7 +13,8 @@
 #include <sstream>
 #include <locale>
 #include <iomanip>
-#include <time.h> 
+#include <time.h>
+#include <istream> 
 
 using namespace std;
 using tr1::hash;
@@ -31,13 +32,13 @@ int Controller::sendUser(vector<string> v, int id) {
 		{
 			// tr1::hash<string> str_hash;
 			int newUserId =  c->createUser(v[0], v[1], v[2]);
-            delete c;
+			delete c;
 			return newUserId;
 
 		}
 		else {
 			throw runtime_error("Empty field.");
-            delete c;
+			delete c;
 			return 0;
 		}
 	}
@@ -57,7 +58,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		Creation* c = new Creation();
 
 		// This is the start time that the view is passing to us
-		string s = v[0][2];
+		string s = v.at(0).at(2);
 		char * date = new char[s.size()+1]; //mutable string
 		strcpy(date, s.c_str());
 
@@ -72,14 +73,14 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		stm->tm_mday = atoi(strtok(NULL, " ,.-:")); //get the day value
 		stm->tm_hour = atoi(strtok(NULL, " ,.-:")); //get the hour value
 		stm->tm_min = atoi(strtok(NULL, " ,.-:")); //get the min value
-		stm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value			
+//		stm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value			
 		// This coverts the tm* ltm to time_t
 
 
 		// This is the end time that the view is passing to us
 
 
-		string s1 = v[0][3];
+		string s1 = v.at(0).at(3);
 		char * date1 = new char[s1.size()+1]; //mutable string
 		strcpy(date1, s1.c_str());
 		//char date1[] = v[0][3];
@@ -92,32 +93,32 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		etm->tm_mday = atoi(strtok(NULL, " ,.-:")); //get the day value
 		etm->tm_hour = atoi(strtok(NULL, " ,.-:")); //get the hour value
 		etm->tm_min = atoi(strtok(NULL, " ,.-:")); //get the min value
-		etm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value                  
+//		etm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value                  
 
 		// This coverts the tm* ltm to time_t
 
 
-		//need to set start time end time 0 -name, 1 -description, 2-openings		
-		int eventId = c->createEvent(v[0][0], v[0][1],mktime (stm), mktime (etm), userId, v[0][4]);
+		//need to set start time end time 0 -name, 1 -description, 2-openings
+		int eventId = c->createEvent(v.at(0).at(0), v.at(0).at(1), mktime (stm), mktime (etm), v.at(0).at(4));
 		string Result;
 		ostringstream Convert;
 		for(unsigned int i = 1; i <v.size(); ++i){ 
 
-			string myStream = v[i][1];
+			string myStream = v.at(i).at(1);
 			istringstream buffer(myStream);
 			int value;
 			buffer >> value;
-			c->createEventPosition(eventId, i,  v[i][0], value, userId);
+			c->createEventPosition(eventId, i,  v.at(i).at(0), value, userId);
 
 		}
-        delete c;
-        delete date;
-        delete stm;
-        delete start_pch;
-        delete date1; delete etm;
-        delete end_pch;
+//		delete c;
+//		delete date;
+//		delete stm;
+//		delete start_pch;
+//		delete date1; delete etm;
+//		delete end_pch;
 
-        return eventId;
+		return eventId;
 	}
 }
 
@@ -128,15 +129,15 @@ vector<string> Controller::showUserInfo(int id) {
 		User* u = new User(id);
 		v.push_back(u->getName());
 		v.push_back(u->getPhoneNumber());
-        delete c;
-        delete u;
+		delete c;
+		delete u;
 		return v;
 	}else{
 		v.push_back("-1");
-        delete c;
+		delete c;
 		return v;
 	}
-    delete c;
+	delete c;
 	return v;
 }
 
@@ -176,27 +177,38 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 	Result = Convert.str();
 	a[0].push_back(Result);
 
+
+	vector<string> v = e->getVacancies();	
+
 	for (unsigned int i = 0; i < ep_arr.size(); ++i ) {
-		a[i+1].push_back(ep_arr[i]->getVolunteer()->getName());
-		a[i+1].push_back(ep_arr[i]->getDescription());
 
-		time_t start_rawtime = ep_arr[i]->getStartTime();
-		time (&start_rawtime);
-
-		time_t end_rawtime = ep_arr[i]->getEndTime();
-		time (&end_rawtime);
-
-		a[i+1].push_back(ctime (&start_rawtime));
-		a[i+1].push_back(ctime (&end_rawtime));
-		string Result;
-		ostringstream Convert;
-		Convert << (ep_arr[i]->getPosId());
-		Result = Convert.str();
-		a[i+1].push_back(Result);
+		//write test case for parser
+		string str = v[i];
+		stringstream ss;
+		string s;
+		char* info = new char[str.size()+1];
+		strcpy(info, str.c_str());
+		char* start;
+		start = strtok(info,";");
+		//name;posid;openings
+		a[i+1].push_back(s);
+		ss << start[1];
+		ss >> s;
+		a[i+1].push_back(s);
+		ss << start[2];
+		ss >> s;
+		a[i+1].push_back(s);
+		
+		delete info; delete start;
+		//string Result;
+		//ostringstream Convert;
+		//Convert << (ep_arr[i]->getPosId());
+		//Result = Convert.str();
+		//a[i+1].push_back(Result);
 	}
 
-    delete e;
-    ep_arr.clear();
+	delete e;
+	ep_arr.clear();
 	return a;
 }
 
@@ -213,7 +225,7 @@ void Controller::updateProfile(vector<string> v, int id) {
 	else {
 		throw runtime_error("Empty update.");
 	}
-    delete u;
+	delete u;
 }
 
 void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
@@ -278,10 +290,10 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 		/*for(int i = 0; i < (v.size()-1); ++i){
 		//	c->createEventPosition
 		}*/
-        delete e; delete date;
-        delete stm; delete start_pch;
-        delete date1; delete end_pch;
-        delete etm;
+		delete e; delete date;
+		delete stm; delete start_pch;
+		delete date1; delete end_pch;
+		delete etm;
 	}
 }
 
@@ -306,7 +318,7 @@ vector<string> Controller::signIn(vector<string> v) {
 	}
 	ret.push_back("false");
 	throw runtime_error("Sign in Error");
-    delete c;
+	delete c;
 	return ret;
 }
 
@@ -316,11 +328,11 @@ void Controller::addVolunteer(int eventId, int userId, int posId) {
 	if(c->findUser(userId) && c->findEvent(eventId)){
 		EventPosition* ep = new EventPosition(eventId, userId, posId);
 		// Does this add a user to an event or adds an event position to an event?
-		// Erace after use, remember that this causes memory leaks
+		delete ep;
 	}else{
 		throw runtime_error("User/Event is invalid");
 	}
-    delete c;
+	delete c;
 }
 
 double Controller::showStats(int id) {//convert to datetime for calculations
@@ -330,7 +342,7 @@ double Controller::showStats(int id) {//convert to datetime for calculations
 	for (unsigned int i = 0; i < u->getEventsWorked().size(); i++) {
 		total_hours += difftime(u->getEventsWorked()[i]->getEndTime(), u->getEventsWorked()[i]->getStartTime())/360;
 	}
-    delete u;
+	delete u;
 	return total_hours;
 }
 //Combine all these functions -useraccess. for home page showing upcoming events need vector<vector<string>>
@@ -363,7 +375,7 @@ vector<int > Controller::showAllUpcoming(){
 
 	Creation *c = new Creation();
 	vector<int> upcoming = c->getUpcoming();
-    delete c;
+	delete c;
 	return upcoming;
 }
 vector<string> Controller::showEvent(int id) {
@@ -375,8 +387,14 @@ vector<string> Controller::showEvent(int id) {
 	time (&start_rawdate);
 	a.push_back(ctime (&start_rawdate));
 	a.push_back(event->getLocation());
-    delete event;
+	delete event;
 	return a;
+}
+
+vector<int> Controller::showAllEvents() {
+	Creation* c = new Creation();
+	vector<int> all = c->getAllEvent();
+	return all;
 }
 
 vector<int> Controller::showOrganizedEvents(int id){
@@ -387,8 +405,8 @@ vector<int> Controller::showOrganizedEvents(int id){
 	for (unsigned int i = 0; i < e.size(); i++) {
 		num_organized_events.push_back(e[i]->getEventId());
 	}
-    delete u;
-    e.clear();
+	delete u;
+	e.clear();
 	return num_organized_events;	
 }
 
@@ -399,13 +417,24 @@ vector<int> Controller::showEventsWorked(int id){
 	for (unsigned int i = 0; i < ep.size(); i++) {
 		num_events_worked.push_back(ep[i]->getEvent()->getEventId());
 	}
-    delete u;
-    ep.clear();
+	delete u;
+	ep.clear();
 	return num_events_worked;
 }
 
-vector<string> Controller::showEventPositions(int id){
-	vector<string> c;
-	return c;
+string Controller::showEventPosition(int userid,int eventid){
+	User* u = new User(userid);
+	string v;
+	vector<EventPosition*> ep = u->getEventsWorked();
+	for(unsigned int i = 0; i < ep.size(); ++i){
+		Event* e = ep[i]->getEvent();
+		if(e->getEventId() == eventid){
+			v = ep[i]->getDescription();
+			delete e;
+			break;	
+		}
+	} 
+	delete u;
+	return v;
 }
 

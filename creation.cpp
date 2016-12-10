@@ -217,14 +217,42 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		eventid = sqlite3_column_int(s, 0);
 		//TODO make some error checkers here!
+		if (eventid == -1) {
+			cout << "Bad eventid.";
+		}	
 	}
 	return eventid;
+}
+
+void Creation::createVacancy(int eventid, int posid, string name, int openings){
+	sqlite3_stmt *s;
+	const char *sql = "insert into vacancies (eventid, posid, name, openings) values (?, ?, ?, ?)";
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval = sqlite3_bind_int(s, 1, eventid);
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
+	}
+	retval = sqlite3_bind_int(s, 2, posid);
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
+	}
+	retval = sqlite3_bind_text(s, 3, name.c_str(), name.size(), SQLITE_STATIC);
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
+	}
+	retval = sqlite3_bind_int(s, 4, openings);
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
+	}
+	if(sqlite3_step(s) != SQLITE_DONE){
+		cout << "Error in executing SQL statemtn" << sql;
+	}
 }
 
 int Creation::createEventPosition(int eventid, int posid, string _description, int _openings, int userid) {
 	int eposid = -1;
 	sqlite3_stmt *s;
-	const char *sql = "insert into eventpositions (eventid, posid) values (?, ?)";
+	const char *sql = "insert into eventpositions (eventid, posid, userid) values (?, ?, ?)";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
@@ -240,69 +268,13 @@ int Creation::createEventPosition(int eventid, int posid, string _description, i
 		cout << "Error in binding SQL statement " << sql;
 		return eposid;
 	}
-	if (sqlite3_step(s) != SQLITE_DONE) {
-		cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
-	}
-	//Finished putting values into eventpositions table, now need to put values into vacancies table.
-
-	sql = "insert into vacancies (eventid, posid, desc, openings) values (?, ?, ?, ?)";
-	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
-	if (retval != SQLITE_OK) {
-		cout << "Error in SQL statement " << sql;
-		return eposid;
-	}
-	retval = sqlite3_bind_int(s, 1, eventid);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return eposid;
-	}
-	retval = sqlite3_bind_int(s, 2, posid);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return eposid;
-	}	
-	retval = sqlite3_bind_text(s, 3, _description.c_str(), _description.size(), SQLITE_STATIC);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return eposid;
-	}
-	retval = sqlite3_bind_int(s, 4, _openings);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
+	retval = sqlite_bind_int(s,3,userid);
+	if( retval != SQLITE_OK) {
+		cout << "error in binding sql statement 3"
 		return eposid;
 	}
 	if (sqlite3_step(s) != SQLITE_DONE) {
 		cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
-	}
-	sqlite3_reset(s);
-
-	//Finished inserting values into vacancies table.
-	//Now pulling eposid from eventpositions table to return.
-
-	sql = "SELECT eposid FROM eventpositions WHERE eventid = ? AND userid = ? AND posid = ?";
-	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
-	if (retval != SQLITE_OK) {
-		cout << "Error in SQL statement " << sql;
-		return eposid;
-	}
-	retval = sqlite3_bind_int(s, 1, eventid);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return eposid;
-	}
-	retval = sqlite3_bind_int(s, 2, userid);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return eposid;
-	}
-	retval = sqlite3_bind_int(s, 3, posid);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return eposid;
-	}
-	while (sqlite3_step(s) == SQLITE_ROW) {
-		eposid = sqlite3_column_int(s, 0);
-		//TODO make some error checkers here!
 	}
 	return eposid;
 }
