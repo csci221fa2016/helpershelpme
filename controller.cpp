@@ -111,12 +111,6 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 			//c->createEventPosition(eventId, i,  v.at(i).at(0), value, userId);
 			c->createVacancy(eventId, i, v.at(i).at(0), value);
 		}
-//		delete c;
-//		delete date;
-//		delete stm;
-//		delete start_pch;
-//		delete date1; delete etm;
-//		delete end_pch;
 
 		return eventId;
 	}
@@ -311,21 +305,18 @@ vector<string> Controller::signIn(vector<string> v) {
 }
 
 void Controller::addVolunteer(int eventId, int userId, int posId) {
-	// add Volunteer to event
 	Creation* c = new Creation();
 	if(c->findUser(userId) && c->findEvent(eventId)){
-	//HERE
-		EventPosition* ep = new EventPosition(eventId, userId, posId);
-		// Does this add a user to an event or adds an event position to an event?
-		delete ep;
+		int eposId = c->createEventPosition(eventId, posId, userId);
+		//EventPosition* ep = new EventPosition(eventId, userId, posId);
 	}else{
 		throw runtime_error("User/Event is invalid");
 	}
 	delete c;
+	//return eposId?
 }
 
-double Controller::showStats(int id) {//convert to datetime for calculations
-	// show the user profile to the view. (hours, etc.)
+double Controller::showStats(int id) {
 	User* u = new User(id);
 	double total_hours;
 	for (unsigned int i = 0; i < u->getEventsWorked().size(); i++) {
@@ -334,34 +325,8 @@ double Controller::showStats(int id) {//convert to datetime for calculations
 	delete u;
 	return total_hours;
 }
-//Combine all these functions -useraccess. for home page showing upcoming events need vector<vector<string>>
 
-vector<int > Controller::showAllUpcoming(){                 
-
-	//	time_t now;
-	//	struct tm upcoming = etm;
-	//	double seconds;
-	//
-	//	time(&now);  /* get current time; same as: now = time(NULL)  */
-	//
-	//	upcoming = *localtime(&now);
-	//
-	//	upcoming.tm_hour = 0;
-	//	upcoming.tm_min = 0;
-	//	upcoming.tm_sec = 0;
-	//	upcoming.tm_mon = 0; 
-	//	upcoming.tm_mday = 1;
-	//
-	//	seconds = difftime(now,mktime(&upcoming));
-	//	
-	//	// This is now hours.
-	//	seconds = seconds/360;
-	//
-	//	// This would give us the days.
-	//	if (seconds > 24) {
-	//		seconds = seconds/24;
-	//	}
-
+vector<int > Controller::showAllUpcoming(){
 	Creation *c = new Creation();
 	vector<int> upcoming = c->getUpcoming();
 	delete c;
@@ -387,7 +352,6 @@ vector<int> Controller::showAllEvents() {
 }
 
 vector<int> Controller::showOrganizedEvents(int id){
-	// get Organized events then getEventId, then return the vector of ints
 	User* u = new User(id);
 	vector<int> num_organized_events;
 	vector<Event*> e = u->getOrganizedEvents();
