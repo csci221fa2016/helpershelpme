@@ -32,34 +32,41 @@ using namespace cgicc;
 //Redirects to the login page if verification fails
 //void printform(const Cgicc& cgi, Controller& c) {
 void printform(const Cgicc& cgi, int& id) {
-/*
- * Controller c;
- * vector<string> userinfo = c.showUserInfo(id);
- * vector<string> eventinfo = c.showEventInfo(id);
- * if(userinfo[0] != "-1"){
- * cout <<"<section>" << endl;
- * cout <<"<header>" << endl;
- * cout <<"<h3>My Information</h3>" << endl;
- * cout <<"</header>" << endl;
- * cout <<"<p><strong>User Name:</strong> userinfo[0] </br><strong>Phone Number:</strong> userinfo[1]  </br><strong>Hours Volunteering:</strong> userinfo[2] </p>" << endl;
- * cout <<"<footer>" << endl;
- * cout <<"<ul class=\"buttons\">" << endl;
- * cout <<"<form name=\"my-events\" action=\"my_events.cgi\">" << endl;
- * cout <<"<button class = \"button small\"/>My Events</button>" << endl;
- * cout <<"</form>" << endl;
- * cout <<"<form name=\"my-events\" action=\"eventcreation.cgi\">" << endl;
- * cout <<"<button class = \"button small\"/>Create Event</button>" << endl;
- * cout <<"</form>" << endl;
- * cout <<"</ul>" << endl;
- * cout <<"</footer>" << endl;
- * cout <<"</section>" << endl;
- * }
- * else {
- *  cout << section() << header() << endl;
- *      cout << h4() << "Not logged in
- *
- * */
-   cout <<"<section>" << endl;
+
+   Controller c;
+   vector<string> userinfo = c.showUserInfo(id);
+   vector<string> eventinfo = c.showEventInfo(id);
+   int stats = c.showStats(id);
+   if(userinfo[0] != "-1"){
+       cout << "<section>" << endl;
+       cout << "<header>" << endl;
+       cout << "<h3>My Information</h3>" << endl;
+       cout << "</header>" << endl;
+       cout << "<p><strong>User Name:</strong>" 
+            <<  userinfo[0] << "</br><strong>Phone Number:</strong> "
+            << userinfo[1] << "</br><strong>Hours "
+            << "Volunteering:</strong>" << stats << "</p>" << endl;
+       cout << "<footer>" << endl;
+       cout << "<ul class=\"buttons\">" << endl;
+       cout << "<form name=\"my-events\" action=\"my_events.cgi\">" << endl;
+       cout << "<button class = \"button small\"/>My Events</button>" << endl;
+       cout << "</form>" << endl;
+       cout << "<form name=\"my-events\" action=\"eventcreation.cgi\">" << endl;
+       cout << "<button class = \"button small\"/>Create Event</button>" << endl;
+       cout << "</form>" << endl;
+       cout << "</ul>" << endl;
+       cout << "</footer>" << endl;
+       cout << "</section>" << endl;
+   }
+   else {
+   cout << section() << header() << endl;
+        cout << h4() << "Not logged in" << h4() << endl;
+        cout << h5() << a().set("href", "login.cgi")
+            << b() << "Click to log in" << b() 
+            << a() << h5() << end;
+   }
+
+   /*cout <<"<section>" << endl;
    cout <<"<header>" << endl;
    cout <<"<h3>My Information</h3>" << endl;
    cout <<"</header>" << endl;
@@ -74,7 +81,7 @@ void printform(const Cgicc& cgi, int& id) {
    cout <<"</form>" << endl;
    cout <<"</ul>" << endl;
    cout <<"</footer>" << endl;
-   cout <<"</section>" << endl;
+   cout <<"</section>" << endl;*/
 }
 
 int main(int /*argc*/, char** /**/) {
