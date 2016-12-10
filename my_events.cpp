@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
 		cout << style() << comment() << endl;
 		cout << styles;
 		cout << comment() << style() <<endl;
-		cout << title() <<"Events" << title() << endl;
+		cout << title() <<"My Events" << title() << endl;
 		cout << head() << endl;
 		cout << "<body class =\"index\">" << endl;
 		cout<<"<div id=\"page-wrapper\">"<<endl;
@@ -64,7 +64,7 @@ int main(int argc, char **argv) {
 		cout<<"<li><a href=\"event_list.cgi\">See All Events</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">Upcoming Events</a></li>"<<endl;
 		cout<<"<li><a href=\"eventcreation.cgi\">Create Event</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">My Events</a></li>"<<endl;
+		cout<<"<li><a href=\"my_events.cgi\">My Events</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"</li>"<<endl;
 		cout<<"<li><a href=\"#\">Rankings</a></li>"<<endl;
