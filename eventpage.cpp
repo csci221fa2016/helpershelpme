@@ -77,16 +77,16 @@ int main(int /*argc*/, char** /*argv*/) {
 		cout<<"</ul>"<<endl;
 		cout<<"</nav>"<<endl;
 		cout<<"</header>"<<endl;
+
+		//<=================Event Page Information=====================>
 		cout<<"<article id=\"main\">"<<endl;
 		cout<<"<header class=\"special container\">"<<endl;
 		cout<<"<span class=\"icon fa-laptop\"></span>"<<endl;
-		cout<<"<h2>Envebt<strong> Name</strong></h2>"<<endl;
+		cout<<"<h2>Event<strong> Name</strong></h2>"<<endl;
 		cout<<"</header>"<<endl;	
 		cout<<"<section class=\"wrapper style3 container special\">"<<endl;
 		cout<<"<div class=\"row\">"<<endl;
 
-
-		//<=================Event Page Information=====================>
 		//print out the everything related to the event
 		// description, time, location, volunteer positions
 		// add button to sign up for event
