@@ -58,7 +58,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		Creation* c = new Creation();
 
 		// This is the start time that the view is passing to us
-		string s = v[0][2];
+		string s = v.at(0).at(2);
 		char * date = new char[s.size()+1]; //mutable string
 		strcpy(date, s.c_str());
 
@@ -73,14 +73,14 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		stm->tm_mday = atoi(strtok(NULL, " ,.-:")); //get the day value
 		stm->tm_hour = atoi(strtok(NULL, " ,.-:")); //get the hour value
 		stm->tm_min = atoi(strtok(NULL, " ,.-:")); //get the min value
-		stm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value			
+//		stm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value			
 		// This coverts the tm* ltm to time_t
 
 
 		// This is the end time that the view is passing to us
 
 
-		string s1 = v[0][3];
+		string s1 = v.at(0).at(3);
 		char * date1 = new char[s1.size()+1]; //mutable string
 		strcpy(date1, s1.c_str());
 		//char date1[] = v[0][3];
@@ -93,30 +93,30 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		etm->tm_mday = atoi(strtok(NULL, " ,.-:")); //get the day value
 		etm->tm_hour = atoi(strtok(NULL, " ,.-:")); //get the hour value
 		etm->tm_min = atoi(strtok(NULL, " ,.-:")); //get the min value
-		etm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value                  
+//		etm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value                  
 
 		// This coverts the tm* ltm to time_t
 
 
 		//need to set start time end time 0 -name, 1 -description, 2-openings
-		int eventId = c->createEvent(v[0][0], v[0][1],mktime (stm), mktime (etm), userId, v[0][4]);
+		int eventId = c->createEvent(v.at(0).at(0), v.at(0).at(1), mktime (stm), mktime (etm), userId, v.at(0).at(4));
 		string Result;
 		ostringstream Convert;
 		for(unsigned int i = 1; i <v.size(); ++i){ 
 
-			string myStream = v[i][1];
+			string myStream = v.at(i).at(1);
 			istringstream buffer(myStream);
 			int value;
 			buffer >> value;
-			c->createEventPosition(eventId, i,  v[i][0], value, userId);
+			c->createEventPosition(eventId, i,  v.at(i).at(0), value, userId);
 
 		}
-		delete c;
-		delete date;
-		delete stm;
-		delete start_pch;
-		delete date1; delete etm;
-		delete end_pch;
+//		delete c;
+//		delete date;
+//		delete stm;
+//		delete start_pch;
+//		delete date1; delete etm;
+//		delete end_pch;
 
 		return eventId;
 	}
