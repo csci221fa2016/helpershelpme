@@ -13,6 +13,14 @@ TEST(user, getPhoneNumber) {
 	u->setPhoneNumber("8889990000");
 	ASSERT_EQ(true, u->getPhoneNumber() == "8889990000");
 }
+TEST(user, getEventsWorked) {
+	User* u = new User(1);
+	ASSERT_EQ(true, u->getEventsWorked().size() == 1);
+}
+TEST(user, getOrganizedEvents) {
+	User* u = new User(1);
+	ASSERT_EQ(true, u->getOrganizedEvents().size() == 1);
+}
 int main(int argc, char **argv){
 	testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

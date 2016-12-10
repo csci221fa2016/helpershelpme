@@ -18,7 +18,7 @@ EventPosition::EventPosition(int _eventid, int _userid, int _posid) {
         cout << "Cannot open test.db: " << sqlite3_errcode(db) << endl;
         return;
     }
-	retval = sqlite3_exec(db, "create table if not exists eventpositions (eposid integer primary key, eventid integer, userid integer, posid integer, desc text);", NULL, NULL, &errmsg);
+	retval = sqlite3_exec(db, "create table if not exists eventpositions (eposid integer primary key, eventid integer, userid integer, posid integer);", NULL, NULL, &errmsg);
     if(retval != SQLITE_OK)
     {
         cout << "Error in previous command: " << errmsg << endl;
