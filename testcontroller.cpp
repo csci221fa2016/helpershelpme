@@ -205,7 +205,7 @@ TEST(Controller, showStats2)
 	event[1].push_back("name");
 	event[1].push_back("3");
 
-	int eId = c->sendEvent(event, 11);
+	int eId = cont->sendEvent(event, 11);
 	
 	cont->addVolunteer(eId, 11, 1);
 	
