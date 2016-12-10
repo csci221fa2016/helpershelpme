@@ -64,6 +64,20 @@ TEST(Controller, showUserInfo)
 TEST(Controller, showEventInfo)
 {
 	Controller* cont = new Controller();
+	vector<vector<string> > a;
+	vector<string> eposinfo;
+	eposinfo.push_back("Name");
+	string posId;
+	ostringstream ss;
+	ss << 2;
+	posId = ss.str(); 
+	eposinfo.push_back(posId);
+	//eposinfo.push_back("1");
+	a.push_back(vector<string>());
+	a.push_back(eposinfo);
+	int eId = cont->sendEvent(a, 13);
+	vector<vector<string> > check = cont->showEventInfo(eId);
+	ASSERT_EQ(true, check.at(0).at(1) == eposinfo.at(0));	
 }
 
 int main(int argc, char **argv) {

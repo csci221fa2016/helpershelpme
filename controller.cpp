@@ -13,7 +13,8 @@
 #include <sstream>
 #include <locale>
 #include <iomanip>
-#include <time.h> 
+#include <time.h>
+#include <istream> 
 
 using namespace std;
 using tr1::hash;
@@ -181,15 +182,22 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 
 	for (unsigned int i = 0; i < ep_arr.size(); ++i ) {
 
-		vector<string> pos;
-		getline(v[i],pos[i], ";");
-		getline(v[i],pos[i], ";");
-		getline(v[i],pos[i]);
-		// string parser is neded here.
+		//write test case for parser
+		string str = v[i];
+		char* info = new char[str.size()+1];
+		strcpy(info, str.c_str());
+		char* start;
+		start = strtok(info,";");
 		//name;posid;openings
-		a[i+1].push_back(pos[0]);
-		a[i+1].push_back(pos[1]);
-		a[i+1].push_back(pos[2]);
+		a[i+1].push_back(s);
+		ss << start[1];
+		ss >> s;
+		a[i+1].push_back(s);
+		ss << start[2];
+		ss >> s;
+		a[i+1].push_back(s);
+		
+		delete info; delete start;
 		//string Result;
 		//ostringstream Convert;
 		//Convert << (ep_arr[i]->getPosId());
@@ -410,12 +418,15 @@ string Controller::showEventPosition(int userid,int eventid){
 	User* u = new User(userid);
 	string v;
 	vector<EventPosition*> ep = u->getEventsWorked();
-	for(int i = 0; i < ep.size(); ++i){
-		if(ep[i]->eventId == eventid){
-			v = ep[i]->getDescription();	
+	for(unsigned int i = 0; i < ep.size(); ++i){
+		Event* e = ep[i]->getEvent();
+		if(e->getEventId() == eventid){
+			v = ep[i]->getDescription();
+			delete e;
+			break;	
 		}
 	} 
-	delete u; delete ep;
+	delete u;
 	return v;
 }
 
