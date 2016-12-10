@@ -391,6 +391,12 @@ vector<string> Controller::showEvent(int id) {
 	return a;
 }
 
+vector<int> Controller::showAllEvents() {
+	Creation* c = new Creation();
+	vector<int> all = c->getAllEvent();
+	return all;
+}
+
 vector<int> Controller::showOrganizedEvents(int id){
 	// get Organized events then getEventId, then return the vector of ints
 	User* u = new User(id);
