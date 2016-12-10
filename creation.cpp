@@ -221,6 +221,31 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 	return eventid;
 }
 
+void Creation::createVacancy(int eventid, int posid, string name, int openings){
+	sqlite3_stmt *s;
+	const char *sql = "insert into vacancies (eventid, posid, name, openings) values (?, ?, ?, ?)";
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval = sqlite3_bind_int(s, 1, eventid);
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
+	}
+	retval = sqlite3_bind_int(s, 2, posid);
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
+	}
+	retval = sqlite3_bind_text(s, 3, name.c_str(), name.size(), SQLITE_STATIC);
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
+	}
+	retval = sqlite3_bind_int(s, 4, openings);
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
+	}
+	if(sqlite3_step(s) != SQLITE_DONE){
+		cout << "Error in executing SQL statemtn" << sql;
+	}
+}
+
 int Creation::createEventPosition(int eventid, int posid, string _description, int _openings, int userid) {
 	int eposid = -1;
 	sqlite3_stmt *s;
