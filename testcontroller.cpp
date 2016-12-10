@@ -175,8 +175,42 @@ TEST(Controller, signInFail)
 
 // Need to finish this
 TEST(Controller, addVolunteer)
-{
-	//Controller* cont = new Controller();		
+{ 
+	Controller* c = new Controller();
+	int id = 19;
+	string uId;
+	ostringstream convert;   
+	convert << id;      
+	uId = convert.str(); 
+
+	vector<vector<string> > event;
+	event.push_back(vector<string>());
+	event.push_back(vector<string>());
+
+	event[0].push_back("EventName");
+	event[0].push_back("Desc");
+	event[0].push_back("2016-05-03 10:00");
+	event[0].push_back("2016-05-03 12:00");
+	//event[0].push_back(uId);
+	event[0].push_back("location");
+	event[0].push_back("1");
+
+	event[1].push_back("name");
+	event[1].push_back("3");
+
+
+	int eId = 4;
+
+	Event* e = new Event(eId);
+	string eName = e->getName();
+	string eDesc = e->getDescription();
+	vector<string> eVacancies = e->getVacancies();
+    
+    c->addVolunteer(eId, id, 1);
+    User* u = new User(id);
+
+    ASSERT_EQ(true, u->getEventsWorked().at(0)->getVolunteer()->getUserId() == id);    
+    
 }
 
 TEST(Controller, showStats)
@@ -188,10 +222,9 @@ TEST(Controller, showStats)
 	ASSERT_EQ(true, cont->showStats(uId) == 0);
 }
 
-TEST(Controller, showStats2)
+/*TEST(Controller, showStats2)
 {
 	Controller* cont = new Controller();
-	Creation* c = new Creation();
 	
 	vector<vector<string> > event;
 	event.push_back(vector<string>());
@@ -212,14 +245,14 @@ TEST(Controller, showStats2)
 	cont->addVolunteer(eId, 11, 1);
 	
 	ASSERT_EQ(true, cont->showStats(11) == 2);
-}
+}*/
 
 TEST(Controller, showAllUpcoming)
 {
 	
 }
 
-TEST(Controller, showEventInfo)
+/*TEST(Controller, showEventInfo)
 {
 	Controller* cont = new Controller();
 	Creation* c = new Creation();
@@ -239,11 +272,11 @@ TEST(Controller, showEventInfo)
 	//a.push_back(event);
 	//a.push_back(eposinfo);
 	//int eId = cont->sendEvent(a, 13);
-//	Event* event = new Event(eventId);
-//	string name = ep->getDescription();
-//	vector<vector<string> > check = cont->showEventInfo(eventId);
-	ASSERT_EQ(true, "Desc" == "Desc");	
-}
+	Event* event = new Event(eventId);
+	string name = ep->getDescription();
+	vector<vector<string> > check = cont->showEventInfo(eventId);
+	ASSERT_EQ(true, check.at(1).at(0) == ep->getDescription());	
+}*/
 
 int main(int argc, char **argv) {
 	::testing::InitGoogleTest(&argc, argv);
