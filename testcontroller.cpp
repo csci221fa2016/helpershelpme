@@ -64,20 +64,26 @@ TEST(Controller, showUserInfo)
 TEST(Controller, showEventInfo)
 {
 	Controller* cont = new Controller();
-	vector<vector<string> > a;
-	vector<string> eposinfo;
-	eposinfo.push_back("Name");
-	string posId;
-	ostringstream ss;
-	ss << 2;
-	posId = ss.str(); 
-	eposinfo.push_back(posId);
+	Creation* c = new Creation();
+	//vector<vector<string> > a;
+	//vector<string> event;
+	int eventId = c->createEvent("EName","Desc.",2222222222222222222222222222222222222, 2222222222222222222222222222223, 13, "1");
+	c->createEventPosition(eventId, 1, "Name", 2, 13);
+	EventPosition* ep = new EventPosition(eventId, 12, 1);
+	//vector<string> eposinfo;
+	//eposinfo.push_back("Name");
+	//string posId;
+	//ostringstream ss;
+	//ss << 2;
+	//posId = ss.str(); 
+	//eposinfo.push_back(posId);
 	//eposinfo.push_back("1");
-	a.push_back(vector<string>());
-	a.push_back(eposinfo);
-	int eId = cont->sendEvent(a, 13);
-	vector<vector<string> > check = cont->showEventInfo(eId);
-	ASSERT_EQ(true, check.at(0).at(1) == eposinfo.at(0));	
+	//a.push_back(event);
+	//a.push_back(eposinfo);
+	//int eId = cont->sendEvent(a, 13);
+	string name = ep->getDescription();
+	vector<vector<string> > check = cont->showEventInfo(eventId);
+	ASSERT_EQ(true, check.at(1).at(0) == ep->getDescription());	
 }
 
 int main(int argc, char **argv) {

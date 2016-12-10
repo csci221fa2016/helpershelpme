@@ -184,6 +184,8 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 
 		//write test case for parser
 		string str = v[i];
+		stringstream ss;
+		string s;
 		char* info = new char[str.size()+1];
 		strcpy(info, str.c_str());
 		char* start;
