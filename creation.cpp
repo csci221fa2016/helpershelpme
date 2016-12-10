@@ -209,11 +209,6 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 		cout << "Error is binding SQL statement " << sql;
 		return eventid;
 	}
-	retval = sqlite3_bind_int(s, 3, userid);
-	if (retval != SQLITE_OK) {
-		cout << "Error is binding SQL statment " << sql;
-		return eventid;
-	}
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		eventid = sqlite3_column_int(s, 0);
 		//TODO make some error checkers here!
@@ -249,7 +244,7 @@ void Creation::createVacancy(int eventid, int posid, string name, int openings){
 	}
 }
 
-int Creation::createEventPosition(int eventid, int posid, string _description, int _openings, int userid) {
+int Creation::createEventPosition(int eventid, int posid, int userid) {
 	int eposid = -1;
 	sqlite3_stmt *s;
 	const char *sql = "insert into eventpositions (eventid, posid, userid) values (?, ?, ?)";
@@ -268,9 +263,9 @@ int Creation::createEventPosition(int eventid, int posid, string _description, i
 		cout << "Error in binding SQL statement " << sql;
 		return eposid;
 	}
-	retval = sqlite_bind_int(s,3,userid);
+	retval = sqlite3_bind_int(s,3,userid);
 	if( retval != SQLITE_OK) {
-		cout << "error in binding sql statement 3"
+		cout << "error in binding sql statement 3" << sql;
 		return eposid;
 	}
 	if (sqlite3_step(s) != SQLITE_DONE) {
