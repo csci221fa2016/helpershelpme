@@ -1,3 +1,5 @@
+#include <openssl/rand.h>
+#include <algorithm>
 #include <sstream>
 #include <iterator>
 #include "user.h"
@@ -22,8 +24,8 @@ Creation::Creation() {
 	}
 }
 
-bool Creation::logIn(string _phoneNumber, string _pass) {
-	bool success = false;
+int Creation::logIn(string _phoneNumber, string _pass) {
+	int userid = -1;
 	sqlite3_stmt *s;
 	string phone = _phoneNumber;
 	string password;
@@ -31,21 +33,44 @@ bool Creation::logIn(string _phoneNumber, string _pass) {
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return NULL;
+		return userid;
 	}
 	retval = sqlite3_bind_text(s, 1, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return NULL;
+		return userid;
 	}
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		password = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 4)));
+		userid = sqlite3_column_int(s, 0);
 	}	
 	sqlite3_reset(s);
 	
-	isstringstream(password);
+	string salt;
+	string hash;
+	string s;
+	vector<string> splitpass;
+	while(getline(istreamstring(password), s, '$')) {
+		splitpass.push_back(s);
+	}
 	
-	return success;
+	salt = splitpass.at(0);
+	hash = splitpass.at(1);
+	
+	//Hash the password inputed with the salt.
+	SHA256_CTX context;
+	unsigned char md[SHA256_DIGEST_LENGTH];
+
+	saltedPass = salt + _pass;
+	SHA256_Init(&context);
+	SHA256_Update(&context, (unsigned char*)saltedPass, saltedPass.size());
+	SHA256_Final(md, &context);
+	
+	if (md != hash) {
+		return -1;
+	}
+	
+	return userid;
 }
 
 int Creation::searchUser(string _phoneNumber) {
@@ -114,7 +139,6 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 	//Hashing and salting the password.
 
 	SHA256_CTX context;
-	unsigned char md[SHA256_DIGEST_LENGTH];
 	int saltlen = rand() % (50 - 21) + 20;
 	unsigned char salt[saltlen];
 	RAND_bytes(salt, saltlen);
@@ -124,7 +148,8 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 	string saltString(reinterpret_cast<char*>(salt));
 	string saltedPass = saltString + _password;
 	//Hash of password + salt.
-	SHA256_Update(&context, (unsigned char*)saltedPass, saltedPass.size());
+	
+	SHA256_Update(&context, , saltedPass.size());
 	SHA256_Final(md, &context);
 
 	//Prepending salt to the hash.
