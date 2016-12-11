@@ -61,9 +61,11 @@ int Creation::logIn(string _phoneNumber, string _pass) {
 	SHA256_CTX context;
 	unsigned char md[SHA256_DIGEST_LENGTH];
 
-	saltedPass = salt + _pass;
+	const char spString[] = sat + _pass;
+	unsigned char saltedPass[sizeof(spString)];
+	copy(spString, spString + sizeof(spString), saltedPass);
 	SHA256_Init(&context);
-	SHA256_Update(&context, (unsigned char*)saltedPass, saltedPass.size());
+	SHA256_Update(&context, saltedPass, sizeof(spString));
 	SHA256_Final(md, &context);
 	
 	if (md != hash) {
@@ -146,10 +148,11 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 
 	SHA256_Init(&context);
 	string saltString(reinterpret_cast<char*>(salt));
-	string saltedPass = saltString + _password;
 	//Hash of password + salt.
-	
-	SHA256_Update(&context, , saltedPass.size());
+	const char spString[] = saltString + _password;
+	unsigned char saltedPass[sizeof(spString)];
+	copy(spString, spString + sizeof(spString), saltedPass);
+	SHA256_Update(&context, saltedPass, sizeof(spString));
 	SHA256_Final(md, &context);
 
 	//Prepending salt to the hash.
