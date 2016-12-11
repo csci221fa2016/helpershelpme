@@ -222,7 +222,7 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 
 	//Get eventid to return to controller.
 
-	sql = "select eventid from events where name = ? AND description = ? AND userid = ?";
+	sql = "select eventid from events where name = ? AND description = ? AND location = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
@@ -238,6 +238,11 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 		cout << "Error is binding SQL statement " << sql;
 		return eventid;
 	}
+	retval = sqlite3_bind_text(s, 3, _location.c_str(), _location.size(), SQLITE_STATIC);
+	if (retval != SQLITE_OK) {
+		cout << "Error in binding SQL statement " << sql;
+		return eventid;
+	}
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		eventid = sqlite3_column_int(s, 0);
 		return eventid;
@@ -246,6 +251,7 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 			cout << "Bad eventid.";
 		}	
 	}
+	sqlite3_reset(s);
 	return eventid;
 }
 
@@ -272,6 +278,7 @@ void Creation::createVacancy(int eventid, int posid, string name, int openings){
 	if(sqlite3_step(s) != SQLITE_DONE){
 		cout << "Error in executing SQL statemtn" << sql;
 	}
+	sqlite3_reset(s);
 }
 
 int Creation::createEventPosition(int eventid, int posid, int userid) {
@@ -300,7 +307,9 @@ int Creation::createEventPosition(int eventid, int posid, int userid) {
 	}
 	if (sqlite3_step(s) != SQLITE_DONE) {
 		cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
+		return eposid;
 	}
+	sqlite3_reset(s);
 	return eposid;
 }
 
