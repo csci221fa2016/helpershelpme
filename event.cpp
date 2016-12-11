@@ -86,8 +86,9 @@ string Event::getName() {
 time_t Event::getStartDate() {
 	sqlite3_stmt *s;
 	time_t start;
-	const char *sql = "select start from events where eventid = " + (char)eventid;
+	const char *sql = "select start from events where eventid = ? ";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval = sqlite3_bind_int(s, 1, eventid);
 	while(sqlite3_step(s)==SQLITE_ROW) {
 		start = (time_t)sqlite3_column_int(s, 0);
 	}
@@ -97,8 +98,9 @@ time_t Event::getStartDate() {
 User* Event::getOrganizer() {
 	sqlite3_stmt *s;
 	int orgid;
-	const char *sql = "select organizer from events where eventid = " + (char)eventid;
+	const char *sql = "select organizer from events where eventid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval = sqlite3_bind_int(s, 1, eventid);
 	while(sqlite3_step(s)==SQLITE_ROW) {
 		orgid = sqlite3_column_int(s, 0);
 	}
@@ -109,8 +111,9 @@ User* Event::getOrganizer() {
 time_t Event::getEndDate() {
 	sqlite3_stmt *s;
 	time_t end;
-	const char *sql = "select end from events where eventid = " + (char)eventid;
+	const char *sql = "select end from events where eventid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval = sqlite3_bind_int(s, 1, eventid);
 	while(sqlite3_step(s)==SQLITE_ROW) {
 		end = (time_t)sqlite3_column_int(s, 0);
 	}
@@ -120,8 +123,9 @@ time_t Event::getEndDate() {
 string Event::getDescription() {
 	sqlite3_stmt *s;
 	string desc;
-	const char *sql = "select desc from events where eventid = " + (char)eventid;
+	const char *sql = "select desc from events where eventid = ? ";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval = sqlite3_bind_int(s, 1, eventid);
 	while(sqlite3_step(s)==SQLITE_ROW) {
 		desc = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
 	}
@@ -131,8 +135,9 @@ string Event::getDescription() {
 string Event::getLocation() {
 	sqlite3_stmt *s;
 	string loc;
-	const char *sql = "select location from events where eventid = " + (char)eventid;
+	const char *sql = "select location from events where eventid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval = sqlite3_bind_int(s, 1, eventid);
 	while(sqlite3_step(s)==SQLITE_ROW) {
 		loc = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
 	}
@@ -146,8 +151,9 @@ string Event::getLocation() {
 vector<string> Event::getVacancies(){
 	sqlite3_stmt *s;
 	vector<string> vacs;
-	const char *sql = "select name, desc, posid, openings from vacancies where eventid = " + (char)eventid;
+	const char *sql = "select name, desc, posid, openings from vacancies where eventid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval = sqlite3_bind_int(s, 1, eventid);
 	while(sqlite3_step(s)==SQLITE_ROW) {
 		string newvac = "";
 		newvac = newvac + string(reinterpret_cast<const char*>(sqlite3_column_text(s,0)));
