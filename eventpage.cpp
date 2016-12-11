@@ -140,13 +140,12 @@ int main(int /*argc*/, char** /*argv*/) {
         }
 
    //print out Event Position Information in detail
-        cout << evinfo[0][1] << " " << name  << " " << volunteering << endl;
         if(evinfo[0][1] != name) {
             if(volunteering == false) {
                 cout << "<form method=\"post\" action=\"\">";
                 for (int x = 1; x < evinfo.size(); ++x) {
-                    cout << evinfo[x][0] << "</p>\n";
-                    cout << "Open Positions: " 
+                    cout << evinfo[x][0]
+                        << " | Open: " 
                         << evinfo[x][2]
                         << input().set("type", "radio").set("name", "volunteer").set("value", evinfo[x][1]) 
                         << br() << endl;
@@ -161,8 +160,8 @@ int main(int /*argc*/, char** /*argv*/) {
             else {
                 cout << "<form method=\"post\" action=\"\">";
                 for (int x = 1; x < evinfo.size(); ++x) {
-                    cout << evinfo[x][0] << "</p>\n";
-                    cout << "Open Positions: " 
+                    cout << evinfo[x][0]
+                        << " | Open: " 
                         << evinfo[x][2]
                         << br() << endl;
                 }
@@ -178,8 +177,8 @@ int main(int /*argc*/, char** /*argv*/) {
         else {
             cout << "<form method=\"post\" action=\"\">";
             for (int x = 1; x < evinfo.size(); ++x) {
-                cout << evinfo[x][0] << "</p>\n";
-                cout << "Open Positions: " 
+                cout << evinfo[x][0]
+                    << " | Open: " 
                     << evinfo[x][2]
                     << br() << endl;
             }

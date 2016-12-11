@@ -47,8 +47,8 @@ int main(int argc, char **argv) {
 		cout<<"<li><a href=\"my_events.cgi\">My Events</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"</li>"<<endl;
-		cout<<"<li><a href=\"#\">News</a></li>"<<endl;
 		cout<<"<li><a href=\"userprofile.cgi\">Profile</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">News</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">Contact</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">Donate</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
