@@ -281,16 +281,13 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 
 vector<string> Controller::signIn(vector<string> v) {
 	Creation* c = new Creation();
-	bool dbPass = c->logIn(v[0], v[1]);
-	//send to database to verify
+	int dbPass = c->logIn(v[0], v[1]);
 	vector<string> ret;
-
-	if(dbPass){
-		int uId = c->searchUser(v[0]);
+	if(dbPass != -1){
 		ret.push_back("true");
 		string Result;
 		ostringstream Convert;
-		Convert << uId;
+		Convert << dbpass;
 		Result = Convert.str();
 		ret.push_back(Result);
 		return ret;
