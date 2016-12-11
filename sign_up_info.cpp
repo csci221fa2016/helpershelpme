@@ -43,11 +43,14 @@ int main () {
 
 	cout<<html()<<endl;
 	cout << head()<<title("Log in") << endl;
-	int returned_id = myController.sendUser(signup,-1);
 
+	int returned_id = myController.sendUser(signup,-1);
 	if(returned_id != 0 || returned_id != -1){
-		cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"8;URL=login.cgi\">"<<endl;
+		cout<<"<META HTTP-EQUIV=\"refresh\" CONTENT=\"3;URL=login.cgi\">"<<endl;
 	}
+    else{
+        cout << p() << "You did not sign up successfully" << p() << endl;
+    }
 	cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
 	cout <<"<link rel=\"stylesheet\" href=\"css/main2.css\" />"<<endl;
 	cout << style() << comment() << endl;

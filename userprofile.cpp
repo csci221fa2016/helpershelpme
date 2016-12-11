@@ -35,7 +35,6 @@ void printform(const Cgicc& cgi, int& id) {
 
    Controller c;
    vector<string> userinfo = c.showUserInfo(id);
-   vector<string> eventinfo = c.showEventInfo(id);
    int stats = c.showStats(id);
    if(userinfo[0] != "-1"){
        cout << "<section>" << endl;
@@ -45,7 +44,7 @@ void printform(const Cgicc& cgi, int& id) {
        cout << "<p><strong>User Name:</strong>" 
             <<  userinfo[0] << "</br><strong>Phone Number:</strong> "
             << userinfo[1] << "</br><strong>Hours "
-            << "Volunteering:</strong>" << stats << "</p>" << endl;
+            << "Volunteering: </strong>" << stats << "</p>" << endl;
        cout << "<footer>" << endl;
        cout << "<ul class=\"buttons\">" << endl;
        cout << "<form name=\"my-events\" action=\"my_events.cgi\">" << endl;
@@ -59,11 +58,12 @@ void printform(const Cgicc& cgi, int& id) {
        cout << "</section>" << endl;
    }
    else {
-   cout << section() << header() << endl;
-        cout << h4() << "Not logged in" << h4() << endl;
+   cout << "<section><header>" << endl;
+        cout << h4() << "Not logged in" << h4() << "<header>" << endl;
         cout << h5() << a().set("href", "login.cgi")
             << b() << "Click to log in" << b() 
-            << a() << h5() << end;
+            << a() << h5() << endl;
+        cout << "</section>" << endl;
    }
 
    /*cout <<"<section>" << endl;
@@ -140,10 +140,10 @@ int main(int /*argc*/, char** /**/) {
     	cout <<"</ul>" << endl;
     	cout <<"</li>" << endl;
 
-    	cout <<"<li><a href=\"#\">Rankings</a></li>" << endl;
-    	cout <<"<li><a href=\"#\">News</a></li>" << endl;
     	cout <<"<li><a href=\"userprofile.cgi\">Profile</a></li>" << endl;
+    	cout <<"<li><a href=\"#\">News</a></li>" << endl;
     	cout <<"<li><a href=\"#\">Contact</a></li>" << endl;
+    	cout <<"<li><a href=\"#\">Donate</a></li>" << endl;
     	cout <<"</ul>" << endl;
     	cout <<"</li>" << endl;
     	cout <<"<li><a href=\"log_out.cgi\" class=\"button special\">Log Out</a></li>" << endl;

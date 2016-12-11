@@ -7,14 +7,17 @@
 #include "cgicc/HTTPHTMLHeader.h"
 #include "cgicc/HTMLClasses.h"
 #include <cgicc/HTTPRedirectHeader.h>
+#include "cgicc/FormEntry.h"
 
 #include "styles2.h"
 #include "controller.h"
 
 using namespace std;
 using namespace cgicc;
-void print_event(vector<string> info, int e_id);
-int main(int argc, char **argv) {
+
+void print_event(vector<string> info, int e_id, bool volunteer);
+
+int main(int , char **) {
     try{
         Cgicc cgi;
         const CgiEnvironment& env = cgi.getEnvironment();
@@ -22,15 +25,15 @@ int main(int argc, char **argv) {
         int uID = 0;
         const_cookie_iterator iter;
         if(env.getCookieList().empty()){
-        id.push_back(" NO COOKIES YET");
-        id.push_back(" NO COOKIES YET");
-        id.push_back(" NO COOKIES YET");
-        id.push_back(" NO COOKIES YET");
+            id.push_back(" NO COOKIES YET");
+            id.push_back(" NO COOKIES YET");
+            id.push_back(" NO COOKIES YET");
+            id.push_back(" NO COOKIES YET");
         }else{
-        for(iter = env.getCookieList().begin(); iter != env.getCookieList().end(); ++iter) {
-            id.push_back(iter->getName());
-            id.push_back(iter->getValue());
-        }
+            for(iter = env.getCookieList().begin(); iter != env.getCookieList().end(); ++iter) {
+                id.push_back(iter->getName());
+                id.push_back(iter->getValue());
+            }
         }
         if(id[3]=="true"){
             cout<<HTTPHTMLHeader()<<endl;
@@ -63,16 +66,16 @@ int main(int argc, char **argv) {
         cout<<"<li class=\"submenu\">"<<endl;
         cout<<"<a href=\"#\">Events</a>"<<endl;
         cout<<"<ul>"<<endl;
-        cout<<"<li><a href=\"event_list.cgi\">See All Events</a></li>"<<endl;
-        cout<<"<li><a href=\"#\">Upcoming Events</a></li>"<<endl;
+        cout<<"<li><a href=\"#\">See All Events</a></li>"<<endl;
+        cout<<"<li><a href=\"event_list.cgi\">Upcoming Events</a></li>"<<endl;
         cout<<"<li><a href=\"eventcreation.cgi\">Create Event</a></li>"<<endl;
         cout<<"<li><a href=\"my_events.cgi\">My Events</a></li>"<<endl;
         cout<<"</ul>"<<endl;
         cout<<"</li>"<<endl;
-        cout<<"<li><a href=\"#\">Rankings</a></li>"<<endl;
-        cout<<"<li><a href=\"#\">News</a></li>"<<endl;
         cout<<"<li><a href=\"userprofile.cgi\">Profile</a></li>"<<endl;
         cout<<"<li><a href=\"#\">Contact</a></li>"<<endl;
+        cout<<"<li><a href=\"#\">News</a></li>"<<endl;
+        cout<<"<li><a href=\"#\">Donate</a></li>"<<endl;
         cout<<"</ul>"<<endl;
         cout<<"</li>"<<endl;
         cout<<"<li><a href=\"log_out.cgi\" class=\"button special\">Log Out</a></li>"<<endl;
@@ -85,25 +88,34 @@ int main(int argc, char **argv) {
             cout<<"<article id=\"main\">"<<endl;
             cout<<"<header class=\"special container\">"<<endl;
             cout<<"<span class=\"icon fa-laptop\"></span>"<<endl;
-            cout<<"<h2>All<strong> Events</strong></h2>"<<endl;
+            cout<<"<h2>My<strong> Events</strong></h2>"<<endl;
             cout<<"</header>"<<endl;    
             cout<<"<section class=\"wrapper style3 container special\">"<<endl;
-            cout<<"<div class=\"row\">"<<endl;
+            cout << cgicc::div().set("class","row") << endl;
     
             Controller c;
             vector<int> eIDs = c.showOrganizedEvents(uID);
             vector<int> ewIDs = c.showEventsWorked(uID);
-            for ( int x = 0; x < eIDs.size(); ++x) {
-                vector<string> event_info = c.showEvent(eIDs[x]);
-                print_event(event_info, eIDs[x]);
+            for (unsigned x = 0; x < eIDs.size(); ++x) {
+                print_event(c.showEvent(eIDs.at(x)), eIDs.at(x), false);
             }
-            cout << p() << h3() << strong() 
-                << "Volunteer Positions"
-                << h3() << strong()<< endl; 
-            for ( int x = 0; x < ewIDs.size(); ++x) {
-                vector<string> event_info = c.showEvent(ewIDs[x]);
-                event_info.push_back(c.showEventPosition(ewIDs[x]));
-                print_positions(event_info, ewIDs[x]);
+
+            cout << cgicc::div() << endl;
+            cout<<"</section>"<<endl;
+            cout<<"</article>"<<endl;
+            cout<<"<article id=\"main\">"<<endl;
+            cout<<"<header class=\"special container\">"<<endl;
+            cout << h2() << "My" << strong() 
+                << " Volunteer Positions" << strong() 
+                << h2() <<endl;
+            cout<<"</header>"<<endl;    
+            cout<<"<section class=\"wrapper style3 container special\">"<<endl;
+            cout << cgicc::div().set("class", "row") << endl;
+
+            for (unsigned x = 0; x < ewIDs.size(); ++x) {
+                vector<string> event_info = c.showEvent(ewIDs.at(x));
+                event_info.push_back(c.showEventPosition(uID, ewIDs.at(x)));
+                print_event(event_info, ewIDs.at(x), true);
             }
             cout << p() << endl;
            /* vector<string> info;
@@ -117,7 +129,7 @@ int main(int argc, char **argv) {
             print_event(info,n);
             print_event(info,n);
             print_event(info,n);*/
-            cout<<"</div>"<<endl;
+            cout << cgicc::div() <<endl;
             cout<<"</section>"<<endl;
             cout<<"</article>"<<endl;
         //<=========================================FOOTER DON'T TOUCH=============================================================>
@@ -148,44 +160,27 @@ int main(int argc, char **argv) {
 
     }
 }
-void print_event(vector<string> info, int event_id) {
-            cout<<"<div class=\"4u 12u(narrower)\">"<<endl;
-            cout<<"<section>"<<endl;
-            cout<<"<header>"<<endl;
-            cout<<"<h3>"<<info[0]<<"</h3>"<<endl;
-            cout<<"</header>"<<endl;
-            cout<<"<p>Date: "<<info[1]
-                <<"</br>Location: "
-                <<info[2]<<"</p>"<<endl;
-            cout<<"<footer>"<<endl;
-            cout<<"<ul class=\"buttons\">"<<endl;
-            cout<<"<form name=\"event\" method=\"get\" action=\"eventpage.cgi\">"<<endl;
-            cout<<"<input type=\"hidden\" name=\"event_id\" value=\""<<event_id<<"\">"<<endl; 
-            cout<<"<button class = \"button small\"/>Learn More</button>" << endl;
-            cout<<"</form>"<<endl;
-            cout<<"</ul>"<<endl;
-            cout<<"</footer>"<<endl;
-            cout<<"</section>"<<endl;
-            cout<<"</div>"<<endl;
-
-}
-void print_positions(vector<string> info, int event_id) {
-            cout<<"<div class=\"4u 12u(narrower)\">"<<endl;
-            cout<<"<section>"<<endl;
-            cout<<"<header>"<<endl;
-            cout<<"<h3>"<<info[3]<<"</h3>"<<endl;
-            cout<<"</header>"<<endl;
-            cout<<"<p>Event: " << info[0]
-                << "</br>Date: "<<info[1]
-            cout<<"<footer>"<<endl;
-            cout<<"<ul class=\"buttons\">"<<endl;
-            cout<<"<form name=\"event\" method=\"get\" action=\"eventpage.cgi\">"<<endl;
-            cout<<"<input type=\"hidden\" name=\"event_id\" value=\""<<event_id<<"\">"<<endl; 
-            cout<<"<button class = \"button small\"/>Learn More</button>" << endl;
-            cout<<"</form>"<<endl;
-            cout<<"</ul>"<<endl;
-            cout<<"</footer>"<<endl;
-            cout<<"</section>"<<endl;
-            cout<<"</div>"<<endl;
+void print_event(vector<string> info, int event_id, bool volunteer) {
+    cout<<"<div class=\"4u 12u(narrower)\">"<<endl;
+    cout<<"<section>"<<endl;
+    cout<<"<header>"<<endl;
+    cout<<"<h3>"<<info[0]<<"</h3>"<<endl;
+    cout<<"</header>"<<endl;
+    cout<<"<p>Date: "<<info[1] <<"</br>Location: "
+        <<info[2]<< br() << endl;
+    if(volunteer) {
+        cout << "Position: " << info[3] << br() << endl;
+    }
+    cout << "</p>" << endl;
+    cout<<"<footer>"<<endl;
+    cout<<"<ul class=\"buttons\">"<<endl;
+    cout<<"<form name=\"event\" method=\"get\" action=\"eventpage.cgi\">"<<endl;
+    cout<<"<input type=\"hidden\" name=\"event_id\" value=\""<<event_id<<"\">"<<endl; 
+    cout<<"<button class = \"button small\"/>Learn More</button>" << endl;
+    cout << "</form>" << endl;
+    cout<<"</ul>"<<endl;
+    cout<<"</footer>"<<endl;
+    cout<<"</section>"<<endl;
+    cout<<"</div>"<<endl;
 
 }

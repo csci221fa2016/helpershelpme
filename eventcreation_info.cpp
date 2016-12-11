@@ -34,7 +34,7 @@ int main () {
 		}
 
 	}
-	//getting element from evencrationpag
+	//getting element from evencreationpage
 	vector<FormEntry> info = cgi.getElements();
 	vector<string> data_1;
 	vector<string> data_2;

@@ -13,6 +13,7 @@
 
 #include "controller.h"
 #include "styles.h"
+
 using namespace std;
 using namespace cgicc;
 
@@ -29,7 +30,7 @@ int main () {
 		login.push_back(**it);
 	}
 
-	/*vector<string> login_answer = myController.signIn(login);
+	vector<string> login_answer = myController.signIn(login);
 	
 	if(login_answer.at(0) == "true") { 
 		cout << HTTPHTMLHeader().setCookie(HTTPCookie("user_id",login_answer[1])).setCookie(HTTPCookie("logged_in","true"))<<endl;
@@ -40,12 +41,11 @@ int main () {
 		cout << HTTPHTMLHeader();
 		cout<<html()<<endl;
 		cout << head()<<title("Log in") << endl;
-    }*/
+    }
 	
-	//login_answer=myController.signIn(login);
-	if(login[0]=="4545"&&login[1]=="1234"){
+/*	if(login[0]=="4545"&&login[1]=="1234"){
 		login.push_back("true");
-	}GICC
+	}else
 		login.push_back("false");
 	}
 
@@ -58,7 +58,7 @@ int main () {
 		cout << HTTPHTMLHeader();
 		cout<<html()<<endl;
 		cout << head()<<title("Incorrect Password") << endl;
-    }
+    }*/
         cout << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/>" << endl;
         cout <<"<link rel=\"stylesheet\" href=\"css/main2.css\" />"<<endl;
         cout << style() << comment() << endl;
