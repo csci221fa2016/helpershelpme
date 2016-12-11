@@ -142,36 +142,36 @@ TEST(Controller, updateEvent)
 }
 
 
-TEST(Controller, signInPass)
-{
-	Controller* cont = new Controller();
-	//	Creation* c = new Creation();
+// TEST(Controller, signInPass)
+// {
+// 	Controller* cont = new Controller();
+// 	//	Creation* c = new Creation();
 
-	vector<string> v;
-	v.push_back("8887776666");
-	v.push_back("JoesPass2");
+// 	vector<string> v;
+// 	v.push_back("8887776666");
+// 	v.push_back("JoesPass2");
 
-	vector<string> result;
-	result = cont->signIn(v);
-	ASSERT_EQ(true, result.at(0) == "true");
-}
+// 	vector<string> result;
+// 	result = cont->signIn(v);
+// 	ASSERT_EQ(true, result.at(0) == "true");
+// }
 
 
 // Hellooo
-TEST(Controller, signInFail)
-{
-	Controller* cont = new Controller();
-	//	Creation* c = new Creation();
+// TEST(Controller, signInFail)
+// {
+// 	Controller* cont = new Controller();
+// 	//	Creation* c = new Creation();
 
-	vector<string> v;
-	v.push_back("8887776666");
-	v.push_back("JoesPa2");
+// 	vector<string> v;
+// 	v.push_back("8887776666");
+// 	v.push_back("JoesPa2");
 
-	vector<string> result;
-	result = cont->signIn(v);
-	ASSERT_EQ(true, result.at(0) == "false");
+// 	vector<string> result;
+// 	result = cont->signIn(v);
+// 	ASSERT_EQ(true, result.at(0) == "false");
 
-}
+// }
 
 // Need to finish this
 TEST(Controller, addVolunteer)
@@ -213,14 +213,14 @@ TEST(Controller, addVolunteer)
     
 }
 
-TEST(Controller, showStats)
-{
-	Controller* cont = new Controller();
-	Creation* c = new Creation();
+// TEST(Controller, showStats)
+// {
+// 	Controller* cont = new Controller();
+// 	Creation* c = new Creation();
 	
-	int uId = c->createUser("Tierney I.", "8049997777", "Password");
-	ASSERT_EQ(true, cont->showStats(uId) == 0);
-}
+// 	int uId = c->createUser("Tierney I.", "8049997777", "Password");
+// 	ASSERT_EQ(true, cont->showStats(uId) == 0);
+// }
 
 /*TEST(Controller, showStats2)
 {
