@@ -39,7 +39,7 @@ TEST(Controller, sendUser2)
 
 TEST(Controller, sendEvent) 
 {
-	Controller* c = new Controller();
+	Controller* cont = new Controller();
 	int id = 11;
 	string uId;
 	ostringstream convert;   
@@ -52,8 +52,8 @@ TEST(Controller, sendEvent)
 
 	event[0].push_back("EventName");
 	event[0].push_back("Desc");
-	event[0].push_back("2016-05-03 10:00");
-	event[0].push_back("2016-05-03 12:00");
+	event[0].push_back("2018-05-03 10:00");
+	event[0].push_back("2018-05-03 12:00");
 	//event[0].push_back(uId);
 	event[0].push_back("location");
 	event[0].push_back("1");
@@ -62,7 +62,7 @@ TEST(Controller, sendEvent)
 	event[1].push_back("3");
 
 
-	int eId = c->sendEvent(event, id);
+	int eId = cont->sendEvent(event, id);
 
 	Event* e = new Event(eId);
 	string eName = e->getName();
@@ -248,6 +248,45 @@ TEST(Controller, showStats)
 }*/
 
 TEST(Controller, showAllUpcoming)
+{
+	Controller* cont = new Controller();
+	vector<int> v = cont->showAllUpcoming();
+	ASSERT_EQ(true, v.at(0) == 25);	
+}
+
+TEST(Controller, showEvent)
+{
+	Controller* cont = new Controller();
+	int id = 11;
+
+	vector<vector<string> > event;
+	event.push_back(vector<string>());
+	event.push_back(vector<string>());
+
+	event[0].push_back("EventName");
+	event[0].push_back("Desc");
+	event[0].push_back("2018-05-03 10:00");
+	event[0].push_back("2018-05-03 12:00");
+	event[0].push_back("location");
+	event[0].push_back("1");
+
+	event[1].push_back("name");
+	event[1].push_back("3");
+
+
+	int eId = cont->sendEvent(event, id);
+
+	Event* e = new Event(eId);
+	string eName = e->getName();
+	string eDesc = e->getDescription();
+	vector<string> eVacancies = e->getVacancies();
+
+
+	vector<string> v = cont->showEvent(eId);
+	ASSERT_EQ(true, v.at(0) == "EventName" && v.at(2) == "location");
+}
+
+TEST(Controller, showAllEvents)
 {
 	
 }
