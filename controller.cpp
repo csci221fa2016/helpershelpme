@@ -177,7 +177,7 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 	for (unsigned int i = 0; i < ep_arr.size(); ++i ) {
 
 		//write test case for parser
-		string str = v.at(i);
+		string str = v->at(i);
 		stringstream ss;
 		string s;
 		char* info = new char[str.size()+1];
