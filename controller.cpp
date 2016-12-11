@@ -172,12 +172,12 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 	a[0].push_back(Result);
 
 
-	vector<string> v = e->getVacancies();	
+	vector<string>* v = e->getVacancies();	
 
 	for (unsigned int i = 0; i < ep_arr.size(); ++i ) {
 
 		//write test case for parser
-		string str = v[i];
+		string str = v.at(i);
 		stringstream ss;
 		string s;
 		char* info = new char[str.size()+1];
@@ -209,11 +209,11 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 void Controller::updateProfile(vector<string> v, int id) {
 	User* u = new User(id);
 
-	if (!v[0].empty() && !v[1].empty() && !v[2].empty())
+	if (!v.at(0).empty() && !v.at(1).empty() && !v.at(2).empty())
 	{
-		u->setName(v[0]);
-		u->setPhoneNumber(v[1]);  
-		u->setPassword(v[2]);
+		u->setName(v.at(0));
+		u->setPhoneNumber(v.at(1));  
+		u->setPassword(v.at(2));
 	}
 	else {
 		throw runtime_error("Empty update.");
@@ -281,7 +281,7 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 
 vector<string> Controller::signIn(vector<string> v) {
 	Creation* c = new Creation();
-	int dbPass = c->logIn(v[0], v[1]);
+	int dbPass = c->logIn(v.at(0), v.at(1));
 	vector<string> ret;
 	if(dbPass != -1){
 		ret.push_back("true");

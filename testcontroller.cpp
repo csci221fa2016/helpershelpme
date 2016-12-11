@@ -9,7 +9,7 @@
 using namespace std;
 
 
-TEST(Controller, sendUser)
+/*TEST(Controller, sendUser)
 {
 	Controller* c = new Controller();
 
@@ -35,7 +35,7 @@ TEST(Controller, sendUser2)
 	v.push_back("8889990000");
 	v.push_back("Hello");
 	ASSERT_EQ(true, c->sendUser(v, id) == -1);
-}
+}*/
 
 TEST(Controller, sendEvent) 
 {
@@ -70,19 +70,18 @@ TEST(Controller, sendEvent)
 	vector<string> eVacancies = e->getVacancies();
 
 	ASSERT_EQ(false, eId == -1);
-
 }
 
-TEST(Controller, showUserInfo)
+/*TEST(Controller, showUserInfo)
 {
 	Controller* cont = new Controller();
 	Creation* c = new Creation();
 	int id = c->createUser("Tierney Irwin", "8887776666", "JoePass2");
 	vector<string> v = cont->showUserInfo(id);
 	ASSERT_EQ(true, v.at(0) == "Tierney Irwin" && v.at(1) == "8887776666");
-}
+}*/
 
-TEST(Controller, updateProfile) 
+/*TEST(Controller, updateProfile) 
 {
 	Controller* cont = new Controller();
 	Creation* c = new Creation();
@@ -97,7 +96,7 @@ TEST(Controller, updateProfile)
 
 	ASSERT_EQ(true, u->getName() == "Tierney Irwin2" && u->getPhoneNumber() == "1112225555");
 
-}
+}*/
 
 TEST(Controller, updateEvent)
 {
@@ -204,7 +203,7 @@ TEST(Controller, addVolunteer)
 	Event* e = new Event(eId);
 	string eName = e->getName();
 	string eDesc = e->getDescription();
-	vector<string> eVacancies = e->getVacancies();
+	vector<string>* eVacancies = e->getVacancies();
     
     c->addVolunteer(eId, id, 1);
     User* u = new User(id);
@@ -247,14 +246,14 @@ TEST(Controller, addVolunteer)
 	ASSERT_EQ(true, cont->showStats(11) == 2);
 }*/
 
-TEST(Controller, showAllUpcoming)
+/*TEST(Controller, showAllUpcoming)
 {
 	Controller* cont = new Controller();
 	vector<int> v = cont->showAllUpcoming();
 	ASSERT_EQ(true, v.at(0) == 25);	
-}
+}*/
 
-TEST(Controller, showEvent)
+/*TEST(Controller, showEvent)
 {
 	Controller* cont = new Controller();
 	int id = 11;
@@ -291,7 +290,7 @@ TEST(Controller, showAllEvents)
 	
 }
 
-/*TEST(Controller, showEventInfo)
+TEST(Controller, showEventInfo)
 {
 	Controller* cont = new Controller();
 	Creation* c = new Creation();
@@ -299,7 +298,7 @@ TEST(Controller, showAllEvents)
 	//vector<string> event;
 	int eventId = c->createEvent("EName","Desc.",2222222222222222222222222222222222222, 2222222222222222222222222222223, "1");
 	//c->createEventPosition(eventId, 1, 13);
-	//EventPosition* ep = new EventPosition(eventId, 12, 1);
+	EventPosition* ep = new EventPosition(eventId, 12, 1);
 	//vector<string> eposinfo;
 	//eposinfo.push_back("Name");
 	//string posId;
@@ -316,6 +315,7 @@ TEST(Controller, showAllEvents)
 	vector<vector<string> > check = cont->showEventInfo(eventId);
 	ASSERT_EQ(true, check.at(1).at(0) == ep->getDescription());	
 }*/
+
 
 int main(int argc, char **argv) {
 	::testing::InitGoogleTest(&argc, argv);
