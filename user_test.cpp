@@ -15,11 +15,11 @@ TEST(user, getPhoneNumber) {
 }
 TEST(user, getEventsWorked) {
 	User* u = new User(1);
-	ASSERT_EQ(true, u->getEventsWorked().size() == 1);
+	ASSERT_EQ(true, u->getEventsWorked().size() == 0);
 }
 TEST(user, getOrganizedEvents) {
 	User* u = new User(1);
-	ASSERT_EQ(true, u->getOrganizedEvents().size() == 1);
+	ASSERT_EQ(true, u->getOrganizedEvents().size() == 0);
 }
 int main(int argc, char **argv){
 	testing::InitGoogleTest(&argc, argv);
