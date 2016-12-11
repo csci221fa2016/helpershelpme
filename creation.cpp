@@ -1,3 +1,5 @@
+#include <sstream>
+#include <iterator>
 #include "user.h"
 #include "event.h"
 #include "eventposition.h"
@@ -24,6 +26,7 @@ bool Creation::logIn(string _phoneNumber, string _pass) {
 	bool success = false;
 	sqlite3_stmt *s;
 	string phone = _phoneNumber;
+	string password;
 	const char *sql = "select password from users where phone = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
@@ -40,6 +43,7 @@ bool Creation::logIn(string _phoneNumber, string _pass) {
 	}	
 	sqlite3_reset(s);
 	
+	isstringstream(password);
 	
 	return success;
 }
