@@ -281,10 +281,11 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 
 vector<string> Controller::signIn(vector<string> v) {
 	Creation* c = new Creation();
-	string dbPass = c->logIn(v[0]);
+	bool dbPass = c->logIn(v[0], v[1]);
 	//send to database to verify
 	vector<string> ret;
-	if(v[1] == dbPass){
+
+	if(dbPass){
 		int uId = c->searchUser(v[0]);
 		ret.push_back("true");
 		string Result;
