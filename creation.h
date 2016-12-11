@@ -1,6 +1,7 @@
 #ifndef CREATION_H
 #define CREATION_H
 
+#include <openssl/sha.h>
 #include <string>
 #include <vector>
 #include "sqlite3.h"
@@ -12,7 +13,7 @@ class Creation {
 	sqlite3 *db; 
     public:
 	Creation();
-	string logIn(string _phoneNumber);
+	string logIn(string _phoneNumber, string _pass);
 	int searchUser(string _phoneNumber);
 	bool findUser(int _userid);
 	bool findEvent(int _eventid);

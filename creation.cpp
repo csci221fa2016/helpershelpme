@@ -1,3 +1,5 @@
+#include <sstream>
+#include <iterator>
 #include "user.h"
 #include "event.h"
 #include "eventposition.h"
@@ -20,7 +22,8 @@ Creation::Creation() {
 	}
 }
 
-string Creation::logIn(string _phoneNumber) {
+bool Creation::logIn(string _phoneNumber, string _pass) {
+	bool success = false;
 	sqlite3_stmt *s;
 	string phone = _phoneNumber;
 	string password;
@@ -39,7 +42,10 @@ string Creation::logIn(string _phoneNumber) {
 		password = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 4)));
 	}	
 	sqlite3_reset(s);
-	return password;
+	
+	isstringstream(password);
+	
+	return success;
 }
 
 int Creation::searchUser(string _phoneNumber) {
@@ -105,6 +111,27 @@ bool Creation::findEvent(int _eventid) {
 }
 
 int Creation::createUser(string _name, string _phoneNumber, string _password) {
+	//Hashing and salting the password.
+
+	SHA256_CTX context;
+	unsigned char md[SHA256_DIGEST_LENGTH];
+	int saltlen = rand() % (50 - 21) + 20;
+	unsigned char salt[saltlen];
+	RAND_bytes(salt, saltlen);
+	unsigned char md[SHA256_DIGEST_LENGTH]; //This is the password hash!
+
+	SHA256_Init(&context);
+	string saltString(reinterpret_cast<char*>(salt));
+	string saltedPass = saltString + _password;
+	//Hash of password + salt.
+	SHA256_Update(&context, (unsigned char*)saltedPass, saltedPass.size());
+	SHA256_Final(md, &context);
+
+	//Prepending salt to the hash.
+	string hash(reinterpret_cast<char*>(md));
+	string saltAndHash = saltString + "$" + hash;
+
+
 	int userid = -1;
 	sqlite3_stmt *s;
 	const char *sql = "insert into users (name, phone, password) values (?, ?, ?)";
@@ -123,7 +150,7 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 		cout << "Error in binding SQL statement 2 " << sql;
 		return userid;
 	}
-	retval = sqlite3_bind_text(s, 3, _password.c_str(), _password.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 3, saltAndHash.c_str(), saltAndHash.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement 3 " << sql;
 		return userid;
@@ -195,7 +222,7 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 
 	//Get eventid to return to controller.
 
-	sql = "select eventid from events where name = ? AND description = ? AND userid = ?";
+	sql = "select eventid from events where name = ? AND description = ? AND location = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
@@ -211,6 +238,11 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 		cout << "Error is binding SQL statement " << sql;
 		return eventid;
 	}
+	retval = sqlite3_bind_text(s, 3, _location.c_str(), _location.size(), SQLITE_STATIC);
+	if (retval != SQLITE_OK) {
+		cout << "Error in binding SQL statement " << sql;
+		return eventid;
+	}
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		eventid = sqlite3_column_int(s, 0);
 		return eventid;
@@ -219,6 +251,7 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 			cout << "Bad eventid.";
 		}	
 	}
+	sqlite3_reset(s);
 	return eventid;
 }
 
@@ -245,6 +278,7 @@ void Creation::createVacancy(int eventid, int posid, string name, int openings){
 	if(sqlite3_step(s) != SQLITE_DONE){
 		cout << "Error in executing SQL statemtn" << sql;
 	}
+	sqlite3_reset(s);
 }
 
 int Creation::createEventPosition(int eventid, int posid, int userid) {
@@ -273,7 +307,9 @@ int Creation::createEventPosition(int eventid, int posid, int userid) {
 	}
 	if (sqlite3_step(s) != SQLITE_DONE) {
 		cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
+		return eposid;
 	}
+	sqlite3_reset(s);
 	return eposid;
 }
 
