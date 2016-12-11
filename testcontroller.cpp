@@ -37,41 +37,41 @@ TEST(Controller, sendUser2)
 	ASSERT_EQ(true, c->sendUser(v, id) == -1);
 }
 
-// TEST(Controller, sendEvent) 
-// {
-// 	Controller* c = new Controller();
-// 	int id = 11;
-// 	string uId;
-// 	ostringstream convert;   
-// 	convert << id;      
-// 	uId = convert.str(); 
+TEST(Controller, sendEvent) 
+{
+	Controller* c = new Controller();
+	int id = 11;
+	string uId;
+	ostringstream convert;   
+	convert << id;      
+	uId = convert.str(); 
 
-// 	vector<vector<string> > event;
-// 	event.push_back(vector<string>());
-// 	event.push_back(vector<string>());
+	vector<vector<string> > event;
+	event.push_back(vector<string>());
+	event.push_back(vector<string>());
 
-// 	event[0].push_back("EventName");
-// 	event[0].push_back("Desc");
-// 	event[0].push_back("2016-05-03 10:00");
-// 	event[0].push_back("2016-05-03 12:00");
-// 	//event[0].push_back(uId);
-// 	event[0].push_back("location");
-// 	event[0].push_back("1");
+	event[0].push_back("EventName");
+	event[0].push_back("Desc");
+	event[0].push_back("2016-05-03 10:00");
+	event[0].push_back("2016-05-03 12:00");
+	//event[0].push_back(uId);
+	event[0].push_back("location");
+	event[0].push_back("1");
 
-// 	event[1].push_back("name");
-// 	event[1].push_back("3");
+	event[1].push_back("name");
+	event[1].push_back("3");
 
 
-// 	int eId = c->sendEvent(event, id);
+	int eId = c->sendEvent(event, id);
 
-// 	Event* e = new Event(eId);
-// 	string eName = e->getName();
-// 	string eDesc = e->getDescription();
-// 	vector<string> eVacancies = e->getVacancies();
+	Event* e = new Event(eId);
+	string eName = e->getName();
+	string eDesc = e->getDescription();
+	vector<string> eVacancies = e->getVacancies();
 
-// 	ASSERT_EQ(false, eId == -1);
+	ASSERT_EQ(false, eId == -1);
 
-// }
+}
 
 TEST(Controller, showUserInfo)
 {
