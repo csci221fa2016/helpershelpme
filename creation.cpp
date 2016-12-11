@@ -201,15 +201,15 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 	sqlite3_reset(s);
 
 	//Get eventid to return to controller.
-
-	sql = "select eventid from events where name = ? AND description = ? AND location = ?";
+	sql = "SELECT last_insert_rowid() FROM events";
+	//sql = "select eventid from events where name = ? AND description = ? AND location = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
 		return eventid;
 	}
-	retval = sqlite3_bind_text(s, 1, _name.c_str(), _name.size(), SQLITE_STATIC);
-	if (retval != SQLITE_OK) {
+	//retval = sqlite3_bind_text(s, 1, _name.c_str(), _name.size(), SQLITE_STATIC);
+	/*if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
 		return eventid;
 	}
@@ -222,7 +222,7 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
 		return eventid;
-	}
+	}*/
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		eventid = sqlite3_column_int(s, 0);
 		return eventid;
