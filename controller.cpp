@@ -58,7 +58,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		Creation* c = new Creation();
 
 		// This is the start time that the view is passing to us
-		string s = v[0][2];
+		string s = v.at(0).at(2);
 		char * date = new char[s.size()+1]; //mutable string
 		strcpy(date, s.c_str());
 
@@ -73,14 +73,14 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		stm->tm_mday = atoi(strtok(NULL, " ,.-:")); //get the day value
 		stm->tm_hour = atoi(strtok(NULL, " ,.-:")); //get the hour value
 		stm->tm_min = atoi(strtok(NULL, " ,.-:")); //get the min value
-		stm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value			
+//		stm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value			
 		// This coverts the tm* ltm to time_t
 
 
 		// This is the end time that the view is passing to us
 
 
-		string s1 = v[0][3];
+		string s1 = v.at(0).at(3);
 		char * date1 = new char[s1.size()+1]; //mutable string
 		strcpy(date1, s1.c_str());
 		//char date1[] = v[0][3];
@@ -93,30 +93,24 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 		etm->tm_mday = atoi(strtok(NULL, " ,.-:")); //get the day value
 		etm->tm_hour = atoi(strtok(NULL, " ,.-:")); //get the hour value
 		etm->tm_min = atoi(strtok(NULL, " ,.-:")); //get the min value
-		etm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value                  
+//		etm->tm_sec = atoi(strtok(NULL, " ,.-:")); //get the sec value                  
 
 		// This coverts the tm* ltm to time_t
 
 
-		//need to set start time end time 0 -name, 1 -description, 2-openings		
-		int eventId = c->createEvent(v[0][0], v[0][1],mktime (stm), mktime (etm), userId, v[0][4]);
+		//need to set start time end time 0 -name, 1 -description, 2-openings
+		int eventId = c->createEvent(v.at(0).at(0), v.at(0).at(1), mktime (stm), mktime (etm), v.at(0).at(4));
 		string Result;
 		ostringstream Convert;
 		for(unsigned int i = 1; i <v.size(); ++i){ 
 
-			string myStream = v[i][1];
+			string myStream = v.at(i).at(1);
 			istringstream buffer(myStream);
 			int value;
 			buffer >> value;
-			c->createEventPosition(eventId, i,  v[i][0], value, userId);
-
+			//c->createEventPosition(eventId, i,  v.at(i).at(0), value, userId);
+			c->createVacancy(eventId, i, v.at(i).at(0), value);
 		}
-		delete c;
-		delete date;
-		delete stm;
-		delete start_pch;
-		delete date1; delete etm;
-		delete end_pch;
 
 		return eventId;
 	}
@@ -178,24 +172,28 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 	a[0].push_back(Result);
 
 
-	vector<string> v = e->getVacancies();	
+	vector<string>* v = e->getVacancies();	
 
 	for (unsigned int i = 0; i < ep_arr.size(); ++i ) {
 
 		//write test case for parser
-		vector<string> pos;
-		istringstream ss(v[i]);
-		string str;
-		getline(ss,str, ";");
-		pos[0] = str;
-		getline(ss,str, ";");
-		pos[1] = str;
-		getline(ss,str, ";");//need database to put ; at end of long string hopeful to work
-		pos[2] = str;
+		string str = v->at(i);
+		stringstream ss;
+		string s;
+		char* info = new char[str.size()+1];
+		strcpy(info, str.c_str());
+		char* start;
+		start = strtok(info,";");
 		//name;posid;openings
-		a[i+1].push_back(pos[0]);
-		a[i+1].push_back(pos[1]);
-		a[i+1].push_back(pos[2]);
+		a[i+1].push_back(s);
+		ss << start[1];
+		ss >> s;
+		a[i+1].push_back(s);
+		ss << start[2];
+		ss >> s;
+		a[i+1].push_back(s);
+		
+		delete info; delete start;
 		//string Result;
 		//ostringstream Convert;
 		//Convert << (ep_arr[i]->getPosId());
@@ -211,12 +209,11 @@ vector<vector<string> > Controller::showEventInfo(int id) {
 void Controller::updateProfile(vector<string> v, int id) {
 	User* u = new User(id);
 
-	if (!v[0].empty() && !v[1].empty() && !v[2].empty())
+	if (!v.at(0).empty() && !v.at(1).empty() && !v.at(2).empty())
 	{
-		u->setName(v[0]);
-		u->setPhoneNumber(v[1]);
-		// tr1::hash<string> str_hash;  
-		u->setPassword(v[2]);
+		u->setName(v.at(0));
+		u->setPhoneNumber(v.at(1));  
+		u->setPassword(v.at(2));
 	}
 	else {
 		throw runtime_error("Empty update.");
@@ -233,11 +230,11 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 	}else {
 
 		// This is the start time that the view is passing to us
-		string s = v[0][2];
+		string s = v.at(0).at(2);
 		char * date = new char[s.size()+1]; //mutable string
 		strcpy(date, s.c_str());
 
-		//char date[] = v[0][2];
+	
 		tm *stm = new tm();
 
 		char* start_pch;
@@ -252,10 +249,10 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 
 		// This is the end time that the view is passing to us
 
-		string s1 = v[0][3];
+		string s1 = v.at(0).at(3);
 		char * date1 = new char[s1.size()+1]; //mutable string
 		strcpy(date1, s1.c_str());
-		// char date1[] = v[0][3];
+		
 		tm *etm = new tm();
 
 		char* end_pch;
@@ -271,39 +268,26 @@ void Controller::updateEvent(vector<vector<string> > v, int id,int userId){
 
 
 		// third and fourth thing passed in here should be time_t's now
-		e->setName(v[0][0]);
+		e->setName(v.at(0).at(0));
 		//convert v[1], v[2] to times
-		e->setDescription(v[0][3]);
-		e->setLocation(v[0][4]);
+		e->setDescription(v.at(0).at(1));
+		e->setLocation(v.at(0).at(4));
 		for(unsigned int i = 1; i<v.size();++i){
-			EventPosition* ep = new EventPosition(id, userId, i);
-			ep->setDescription(v[i][0]);
-			// ep->setDescription(v[i][1]);
-			//set openings?
-			// ****  remember to delete the ep variable *****
+			//set vacancies without user input, needs creation here
 		}
-		// Think this is not needed anymore???
-		/*for(int i = 0; i < (v.size()-1); ++i){
-		//	c->createEventPosition
-		}*/
-		delete e; delete date;
-		delete stm; delete start_pch;
-		delete date1; delete end_pch;
-		delete etm;
+	
 	}
 }
 
 vector<string> Controller::signIn(vector<string> v) {
 	Creation* c = new Creation();
-	string dbPass = c->logIn(v[0]);
-	//send to database to verify
+	int dbPass = c->logIn(v.at(0), v.at(1));
 	vector<string> ret;
-	if(v[1] == dbPass){
-		int uId = c->searchUser(v[0]);
+	if(dbPass != -1){
 		ret.push_back("true");
 		string Result;
 		ostringstream Convert;
-		Convert << uId;
+		Convert << dbPass;
 		Result = Convert.str();
 		ret.push_back(Result);
 		return ret;
@@ -319,20 +303,18 @@ vector<string> Controller::signIn(vector<string> v) {
 }
 
 void Controller::addVolunteer(int eventId, int userId, int posId) {
-	// add Volunteer to event
 	Creation* c = new Creation();
 	if(c->findUser(userId) && c->findEvent(eventId)){
-		EventPosition* ep = new EventPosition(eventId, userId, posId);
-		// Does this add a user to an event or adds an event position to an event?
-		delete ep;
+		int eposId = c->createEventPosition(eventId, posId, userId);
+		//EventPosition* ep = new EventPosition(eventId, userId, posId);
 	}else{
 		throw runtime_error("User/Event is invalid");
 	}
 	delete c;
+	//return eposId?
 }
 
-double Controller::showStats(int id) {//convert to datetime for calculations
-	// show the user profile to the view. (hours, etc.)
+double Controller::showStats(int id) {
 	User* u = new User(id);
 	double total_hours;
 	for (unsigned int i = 0; i < u->getEventsWorked().size(); i++) {
@@ -341,34 +323,8 @@ double Controller::showStats(int id) {//convert to datetime for calculations
 	delete u;
 	return total_hours;
 }
-//Combine all these functions -useraccess. for home page showing upcoming events need vector<vector<string>>
 
-vector<int > Controller::showAllUpcoming(){                 
-
-	//	time_t now;
-	//	struct tm upcoming = etm;
-	//	double seconds;
-	//
-	//	time(&now);  /* get current time; same as: now = time(NULL)  */
-	//
-	//	upcoming = *localtime(&now);
-	//
-	//	upcoming.tm_hour = 0;
-	//	upcoming.tm_min = 0;
-	//	upcoming.tm_sec = 0;
-	//	upcoming.tm_mon = 0; 
-	//	upcoming.tm_mday = 1;
-	//
-	//	seconds = difftime(now,mktime(&upcoming));
-	//	
-	//	// This is now hours.
-	//	seconds = seconds/360;
-	//
-	//	// This would give us the days.
-	//	if (seconds > 24) {
-	//		seconds = seconds/24;
-	//	}
-
+vector<int > Controller::showAllUpcoming(){
 	Creation *c = new Creation();
 	vector<int> upcoming = c->getUpcoming();
 	delete c;
@@ -387,8 +343,13 @@ vector<string> Controller::showEvent(int id) {
 	return a;
 }
 
+vector<int> Controller::showAllEvents() {
+	Creation* c = new Creation();
+	vector<int> all = c->getAllEvents();
+	return all;
+}
+
 vector<int> Controller::showOrganizedEvents(int id){
-	// get Organized events then getEventId, then return the vector of ints
 	User* u = new User(id);
 	vector<int> num_organized_events;
 	vector<Event*> e = u->getOrganizedEvents();
@@ -426,5 +387,13 @@ string Controller::showEventPosition(int userid,int eventid){
 	} 
 	delete u;
 	return v;
+}
+
+bool Controller::removeVolunteer(int eId, int uId, int posId){
+	User* u = new User(uId);
+	Event* e = new Event(eId);
+	//send db posid somehow
+	bool leave = u->leaveEvent(e);
+	return leave;
 }
 

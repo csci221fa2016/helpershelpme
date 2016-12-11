@@ -1,3 +1,7 @@
+#include <openssl/rand.h>
+#include <algorithm>
+#include <sstream>
+#include <iterator>
 #include "user.h"
 #include "event.h"
 #include "eventposition.h"
@@ -8,6 +12,7 @@
 #include <ctime>
 #include "creation.h"
 #include "string.h"
+#include <vector>
 using namespace std;
 
 Creation::Creation() {
@@ -19,7 +24,8 @@ Creation::Creation() {
 	}
 }
 
-string Creation::logIn(string _phoneNumber) {
+int Creation::logIn(string _phoneNumber, string _pass) {
+	int userid = -1;
 	sqlite3_stmt *s;
 	string phone = _phoneNumber;
 	string password;
@@ -27,34 +33,35 @@ string Creation::logIn(string _phoneNumber) {
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return NULL;
+		return userid;
 	}
-	retval = sqlite3_bind_text(s, 0, phone.c_str(), phone.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 1, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return NULL;
+		return userid;
 	}
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		password = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 4)));
+		userid = sqlite3_column_int(s, 0);
 	}	
-	sqlite3_reset(s);
-	return password;
+	
+	return userid;
 }
 
 int Creation::searchUser(string _phoneNumber) {
 	sqlite3_stmt *s;
-	int userid;
+	int userid = -1;
 	string phone = _phoneNumber;
 	const char *sql = "select id from users where phone = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return -1;
+		return userid;
 	}
-	retval = sqlite3_bind_text(s, 0, phone.c_str(), phone.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 1, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return userid;
 	}
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		userid = sqlite3_column_int(s, 0);
@@ -66,8 +73,9 @@ int Creation::searchUser(string _phoneNumber) {
 bool Creation::findUser(int _userid) {
 	bool found = false;
 	sqlite3_stmt *s;
-	const char *sql = "select count(id) from users where id = " + (char)_userid;
+	const char *sql = "select count(id) from users where id = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval = sqlite3_bind_int(s,1,_userid);
 	if (retval != SQLITE_OK){
 		cout << "Error in SQL statement " << sql;
 		return false;
@@ -85,8 +93,9 @@ bool Creation::findUser(int _userid) {
 bool Creation::findEvent(int _eventid) {
 	sqlite3_stmt *s;
 	bool found = false;
-	const char *sql = "SELECT count(eventid) FROM events WHERE eventid = " + (char)_eventid;
+	const char *sql = "SELECT count(eventid) FROM events WHERE eventid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	retval =sqlite3_bind_int(s,1,_eventid);
 	if (retval != SQLITE_OK){
 		cout << "Error in SQL statement " << sql;
 		return false;
@@ -102,32 +111,32 @@ bool Creation::findEvent(int _eventid) {
 }
 
 int Creation::createUser(string _name, string _phoneNumber, string _password) {
-	int userid;
+
+	int userid = -1;
 	sqlite3_stmt *s;
 	const char *sql = "insert into users (name, phone, password) values (?, ?, ?)";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return -1;
+		return userid;
 	}
-	retval = sqlite3_bind_text(s, 0, _name.c_str(), _name.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 1, _name.c_str(), _name.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		cout << "Error in binding SQL statement 1 " << sql;
+		return userid;
 	}
-	retval = sqlite3_bind_text(s, 1, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 2, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		cout << "Error in binding SQL statement 2 " << sql;
+		return userid;
 	}
-	retval = sqlite3_bind_text(s, 2, _password.c_str(), _password.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 3, _password.c_str(), _password.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		cout << "Error in binding SQL statement 3 " << sql;
+		return userid;
 	}
 	if (sqlite3_step(s) != SQLITE_DONE) {
 		cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
-		return -1;
 	}
 	sqlite3_reset(s);
 	//Finished creating new User, now getting userid to return.
@@ -136,11 +145,11 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 	sql = "select id from users where phone = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		cout << "Error in binding SQL statement 4 " << sql;
+		return userid;
 	}
 	
-	retval = sqlite3_bind_text(s, 0, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 1, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		userid = sqlite3_column_int(s, 0);
 		if (userid == -1) {
@@ -150,172 +159,137 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 	return userid;
 }
 
-int Creation::createEvent(string _name, string _description, time_t _start, time_t _end, int userid, string _location) {
-	int eventid;
+int Creation::createEvent(string _name, string _description, time_t _start, time_t _end, string _location) {
+	int eventid = -1;
 	sqlite3_stmt *s;
-	const char *sql = "insert into events (name, description, start, end, organizer, location) values (?, ?, ?, ?, ?, ?)";
+	const char *sql = "insert into events (name, description, start, end, location) values (?, ?, ?, ?, ?)";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in the SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
-	retval = sqlite3_bind_text(s, 0, _name.c_str(), _name.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 1, _name.c_str(), _name.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
-	retval = sqlite3_bind_text(s, 1, _description.c_str(), _description.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 2, _description.c_str(), _description.size(), SQLITE_STATIC);
         if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
-	retval = sqlite3_bind_int(s, 2, (int)_start);
+	retval = sqlite3_bind_int(s, 3, (int)_start);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
-	retval = sqlite3_bind_int(s, 3, (int)_end);
+	retval = sqlite3_bind_int(s, 4, (int)_end);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
-	}
-	retval = sqlite3_bind_int(s, 4, userid);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
 	retval = sqlite3_bind_text(s, 5, _location.c_str(), _location.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
 	
+
 	if (sqlite3_step(s) != SQLITE_DONE) {
 		cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
-		return -1;
 	}
 	sqlite3_reset(s);
 
 	//Get eventid to return to controller.
-
-	sql = "select eventid from events where name = ? AND description = ? AND userid = ?";
+	sql = "SELECT last_insert_rowid() FROM events";
+	//sql = "select eventid from events where name = ? AND description = ? AND location = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
-	retval = sqlite3_bind_text(s, 0, _name.c_str(), _name.size(), SQLITE_STATIC);
-	if (retval != SQLITE_OK) {
+	//retval = sqlite3_bind_text(s, 1, _name.c_str(), _name.size(), SQLITE_STATIC);
+	/*if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
-	retval = sqlite3_bind_text(s, 1, _description.c_str(), _description.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 2, _description.c_str(), _description.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error is binding SQL statement " << sql;
-		return -1;
+		return eventid;
 	}
-	retval = sqlite3_bind_int(s, 2, userid);
+	retval = sqlite3_bind_text(s, 3, _location.c_str(), _location.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
-		cout << "Error is binding SQL statment " << sql;
-		return -1;
-	}
+		cout << "Error in binding SQL statement " << sql;
+		return eventid;
+	}*/
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		eventid = sqlite3_column_int(s, 0);
+		return eventid;
 		//TODO make some error checkers here!
+		if (eventid == -1) {
+			cout << "Bad eventid.";
+		}	
 	}
+	sqlite3_reset(s);
 	return eventid;
 }
 
-int Creation::createEventPosition(int eventid, int posid, string _description, int _openings, int userid) {
-	int eposid;
+void Creation::createVacancy(int eventid, int posid, string name, int openings){
 	sqlite3_stmt *s;
-	const char *sql = "insert into eventpositions (eventid, posid) values (?, ?)";
+	const char *sql = "insert into vacancies (eventid, posid, name, openings) values (?, ?, ?, ?)";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
-	if (retval != SQLITE_OK) {
-		cout << "Error in SQL statement " << sql;
-		return -1;
-	}
-	retval = sqlite3_bind_int(s, 0, posid);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return -1;
-	}
 	retval = sqlite3_bind_int(s, 1, eventid);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return -1;
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
 	}
-	if (sqlite3_step(s) != SQLITE_DONE) {
-		cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
-		return -1;
+	retval = sqlite3_bind_int(s, 2, posid);
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
 	}
-	//Finished putting values into eventpositions table, now need to put values into vacancies table.
+	retval = sqlite3_bind_text(s, 3, name.c_str(), name.size(), SQLITE_STATIC);
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
+	}
+	retval = sqlite3_bind_int(s, 4, openings);
+	if(retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
+	}
+	if(sqlite3_step(s) != SQLITE_DONE){
+		cout << "Error in executing SQL statemtn" << sql;
+	}
+	sqlite3_reset(s);
+}
 
-	sql = "insert into vacancies (eventid, posid, name, desc, openings) values (?, ?, ?, ?, ?)";
+int Creation::createEventPosition(int eventid, int posid, int userid) {
+	int eposid = -1;
+	sqlite3_stmt *s;
+	const char *sql = "insert into eventpositions (eventid, posid, userid) values (?, ?, ?)";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return -1;
-	}
-	retval = sqlite3_bind_int(s, 0, eventid);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eposid;
 	}
 	retval = sqlite3_bind_int(s, 1, posid);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
-	}	
-//	retval = sqlite3_bind_text(s, 2, _name.c_str(), _name.size(), SQLITE_STATIC);
-//	if (retval != SQLITE_OK) {
-//		cout << "Error in binding SQL statement " << sql;
-//		return -1;
-//	}
-	retval = sqlite3_bind_text(s, 2, _description.c_str(), _description.size(), SQLITE_STATIC);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eposid;
 	}
-	retval = sqlite3_bind_int(s, 3, _openings);
+	retval = sqlite3_bind_int(s, 2, eventid);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return -1;
+		return eposid;
+	}
+	retval = sqlite3_bind_int(s,3,userid);
+	if( retval != SQLITE_OK) {
+		cout << "error in binding sql statement 3" << sql;
+		return eposid;
 	}
 	if (sqlite3_step(s) != SQLITE_DONE) {
 		cout << "Error executing SQL statement " << sql << ": " << sqlite3_errcode(db);
-		return -1;
+		return eposid;
 	}
 	sqlite3_reset(s);
-
-	//Finished inserting values into vacancies table.
-	//Now pulling eposid from eventpositions table to return.
-
-	sql = "SELECT eposid FROM eventpositions WHERE eventid = ? AND userid = ? AND posid = ?";
-	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
-	if (retval != SQLITE_OK) {
-		cout << "Error in SQL statement " << sql;
-		return -1;
-	}
-	retval = sqlite3_bind_int(s, 0, eventid);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return -1;
-	}
-	retval = sqlite3_bind_int(s, 1, userid);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return -1;
-	}
-	retval = sqlite3_bind_int(s, 2, posid);
-	if (retval != SQLITE_OK) {
-		cout << "Error in binding SQL statement " << sql;
-		return -1;
-	}
-	while (sqlite3_step(s) == SQLITE_ROW) {
-		eposid = sqlite3_column_int(s, 0);
-		//TODO make some error checkers here!
-	}
 	return eposid;
 }
 
@@ -337,3 +311,19 @@ vector<int> Creation::getUpcoming(){
 	return upcoming;
 }
 
+vector<int> Creation::getAllEvents() {
+	sqlite3_stmt *s;
+	vector<int> allEvents;
+
+	const char *sql = "SELECT eventid FROM events";
+	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
+	if (retval != SQLITE_OK) {
+		cout << "Error in SQL statement " << sql;
+		return allEvents;
+	}
+	while (sqlite3_step(s) == SQLITE_ROW) {
+		allEvents.push_back(sqlite3_column_int(s, 0));
+	}
+	sqlite3_reset(s);
+	return allEvents;
+}

@@ -43,14 +43,13 @@ int main(int argc, char **argv) {
 		cout<<"<ul>"<<endl;
 		cout<<"<li><a href=\"event_list.cgi\">See All Events</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">Upcoming Events</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">Closed Events</a></li>"<<endl;
 		cout<<"<li><a href=\"eventcreation.cgi\">Create Event</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">My Events</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"</li>"<<endl;
 		cout<<"<li><a href=\"#\">Rankings</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">News</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">Donate</a></li>"<<endl;
+		cout<<"<li><a href=\"userprofile.cgi\">Profile</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">Contact</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"</li>"<<endl;
@@ -58,7 +57,7 @@ int main(int argc, char **argv) {
 		cout<<"</ul>"<<endl;
 		cout<<"</nav>"<<endl;
 		cout<<"</header>"<<endl;
-		cout<<"<section id=\"banner\">"<<endl;
+		cout<<"<section id=\"main\">"<<endl;
 		//<=======================LOGIN WORK HERE=========================================>	
 		cout << "<div class = \"form\">" << endl;
 		cout << "<ul class = \"tab-group\">" << endl;
@@ -111,9 +110,8 @@ int main(int argc, char **argv) {
 		cout << "</div>"<< endl;	
 		cout << "</div>" << endl;
 		cout << "</div>" << endl;
-        
+		cout << "</section>"<<endl; 
 		//<=========================================FOOTER DON'T TOUCH=============================================================>
-		cout<<"</section>"<<endl;
 		cout<<"<footer id=\"footer\">"<<endl;
 		cout<<"<ul class=\"icons\">"<<endl;
 		cout<<"<li><a href=\"#\" class=\"icon circle fa-twitter\"><span class=\"label\">Twitter</span></a></li>"<<endl;
