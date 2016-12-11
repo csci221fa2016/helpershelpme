@@ -391,9 +391,10 @@ string Controller::showEventPosition(int userid,int eventid){
 	return v;
 }
 
-bool Controller::removeVolunteer(int eId, int uId){
+bool Controller::removeVolunteer(int eId, int uId, int posId){
 	User* u = new User(uId);
 	Event* e = new Event(eId);
+	//send db posid somehow
 	bool leave = u->leaveEvent(e);
 	return leave;
 }
