@@ -287,7 +287,7 @@ vector<string> Controller::signIn(vector<string> v) {
 		ret.push_back("true");
 		string Result;
 		ostringstream Convert;
-		Convert << dbpass;
+		Convert << dbPass;
 		Result = Convert.str();
 		ret.push_back(Result);
 		return ret;
