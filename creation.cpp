@@ -30,7 +30,7 @@ string Creation::logIn(string _phoneNumber) {
 		cout << "Error in SQL statement " << sql;
 		return NULL;
 	}
-	retval = sqlite3_bind_text(s, 1, phone.c_str(), phone.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 1, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
 		return NULL;
@@ -52,7 +52,7 @@ int Creation::searchUser(string _phoneNumber) {
 		cout << "Error in SQL statement " << sql;
 		return userid;
 	}
-	retval = sqlite3_bind_text(s, 1, phone.c_str(), phone.size(), SQLITE_STATIC);
+	retval = sqlite3_bind_text(s, 1, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
 		return userid;
