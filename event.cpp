@@ -148,9 +148,9 @@ string Event::getLocation() {
 //posid in the event. Each string is delimited by semicolons in the format
 //name;desc;posid;openings
 //The last two will have to be converted back into ints later
-vector<string> Event::getVacancies(){
+vector<string>* Event::getVacancies(){
 	sqlite3_stmt *s;
-	vector<string> vacs;
+	vector<string>* vacs;
 	const char *sql = "select name, desc, posid, openings from vacancies where eventid = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	retval = sqlite3_bind_int(s, 1, eventid);
