@@ -113,7 +113,7 @@ sign_up_info.o: sign_up_info.cpp
 	$(CXX) -std=c++11 -c sign_up_info.cpp
 
 userprofile.cgi: userprofile.o controller.o user.o event.o eventposition.o sqlite3.o creation.o
-	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o userprofile.cgi userprofile.o user.o event.o eventposition.o creation.o sqlite3.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o userprofile.cgi userprofile.o user.o event.o eventposition.o creation.o sqlite3.o controller.o
 
 userprofile.o: userprofile.cpp styles2.h controller.h
 	$(CXX) -std=c++11 -c userprofile.cpp
