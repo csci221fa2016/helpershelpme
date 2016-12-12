@@ -23,7 +23,7 @@ class Controller {
 		void updateEvent(vector<vector<string> > v, int id, int userId);
 		vector<string> signIn(vector<string> v);
 		void addVolunteer(int eventId, int userId, int posId);
-		bool removeVolunteer(int eventId, int userId);	
+		bool removeVolunteer(int eventId, int userId, int posId);	
 		double showStats(int id);
 		vector<int> showAllUpcoming();
 		vector<string> showEvent(int id);

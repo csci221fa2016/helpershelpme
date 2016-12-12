@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
 		}
 		}
 		if(id[3]=="true"){
-		cout<<HTTPHTMLHeader()<<endl;
+            cout<<HTTPHTMLHeader()<<endl;
 		}
 		else{
 			cout<<HTTPRedirectHeader("login.cgi")<<endl;
@@ -61,16 +61,16 @@ int main(int argc, char **argv) {
 		cout<<"<li class=\"submenu\">"<<endl;
 		cout<<"<a href=\"#\">Events</a>"<<endl;
 		cout<<"<ul>"<<endl;
-		cout<<"<li><a href=\"event_list.cgi\">See All Events</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">Upcoming Events</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">See All Events</a></li>"<<endl;
+		cout<<"<li><a href=\"event_list.cgi\">Upcoming Events</a></li>"<<endl;
 		cout<<"<li><a href=\"eventcreation.cgi\">Create Event</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">My Events</a></li>"<<endl;
+		cout<<"<li><a href=\"my_events.cgi\">My Events</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"</li>"<<endl;
-		cout<<"<li><a href=\"#\">Rankings</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">News</a></li>"<<endl;
 		cout<<"<li><a href=\"userprofile.cgi\">Profile</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">News</a></li>"<<endl;
 		cout<<"<li><a href=\"#\">Contact</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">Donate</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
 		cout<<"</li>"<<endl;
 		cout<<"<li><a href=\"log_out.cgi\" class=\"button special\">Log Out</a></li>"<<endl;
@@ -87,7 +87,14 @@ int main(int argc, char **argv) {
 			cout<<"</header>"<<endl;	
 			cout<<"<section class=\"wrapper style3 container special\">"<<endl;
 			cout<<"<div class=\"row\">"<<endl;
-			vector<string> info;
+
+   			Controller control;
+			vector<int> eventNum = control.showAllUpcoming();
+			for(unsigned i = 0; i < eventNum.size(); i++){
+			   print_event(control.showEvent(eventNum.at(i)), eventNum.at(i));
+			}
+
+/*			vector<string> info;
 			info.push_back("Computer work");
 			info.push_back("12/12/32 12:00 pm");
 			info.push_back("Stetson University");
@@ -97,7 +104,7 @@ int main(int argc, char **argv) {
 			print_event(info,n);
 			print_event(info,n);
 			print_event(info,n);
-			print_event(info,n);
+			print_event(info,n);*/
 			cout<<"</div>"<<endl;
 			cout<<"</section>"<<endl;
 			cout<<"</article>"<<endl;
