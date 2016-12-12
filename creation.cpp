@@ -29,7 +29,7 @@ int Creation::logIn(string _phoneNumber, string _pass) {
 	sqlite3_stmt *s;
 	string phone = _phoneNumber;
 	string password;
-	const char *sql = "select password from users where phone = ?";
+	const char *sql = "select password, id from users where phone = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
@@ -38,14 +38,18 @@ int Creation::logIn(string _phoneNumber, string _pass) {
 	retval = sqlite3_bind_text(s, 1, _phoneNumber.c_str(), _phoneNumber.size(), SQLITE_STATIC);
 	if (retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
-		return userid;
+		return -1;
 	}
 	while (sqlite3_step(s) == SQLITE_ROW) {
-		password = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 4)));
-		userid = sqlite3_column_int(s, 0);
-	}	
+		password = string(reinterpret_cast<const char*>(sqlite3_column_text(s,0)));
+		userid = sqlite3_column_int(s, 1);
+	}
+	if(password!=_pass) { return -1; }
+	else if (password==_pass) {
+		return userid;
+	}
 	
-	return userid;
+	return -1;
 }
 
 int Creation::searchUser(string _phoneNumber) {
