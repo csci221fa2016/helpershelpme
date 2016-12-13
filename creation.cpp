@@ -302,11 +302,16 @@ vector<int> Creation::getUpcoming(){
 	time_t timer = time(NULL);
 	vector<int> upcoming;
 	
-	const char *sql = "SELECT eventid FROM events WHERE start > timer";
+	const char *sql = "SELECT eventid FROM events WHERE start > ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	if(retval != SQLITE_OK) {
 		cout << "Error in SQL statement " << sql;
 		return upcoming;
+	}
+	retval = sqlite3_bind_int(s, 1, timer);
+	if (retval != SQLITE_OK) {
+		cout << "Error in binding SQL statement " << sql;
+		return eposid;
 	}
 	while(sqlite3_step(s) == SQLITE_ROW) {
 		upcoming.push_back(sqlite3_column_int(s,0));
