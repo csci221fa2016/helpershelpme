@@ -28,7 +28,6 @@ Creation::Creation() {
 }
 
 int Creation::logIn(string _phone, string _pass) {
-    cout<<"inside login"<<endl;	
     int userid = -1;
     sqlite3_stmt *s;
     //string phone = _phoneNumber;
@@ -40,20 +39,17 @@ int Creation::logIn(string _phone, string _pass) {
         cout << "Error in SQL statement " << sql;
         return userid;
     }
-    cout<<"prepared sql stmt"<<endl;
     retval = sqlite3_bind_text(s, 1, _phone.c_str(), _phone.size(), SQLITE_STATIC);
     if (retval != SQLITE_OK) {
         cout << "Error in SQL statement " << sql;
         return userid;
     }
-    cout<<"bound sql stmt"<<endl;
     while (sqlite3_step(s) == SQLITE_ROW) {
-        cout<<"inside while for sql stmt"<<endl;
         password = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
         userid = sqlite3_column_int(s, 1);
     }
     //Hash the password inputed with the salt.
-    char *hash;
+   /* char *hash;
     char *cstr = new char[password.size() + 1];
     strcpy(cstr, password.c_str());
     char tmp = '$';
@@ -61,12 +57,10 @@ int Creation::logIn(string _phone, string _pass) {
     salt = strtok(cstr, delim);
     hash = strtok(NULL, delim);
     string saltedPass = salt + _pass;  
+*/
+    string stringmd = SHA256string(_pass); 	
 
-    string stringmd = SHA256string(saltedPass); 	
-    
-    string temp(hash);   
- 
-    if (temp.compare(stringmd) != 0) {
+    if (password.compare(stringmd) != 0) {
         cout<<"hashs didn't match"<<endl;
         return -1;
     }
@@ -78,7 +72,7 @@ int Creation::logIn(string _phone, string _pass) {
 string Creation::to_hex(unsigned char s)
 {
     stringstream ss;
-    ss << s;
+    ss << hex  << (int) s;
     return ss.str(); 
 }
 
@@ -163,21 +157,7 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 
     //Hashing and salting the password.
 
-    SHA256_CTX context;
-    unsigned char salttmp[64];
-    RAND_bytes(salttmp, 64);
-    unsigned char md[SHA256_DIGEST_LENGTH]; //This is the password hash!
-
-    SHA256_Init(&context);
-    string salt = string(reinterpret_cast<char*>(salttmp));
-    string saltedPass = salt + _password;
-    //Hash of password + salt.
-
-    SHA256_Update(&context, saltedPass.c_str(), saltedPass.size());
-    SHA256_Final(md, &context);
-    string tmpmd = string(reinterpret_cast<char*>(md));
-    string hash = salt + "$" + tmpmd;
-
+    string hash = SHA256string(_password);
     int userid = -1;
     sqlite3_stmt *s;
     const char *sql = "insert into users (name, phone, password) values (?, ?, ?)";
@@ -196,7 +176,7 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
         cout << "Error in binding SQL statement 2 " << sql;
         return userid;
     }
-    retval = sqlite3_bind_text(s, 3, _password.c_str(), _password.size(), SQLITE_STATIC);
+    retval = sqlite3_bind_text(s, 3, hash.c_str(), hash.size(), SQLITE_STATIC);
     if (retval != SQLITE_OK) {
         cout << "Error in binding SQL statement 3 " << sql;
         return userid;

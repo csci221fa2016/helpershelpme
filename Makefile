@@ -5,7 +5,7 @@ CXXFLAGS = -ansi -Wall -g -ggdb3 -isystem $(GTEST_DIR)/include -Wextra -lpthread
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h $(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
-all: main user event eventposition creation controller home.cgi login.cgi log_out.cgi my_events.cgi login_info.cgi event_list.cgi eventcreation_info.cgi sign_up_info.cgi userprofile.cgi eventpage.cgi eventcreation.cgi
+all:  user event eventposition creation controller home.cgi login.cgi log_out.cgi my_events.cgi login_info.cgi event_list.cgi eventcreation_info.cgi sign_up_info.cgi userprofile.cgi eventpage.cgi eventcreation.cgi
 
 .PHONY: test
 test: testcontroller user_test creationtest
@@ -30,7 +30,6 @@ creationtest.o: creationtest.cpp creation.h $(GTEST_HEADERS)
 
 creationtest: creationtest.o gtest_main.a user.o event.o eventposition.o creation.o
 	$(CXX) $(CXXFLAGS) -g -lpthread -lsqlite3 -lcrypto -o creationtest creationtest.o gtest_main.a user.o event.o eventposition.o creation.o
-
 
 testcontroller.o: testcontroller.cpp controller.h event.h user.h eventposition.h creation.h $(GTEST_HEADERS)
 	$(CXX) $(CXXFLAGS) -c testcontroller.cpp
