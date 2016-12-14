@@ -12,6 +12,7 @@
 #include <iostream>
 #include <string>
 #include <ctime>
+#include <iostream>
 #include "creation.h"
 #include "string.h"
 #include <vector>
@@ -268,6 +269,7 @@ int Creation::createEvent(string _name, string _description, time_t _start, time
 	}*/
 	while (sqlite3_step(s) == SQLITE_ROW) {
 		eventid = sqlite3_column_int(s, 0);
+		cout<<"eventid is: "<<eventid<<endl;
 		return eventid;
 		//TODO make some error checkers here!
 		if (eventid == -1) {
