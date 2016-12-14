@@ -25,7 +25,7 @@ user_test.o: user_test.cpp user.h $(GTEST_HEADERS)
 user_test: user_test.o gtest_main.a user.o event.o eventposition.o
 	$(CXX) $(CXXFLAGS) -lpthread -lsqlite3 -o user_test user_test.o gtest_main.a user.o event.o eventposition.o
 
-testcontroller.o: testcontroller.cpp controller.h event.h user.h eventposition.h creation.h $(GTEST_HEADERS)
+testcontroller.o: testcontroller.cpp controller.h event.h user.h eventposition.h creation.h
 	$(CXX) $(CXXFLAGS) -c testcontroller.cpp
 
 testcontroller: testcontroller.o controller.h controller.o creation.o user.o event.o eventposition.o gtest_main.a
@@ -37,7 +37,7 @@ main.o: main.cpp controller.h user.h event.h eventposition.h
 user: user.o sqlite3.o event.o eventposition.o main.o
 	g++ -ldl -pthread -lsqlite3 -o user user.o sqlite3.o event.o eventposition.o  main.o
 
-user.o: user.h user.cpp sqlite3.h event.h eventposition.h creation.h $(GTEST_HEADERS)
+user.o: user.h user.cpp sqlite3.h event.h eventposition.h creation.h
 	$(CXX) -lsqlite3 -c user.cpp
 
 event: event.o sqlite3.o user.o eventposition.o main.o
@@ -61,7 +61,7 @@ creation.o: creation.h user.h event.h eventposition.h sqlite3.h creation.cpp
 controller: controller.o event.o user.o eventposition.o main.o creation.o
 	g++ -ldl -lpthread -lsqlite3 -g -Wall -lcrypto -o controller controller.o creation.o event.o user.o eventposition.o main.o
 
-controller.o: controller.h controller.cpp event.h user.h eventposition.h creation.h $(GTEST_HEADERS)
+controller.o: controller.h controller.cpp event.h user.h eventposition.h creation.h
 	$(CXX) $(CXXFLAGS) -c controller.cpp
 
 home.cgi: home.o controller.o user.o event.o eventposition.o sqlite3.o creation.o
