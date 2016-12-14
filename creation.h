@@ -22,7 +22,9 @@ class Creation {
 	int createEventPosition(int eventid, int posid, int _userid);
 	int createEvent(string _name, string _description, time_t _startTime, time_t _endTime, string _location);
 	vector<int> getUpcoming();
-	vector<int> getAllEvents();
+    string to_hex(unsigned char s);
+    string SHA256string(string line);
+    vector<int> getAllEvents();
 	void createVacancy(int eventid, int posid, string name, int openings);
 };
 

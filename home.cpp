@@ -1,4 +1,4 @@
-#include <iostream>
+tinclude <iostream>
 #include <vector>
 #include <string>
 #include "controller.h"
@@ -140,7 +140,7 @@ int main(int argc, char** argv){
         cout<<"<header>"<<endl;
         cout<<"<h3>Create Events</h3>"<<endl;
         cout<<"</header>"<<endl;
-        cout<<"<p>Create you own event, set the number of volunteers you\
+        cout<<"<p>Create your own event, set the number of volunteers you\
             will need, time, and location.</p>"<<endl;
         cout<<"</section>"<<endl;
         cout<<"</div>"<<endl;

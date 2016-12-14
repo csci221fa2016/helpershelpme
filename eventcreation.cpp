@@ -116,8 +116,8 @@ int main(int argc, char **argv) {
 		cout<<"<li class=\"submenu\">"<<endl;
 		cout<<"<a href=\"#\">Events</a>"<<endl;
 		cout<<"<ul>"<<endl;
-		cout<<"<li><a href=\"event_list.cgi\">See All Events</a></li>"<<endl;
-		cout<<"<li><a href=\"#\">Upcoming Events</a></li>"<<endl;
+		cout<<"<li><a href=\"#\">See All Events</a></li>"<<endl;
+		cout<<"<li><a href=\"event_list.cgi\">Upcoming Events</a></li>"<<endl;
 		cout<<"<li><a href=\"eventcreation.cgi\">Create Event</a></li>"<<endl;
 		cout<<"<li><a href=\"my_events.cgi\">My Events</a></li>"<<endl;
 		cout<<"</ul>"<<endl;
