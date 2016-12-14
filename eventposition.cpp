@@ -12,7 +12,7 @@ EventPosition::EventPosition(int _eventid, int _userid, int _posid) {
 	eventid = _eventid;
 	userId = _userid;
 	char *errmsg;
-	retval = sqlite3_open("/tmp/csci221_dmcmahon1.db", &db);
+	retval = sqlite3_open("/tmp/csci221_dmcmahon.db", &db);
     if(retval != 0)
     {
         cout << "Cannot open test.db: " << sqlite3_errcode(db) << endl;
