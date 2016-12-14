@@ -100,9 +100,9 @@ TEST(Controller, updateProfile)
 
 TEST(Controller, updateEvent)
 {
-/*	Controller* cont = new Controller();
+	Controller* cont = new Controller();
 	Creation* c = new Creation();
-	int eventId = c->createEvent("EName","Desc.",2222222222222222222222222222222222222, 2222222222222222222222222222223, "Stetsoon");
+	int eventId = c->createEvent("EName","Desc.",222222222222222, 2222222222222223, "Stetsoon");
 //	c->createEventPosition(eventId, 1, "Name", 2, 13);
 //	EventPosition* ep = new EventPosition(eventId, 12, 1);
 	
@@ -110,15 +110,9 @@ TEST(Controller, updateEvent)
 	event.push_back(vector<string>());
 	event.push_back(vector<string>());
 
-	Event* e = new Event(eId);
+	Event* e = new Event(eventId);
 	
-	c->createVacancy(eId, 1, "Vacancy", 5);
-	
-	event[0].push_back(e->getName());
-	event[0].push_back(e->getDescription());
-	event[0].push_back(e->getStartDate());
-	event[0].push_back(e->getEndDate());
-	event[0].push_back(e->getLocation());
+	c->createVacancy(eventId, 1, "Vacancy", 5);
 	
 	// make event position and add it to event 1.
 	
@@ -136,41 +130,43 @@ TEST(Controller, updateEvent)
 
 	cont->updateEvent(v, eventId, 12);
 
+
 	ASSERT_EQ(true, e->getName() == "Newname"); 
-*/
+
 }
 
 
-// TEST(Controller, signInPass)
-// {
-// 	Controller* cont = new Controller();
-// 	//	Creation* c = new Creation();
+TEST(Controller, signInPass)
+{
+ 	Controller* cont = new Controller();
+ 	//	Creation* c = new Creation();
 
-// 	vector<string> v;
-// 	v.push_back("8887776666");
-// 	v.push_back("JoesPass2");
+ 	vector<string> v;
+ 	v.push_back("8887776666");
+ 	v.push_back("JoesPass2");
 
-// 	vector<string> result;
-// 	result = cont->signIn(v);
-// 	ASSERT_EQ(true, result.at(0) == "true");
-// }
+ 	vector<string> result;
+ 	result = cont->signIn(v);
+ 	ASSERT_EQ(true, result.at(0) == "true");
+	ASSERT_EQ(true, result.at(1) != -1); 
+}
+
 
 
 // Hellooo
-// TEST(Controller, signInFail)
-// {
-// 	Controller* cont = new Controller();
-// 	//	Creation* c = new Creation();
+TEST(Controller, signInFail)
+{
+ 	Controller* cont = new Controller();
+ 	//	Creation* c = new Creation();
 
-// 	vector<string> v;
-// 	v.push_back("8887776666");
-// 	v.push_back("JoesPa2");
+ 	vector<string> v;
+ 	v.push_back("8887776666");
+ 	v.push_back("JoesPa2");
 
-// 	vector<string> result;
-// 	result = cont->signIn(v);
-// 	ASSERT_EQ(true, result.at(0) == "false");
-
-// }
+ 	vector<string> result;
+ 	result = cont->signIn(v);
+ 	ASSERT_EQ(true, result.at(0) == "false");
+}
 
 // Need to finish this
 TEST(Controller, addVolunteer)
@@ -212,14 +208,14 @@ TEST(Controller, addVolunteer)
     
 }
 
-// TEST(Controller, showStats)
-// {
-// 	Controller* cont = new Controller();
-// 	Creation* c = new Creation();
+TEST(Controller, showStats)
+{
+ 	Controller* cont = new Controller();
+ 	Creation* c = new Creation();
 	
-// 	int uId = c->createUser("Tierney I.", "8049997777", "Password");
-// 	ASSERT_EQ(true, cont->showStats(uId) == 0);
-// }
+ 	int uId = c->createUser("Tierney I.", "8049997777", "Password");
+ 	ASSERT_EQ(true, cont->showStats(uId) == 0);
+}
 
 TEST(Controller, showStats2)
 {
@@ -287,7 +283,12 @@ TEST(Controller, showEvent)
 
 TEST(Controller, showAllEvents)
 {
+	Controller* cont = new Controller();
+	vector<int> v = cont->showAllEvents();
 	
+	for (int i = 0; i < v.size(); i++) {
+		ASSERT_EQ(true, v[i] != -1) << "Broke at: " << i;
+	}
 }
 
 TEST(Controller, showEventInfo)
@@ -296,7 +297,7 @@ TEST(Controller, showEventInfo)
 	Creation* c = new Creation();
 	//vector<vector<string> > a;
 	//vector<string> event;
-	int eventId = c->createEvent("EName","Desc.",2222222222222222222222222222222222222, 2222222222222222222222222222223, "1");
+	int eventId = c->createEvent("EName","Desc.",2222222222222222, 222222222222222223, "1");
 	//c->createEventPosition(eventId, 1, 13);
 	EventPosition* ep = new EventPosition(eventId, 12, 1);
 	//vector<string> eposinfo;
