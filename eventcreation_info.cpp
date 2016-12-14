@@ -89,7 +89,7 @@ int main () {
 	int userID = atoi(id[1].c_str());	
 	int controller_response =0;
 	//controller response doesn't work
-	//controller_response = myController.sendEvent(my_event,userID);		
+	controller_response = myController.sendEvent(my_event,userID);		
 
 	//WEBPAGE
 	cout << HTTPHTMLHeader();
