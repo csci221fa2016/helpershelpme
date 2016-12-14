@@ -31,7 +31,6 @@ creationtest.o: creationtest.cpp creation.h $(GTEST_HEADERS)
 creationtest: creationtest.o gtest_main.a user.o event.o eventposition.o creation.o
 	$(CXX) $(CXXFLAGS) -g -lpthread -lsqlite3 -lcrypto -o creationtest creationtest.o gtest_main.a user.o event.o eventposition.o creation.o
 
-
 testcontroller.o: testcontroller.cpp controller.h event.h user.h eventposition.h creation.h $(GTEST_HEADERS)
 	$(CXX) $(CXXFLAGS) -c testcontroller.cpp
 
