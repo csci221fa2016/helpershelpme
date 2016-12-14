@@ -10,7 +10,7 @@ using namespace std;
 
 User::User(int _userid) : userid(_userid){
 	char *errmsg;
-	retval=sqlite3_open("/tmp/csci221_dmcmahon.db", &db);
+	retval=sqlite3_open("/tmp/csci221_dmcmahon1.db", &db);
 	if(retval != 0) {
 		cout<< "cannnot open test.db: " << sqlite3_errcode(db) << endl;
 		return;
@@ -88,7 +88,7 @@ vector<EventPosition*> User::getEventsWorked() {
 }	
 bool User::setPhoneNumber(string _phoneNumber) {
 	sqlite3_stmt *s;
-	const char *sql = "update users set phone = ? where id = ?";
+	const char *sql = "update users set phone = \"?\" where id = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	retval = sqlite3_bind_int(s, 2, userid);
 	retval = sqlite3_bind_text(s,1,_phoneNumber.c_str(),_phoneNumber.size(), SQLITE_STATIC);
@@ -102,7 +102,7 @@ bool User::setPhoneNumber(string _phoneNumber) {
 //make it a const size_t
 void User::setPassword(string _pass) {
 	sqlite3_stmt *s;
-	const char *sql = "update users set password = ? where id = ?";
+	const char *sql = "update users set password = \"?\" where id = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	retval = sqlite3_bind_int(s, 2, userid);
 	retval = sqlite3_bind_text(s,1,_pass.c_str(), _pass.size(), SQLITE_STATIC);
@@ -112,7 +112,7 @@ void User::setPassword(string _pass) {
 }
 bool User::setName(string _name) {
 	sqlite3_stmt *s;
-	const char *sql = "update users set name = ? where id = ?";
+	const char *sql = "update users set name = \"?\" where id = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	retval = sqlite3_bind_int(s, 2, userid);
 	retval = sqlite3_bind_text(s,1,_name.c_str(), _name.size(), SQLITE_STATIC);

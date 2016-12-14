@@ -19,12 +19,12 @@
 using namespace std;
 
 Creation::Creation() {
-    retval = sqlite3_open("/tmp/csci221_dmcmahon.db", &db);
-    if(retval != 0)
-    {
-        cout << "Cannot open test.db: " << sqlite3_errcode(db) << endl;
-        return;
-    }
+	retval = sqlite3_open("/tmp/csci221_dmcmahon1.db", &db);
+	if(retval != 0)
+	{
+		cout << "Cannot open test.db: " << sqlite3_errcode(db) << endl;
+		return;
+	}
 }
 
 int Creation::logIn(string _phone, string _pass) {
@@ -62,7 +62,7 @@ int Creation::logIn(string _phone, string _pass) {
     hash = strtok(NULL, delim);
     string saltedPass = salt + _pass;  
 
-    string stringmd = SHA256string(_pass); 	
+    string stringmd = SHA256string(saltedPass); 	
     
     string temp(hash);   
  
