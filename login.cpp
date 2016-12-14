@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
 		cout << "<form action = \"login_info.cgi\" method = \"post\">"<< endl;	
 		cout << "<div class = \"field-wrap\">"<< endl;
 		cout << "<label>Phone Number<span class = \"req\">*</span></label>" << endl;
-		cout << "<input type = \"number\" name=\"user_phone_number\" value=\"\" required autocomplete = \"off\"/>" << endl;
+		cout << "<input type = \"number\" min=\"1000000001\" max\"9999999999\" name=\"user_phone_number\" value=\"\" required autocomplete = \"off\"/>" << endl;
 		cout << "</div>" << endl;
 		cout << "<div class = \"field-wrap\">" << endl;
 		cout << "<label> Password<span class = \"req\">*</span></label>" << endl;
@@ -97,7 +97,7 @@ int main(int argc, char **argv) {
 		cout << "</div>" << endl;
 		cout << "<div class = \"field-wrap\">" << endl;
 		cout << "<label>Phone Number<span class = \"req\">*</span> </label>" << endl;
-		cout << "<input type = \"number\"name=\"user_phone_number_s\"required autocomplete=\"off\"/>" << endl;
+		cout << "<input type = \"number\" min=\"1000000001\" max\"9999999999\" name=\"user_phone_number_s\"required autocomplete=\"off\"/>" << endl;
 		cout << "</div>" << endl;
 		cout << "<div class = \"field-wrap\">" << endl;
 		cout << "<label> Set A Password<span class = \"req\">*</span> </label>" << endl;
