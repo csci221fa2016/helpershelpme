@@ -73,7 +73,9 @@ TEST(Controller, showUserInfo)
 	Creation* c = new Creation();
 	int id = c->createUser("Tierney Irwin", "8887776666", "JoePass2");
 	vector<string> v = cont->showUserInfo(id);
-	ASSERT_EQ(true, v.at(0) == "Tierney Irwin" && v.at(1) == "8887776666");
+	ASSERT_EQ(true, v.at(0) == "-1");
+	ASSERT_EQ(true, v.at(0) == "8887776666");
+	ASSERT_EQ(true, v.at(1) == "Tierney Irwin");
 }
 
 TEST(Controller, updateProfile) 
@@ -99,18 +101,18 @@ TEST(Controller, updateEvent)
 {
 	Controller* cont = new Controller();
 	Creation* c = new Creation();
-	int eventId = c->createEvent("EName","Desc.",222222222222222, 2222222222222223, "Stetsoon");
+	//int eventId = c->createEvent("EName","Desc.",222222222222222, 2222222222222223, "Stetsoon");
 //	c->createEventPosition(eventId, 1, "Name", 2, 13);
 //	EventPosition* ep = new EventPosition(eventId, 12, 1);
 	
-	vector<vector<string> > event;
-	event.push_back(vector<string>());
-	event.push_back(vector<string>());
+	//vector<vector<string> > event;
+	//event.push_back(vector<string>());
+	//event.push_back(vector<string>());
 
-	Event* e = new Event(eventId);
+	//Event* e = new Event(eventId);
 	
-	c->createVacancy(eventId, 1, "Vacancy", 5);
-	
+	//c->createVacancy(eventId, 1, "Vacancy", 5);
+	//c->creatEventPosition(eventId,1,12);
 	// make event position and add it to event 1.
 	
 	vector<vector<string> > v;
@@ -124,11 +126,22 @@ TEST(Controller, updateEvent)
 	v[1].push_back("meep");
 	v[1].push_back("1");
 	v[1].push_back("3");
+	cont->sendEvent(v, 12);
+	vector<vector<string> > vect;
+	vect.push_back(vector<string>());
+	vect.push_back(vector<string>());
+	v[0].push_back("Newnam");
+	v[0].push_back("NewDe");
+	v[0].push_back("22222222222222");
+	v[0].push_back("222222222222222");
+	v[0].push_back("Stetson");
+	v[1].push_back("mee");
+	v[1].push_back("1");
+	v[1].push_back("3");
+	cont->updateEvent(vect, eventId, 12);
 
-	cont->updateEvent(v, eventId, 12);
 
-
-	ASSERT_EQ(true, e->getName() == "Newname"); 
+	ASSERT_EQ(true, e->getName() == "Newnam"); 
 
 }
 
