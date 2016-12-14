@@ -26,10 +26,10 @@ user_test: user_test.o gtest_main.a user.o event.o eventposition.o
 	$(CXX) $(CXXFLAGS) -lpthread -lsqlite3 -o user_test user_test.o gtest_main.a user.o event.o eventposition.o
 
 creationtest.o: creationtest.cpp creation.h $(GTEST_HEADERS)
-	$(CXX) $(CXXFLAGS) -lsqlite3 -c creationtest.cpp
+	$(CXX) $(CXXFLAGS)  -g -lsqlite3 -c creationtest.cpp
 
 creationtest: creationtest.o gtest_main.a user.o event.o eventposition.o creation.o
-	$(CXX) $(CXXFLAGS) -lpthread -lsqlite3 -lcrypto -o creationtest creationtest.o gtest_main.a user.o event.o eventposition.o creation.o
+	$(CXX) $(CXXFLAGS) -g -lpthread -lsqlite3 -lcrypto -o creationtest creationtest.o gtest_main.a user.o event.o eventposition.o creation.o
 
 
 testcontroller.o: testcontroller.cpp controller.h event.h user.h eventposition.h creation.h $(GTEST_HEADERS)
@@ -60,10 +60,10 @@ eventposition.o: user.h event.h eventposition.h sqlite3.h eventposition.cpp
 	$(CXX) -std=c++11 -c eventposition.cpp
 
 creation: creation.o eventposition.o sqlite3.o user.o event.o main.o
-	g++ -ldl -pthread -lsqlite3 -lcrypto -o creation creation.o sqlite3.o main.o user.o event.o eventposition.o
+	g++ -g -ldl -pthread -lsqlite3 -lcrypto -o creation creation.o sqlite3.o main.o user.o event.o eventposition.o
 
 creation.o: creation.h user.h event.h eventposition.h sqlite3.h creation.cpp
-	$(CXX) -std=c++11 -c creation.cpp
+	$(CXX) -I/opt/ssl/include/ -L/opt/ssl/lib/ -lcrypto -std=c++11 -c creation.cpp
 
 controller: controller.o event.o user.o eventposition.o main.o creation.o
 	g++ -ldl -lpthread -lsqlite3 -g -Wall -lcrypto -o controller controller.o creation.o event.o user.o eventposition.o main.o
@@ -143,4 +143,4 @@ main: main.cpp user.o event.o eventposition.o
 	$(CXX) $(CXXFLAGS) -lsqlite3 -o main main.cpp user.o event.o eventposition.o
 .PHONY: clean
 clean:
-	rm -f *.o *.cgi controller user event eventposition creation main user_test testcontroller
+	rm -f *.o *.cgi  creationtest controller user event eventposition creation main user_test testcontroller
