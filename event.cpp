@@ -74,7 +74,7 @@ string Event::getName() {
 		if(sqlite3_column_text(s, 0) != NULL) {
 			name = string(reinterpret_cast<const char*>(sqlite3_column_text(s,0)));
 		} else {
-			name = "NULL";
+			name = "";
 		}
 	} else {
 		cout << "Bad event id? " << eventid;
@@ -98,7 +98,7 @@ time_t Event::getStartDate() {
 User* Event::getOrganizer() {
 	sqlite3_stmt *s;
 	int orgid;
-	const char *sql = "select organizer from events where eventid = ?";
+	const char *sql = "select userid from eventpositions where eventid = ? and posid = 1";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	retval = sqlite3_bind_int(s, 1, eventid);
 	while(sqlite3_step(s)==SQLITE_ROW) {
