@@ -64,7 +64,17 @@ int main () {
 
 			}	
 		}else{
-			data_1.push_back(**it);	
+			//remove the T from time string
+			if(counter==3||counter==4){
+			 string timeT = **it;
+			 size_t position = timeT.find("T");
+			 string timeHMS = timeT.substr(position+1);
+			 string timeYMD = timeT.substr(0,position);
+			 string myTime =  timeYMD+" "+timeHMS;
+			 data_1.push_back(myTime);
+			} else {
+			 data_1.push_back(**it);	
+			}
 		}
 		counter++;	
 	}
