@@ -41,10 +41,6 @@ TEST(Controller, sendEvent)
 {
 	Controller* cont = new Controller();
 	int id = 11;
-	string uId;
-	ostringstream convert;   
-	convert << id;      
-	uId = convert.str(); 
 
 	vector<vector<string> > event;
 	event.push_back(vector<string>());
@@ -56,7 +52,6 @@ TEST(Controller, sendEvent)
 	event[0].push_back("2018-05-03 12:00");
 	//event[0].push_back(uId);
 	event[0].push_back("location");
-	event[0].push_back("1");
 
 	event[1].push_back("name");
 	event[1].push_back("3");
@@ -87,6 +82,8 @@ TEST(Controller, updateProfile)
 	Creation* c = new Creation();
 	int id = c->createUser("Tierney Irwin", "8887776666", "JoePass2");
 	User* u = new User(id);
+	ASSERT_EQ(true, u->getName() == "Tierney Irwin");
+
 	vector<string> v;
 	v.push_back("Tierney Irwin2");
 	v.push_back("1112225555");
@@ -95,7 +92,7 @@ TEST(Controller, updateProfile)
 	cont->updateProfile(v, id);	
 
 	ASSERT_EQ(true, u->getName() == "Tierney Irwin2" && u->getPhoneNumber() == "1112225555");
-
+	
 }
 
 TEST(Controller, updateEvent)
@@ -148,7 +145,7 @@ TEST(Controller, signInPass)
  	vector<string> result;
  	result = cont->signIn(v);
  	ASSERT_EQ(true, result.at(0) == "true");
-	ASSERT_EQ(true, result.at(1) != -1); 
+//	ASSERT_EQ(true, result.at(1) != -1); 
 }
 
 
@@ -230,7 +227,6 @@ TEST(Controller, showStats2)
 	event[0].push_back("2016-05-03 10:00");
 	event[0].push_back("2016-05-03 12:00");
 	event[0].push_back("location");
-	event[0].push_back("1");
 
 	event[1].push_back("name");
 	event[1].push_back("3");
@@ -288,6 +284,8 @@ TEST(Controller, showAllEvents)
 	
 	for (int i = 0; i < v.size(); i++) {
 		ASSERT_EQ(true, v[i] != -1) << "Broke at: " << i;
+		ASSERT_EQ(true, v[i] != NULL) << "Broke at NULL: " << i;
+		ASSERT_EQ(true, v[i] != 0) << "Broke at 0: " << i;
 	}
 }
 
