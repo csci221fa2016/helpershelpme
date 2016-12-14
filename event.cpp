@@ -11,7 +11,7 @@ using namespace std;
 
 Event::Event(int _eventid) : eventid(_eventid) {
 	char *errmsg;
-	retval = sqlite3_open("/tmp/csci221_dmcmahon.db", &db);
+	retval = sqlite3_open("/tmp/csci221_dmcmahon1.db", &db);
 	if(retval != 0)
 	{
 		cout << "Cannot open test.db: " << sqlite3_errcode(db) << endl;
@@ -129,6 +129,7 @@ string Event::getDescription() {
 	while(sqlite3_step(s)==SQLITE_ROW) {
 		desc = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
 	}
+	cout << "the desc is: "<<desc<<endl;
 	return desc;
 }
 
