@@ -29,7 +29,6 @@ int Creation::logIn(string _phoneNumber, string _pass) {
 	sqlite3_stmt *s;
 	string phone = _phoneNumber;
 	string password;
-	string hash;
 	string salt;
 	const char *sql = "select password, salt, id from users where phone = ?";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
@@ -51,13 +50,15 @@ int Creation::logIn(string _phoneNumber, string _pass) {
 	//Hash the password inputed with the salt.
 	SHA256_CTX context;
 	unsigned char md[SHA256_DIGEST_LENGTH];
-
-	saltedPass = salt + _pass;
+	
+	string saltedPass = salt + _pass;
 	SHA256_Init(&context);
-	SHA256_Update(&context, (unsigned char*)saltedPass, saltedPass.size());
+	SHA256_Update(&context, saltedPass.c_str(), saltedPass.size());
 	SHA256_Final(md, &context);
 	
-	if (md != password) {
+	string hash = string(reinterpret_cast<char*>(md));
+	
+	if (hash != password) {
 		return -1;
 	}
 	
@@ -132,9 +133,8 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 	//Hashing and salting the password.
 
 	SHA256_CTX context;
-	int saltlen = rand() % (50 - 21) + 20;
-	unsigned char salt[saltlen];
-	RAND_bytes(salt, saltlen);
+	unsigned char salt[64];
+	RAND_bytes(salt, 64);
 	unsigned char md[SHA256_DIGEST_LENGTH]; //This is the password hash!
 
 	SHA256_Init(&context);
@@ -142,7 +142,7 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 	string saltedPass = saltString + _password;
 	//Hash of password + salt.
 	
-	SHA256_Update(&context, , saltedPass.size());
+	SHA256_Update(&context, saltedPass.c_str(), saltedPass.size());
 	SHA256_Final(md, &context);
 	string hash(reinterpret_cast<char*>(md));
 
@@ -171,7 +171,7 @@ int Creation::createUser(string _name, string _phoneNumber, string _password) {
 		return userid;
 	}
 	retval = sqlite3_bind_text(s, 4, saltString.c_str(), saltString.size(), SQLITE_STATIC);
-	if (retval !- SQLITE_OK) {
+	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement 4 " << sql;
 		return userid;
 	}
@@ -347,7 +347,7 @@ vector<int> Creation::getUpcoming(){
 	retval = sqlite3_bind_int(s, 1, timer);
 	if (retval != SQLITE_OK) {
 		cout << "Error in binding SQL statement " << sql;
-		return eposid;
+		return upcoming;
 	}
 	while(sqlite3_step(s) == SQLITE_ROW) {
 		upcoming.push_back(sqlite3_column_int(s,0));
