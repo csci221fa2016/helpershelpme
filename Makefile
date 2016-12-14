@@ -29,7 +29,7 @@ testcontroller.o: testcontroller.cpp controller.h event.h user.h eventposition.h
 	$(CXX) $(CXXFLAGS) -c testcontroller.cpp
 
 testcontroller: testcontroller.o controller.h controller.o creation.o user.o event.o eventposition.o gtest_main.a
-	$(CXX) $(CXXFLAGS) -lsqlite3 -o testcontroller testcontroller.o controller.o event.o eventposition.o creation.o user.o gtest_main.a
+	$(CXX) $(CXXFLAGS) -lsqlite3 -lcrypto -o testcontroller testcontroller.o controller.o event.o eventposition.o creation.o user.o gtest_main.a
 
 main.o: main.cpp controller.h user.h event.h eventposition.h
 	g++ -ldl -g -Wall -c main.cpp
@@ -53,79 +53,79 @@ eventposition.o: user.h event.h eventposition.h sqlite3.h eventposition.cpp
 	$(CXX) -std=c++11 -c eventposition.cpp
 
 creation: creation.o eventposition.o sqlite3.o user.o event.o main.o
-	g++ -ldl -pthread -lsqlite3 -o creation creation.o sqlite3.o main.o user.o event.o eventposition.o
+	g++ -ldl -pthread -lsqlite3 -lcrypto -o creation creation.o sqlite3.o main.o user.o event.o eventposition.o
 
 creation.o: creation.h user.h event.h eventposition.h sqlite3.h creation.cpp
 	$(CXX) -std=c++11 -c creation.cpp
 
 controller: controller.o event.o user.o eventposition.o main.o creation.o
-	g++ -ldl -lpthread -lsqlite3 -g -Wall -o controller controller.o creation.o event.o user.o eventposition.o main.o
+	g++ -ldl -lpthread -lsqlite3 -g -Wall -lcrypto -o controller controller.o creation.o event.o user.o eventposition.o main.o
 
 controller.o: controller.h controller.cpp event.h user.h eventposition.h creation.h $(GTEST_HEADERS)
 	$(CXX) $(CXXFLAGS) -c controller.cpp
 
 home.cgi: home.o controller.o user.o event.o eventposition.o sqlite3.o creation.o
-	g++ -ldl -lpthread -lsqlite3 -lcgicc -o home.cgi home.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
+	g++ -ldl -lpthread -lsqlite3 -lcrypto -lcgicc -o home.cgi home.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
 
 home.o: home.cpp controller.h styles.h
 	$(CXX) -std=c++11 -c home.cpp
 
 login.cgi: login.o controller.o user.o event.o sqlite3.o eventposition.o creation.o
-	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o login.cgi login.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -lcrypto -o login.cgi login.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
 
 login.o: login.cpp controller.h styles.h
 	$(CXX) -std=c++11 -c login.cpp
 
 log_out.cgi: log_out.o user.o event.o sqlite3.o eventposition.o creation.o controller.o
-	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o log_out.cgi log_out.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -lcrypto -o log_out.cgi log_out.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
 
 log_out.o: log_out.cpp controller.h
 	$(CXX) -std=c++11 -c log_out.cpp
 
 my_events.cgi: my_events.o user.o event.o sqlite3.o eventposition.o creation.o controller.o
-	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o my_events.cgi my_events.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -lcrypto -o my_events.cgi my_events.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
 
 my_events.o: my_events.cpp controller.h
 	$(CXX) -std=c++11 -c my_events.cpp
 
 login_info.cgi: login_info.o user.o event.o sqlite3.o eventposition.o creation.o controller.o
-	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o login_info.cgi login_info.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -lcrypto -o login_info.cgi login_info.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
 
 login_info.o: login_info.cpp controller.h
 	$(CXX) -std=c++11 -c login_info.cpp
 
 event_list.cgi: event_list.o user.o event.o sqlite3.o eventposition.o creation.o controller.o
-	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o event_list.cgi event_list.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -lcrypto -o event_list.cgi event_list.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
 
 event_list.o: event_list.cpp controller.h
 	$(CXX) -std=c++11 -c event_list.cpp
 
 eventcreation_info.cgi: eventcreation_info.o user.o event.o sqlite3.o eventposition.o creation.o controller.o
-	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o eventcreation_info.cgi eventcreation_info.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -lcrypto -o eventcreation_info.cgi eventcreation_info.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
 
 eventcreation_info.o: eventcreation_info.cpp controller.h
 	$(CXX) -std=c++11 -c eventcreation_info.cpp
 
 sign_up_info.cgi: sign_up_info.o user.o event.o sqlite3.o eventposition.o creation.o controller.o
-	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o sign_up_info.cgi sign_up_info.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -lcrypto -o sign_up_info.cgi sign_up_info.o controller.o user.o event.o eventposition.o creation.o sqlite3.o
 	
 sign_up_info.o: sign_up_info.cpp
 	$(CXX) -std=c++11 -c sign_up_info.cpp
 
 userprofile.cgi: userprofile.o controller.o user.o event.o eventposition.o sqlite3.o creation.o
-	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o userprofile.cgi userprofile.o user.o event.o eventposition.o creation.o sqlite3.o controller.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -lcrypto -o userprofile.cgi userprofile.o user.o event.o eventposition.o creation.o sqlite3.o controller.o
 
 userprofile.o: userprofile.cpp styles2.h controller.h
 	$(CXX) -std=c++11 -c userprofile.cpp
 
 eventpage.cgi: eventpage.o controller.o user.o event.o eventposition.o creation.o
-	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o eventpage.cgi eventpage.o controller.o creation.o user.o event.o eventposition.o sqlite3.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcrypto -lcgicc -o eventpage.cgi eventpage.o controller.o creation.o user.o event.o eventposition.o sqlite3.o
 
 eventpage.o: eventpage.cpp styles.h controller.h
 	$(CXX) -std=c++11 -c eventpage.cpp
 
 eventcreation.cgi: eventcreation.o controller.o user.o event.o eventposition.o creation.o
-	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -o eventcreation.cgi eventcreation.o controller.o creation.o user.o event.o eventposition.o sqlite3.o
+	$(CXX) -ldl -lpthread -lsqlite3 -lcgicc -lcrypto -o eventcreation.cgi eventcreation.o controller.o creation.o user.o event.o eventposition.o sqlite3.o
 
 eventcreation.o: eventcreation.cpp styles.h controller.h
 	$(CXX) -std=c++11 -c eventcreation.cpp

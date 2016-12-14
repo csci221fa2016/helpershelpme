@@ -1,6 +1,7 @@
 #ifndef CREATION_H
 #define CREATION_H
 
+#include <openssl/rand.h>
 #include <openssl/sha.h>
 #include <string>
 #include <vector>

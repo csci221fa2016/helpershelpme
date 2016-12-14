@@ -1,3 +1,4 @@
+#include <openssl/sha.h>
 #include <openssl/rand.h>
 #include <algorithm>
 #include <sstream>
