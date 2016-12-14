@@ -123,7 +123,7 @@ time_t Event::getEndDate() {
 string Event::getDescription() {
 	sqlite3_stmt *s;
 	string desc;
-	const char *sql = "select desc from events where eventid = ? ";
+	const char *sql = "select description from events where eventid = ? ";
 	retval = sqlite3_prepare(db, sql, strlen(sql), &s, NULL);
 	retval = sqlite3_bind_int(s, 1, eventid);
 	while(sqlite3_step(s)==SQLITE_ROW) {
