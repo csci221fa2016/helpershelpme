@@ -129,6 +129,7 @@ string Event::getDescription() {
 	while(sqlite3_step(s)==SQLITE_ROW) {
 		desc = string(reinterpret_cast<const char*>(sqlite3_column_text(s, 0)));
 	}
+	cout << "the desc is: "<<desc<<endl;
 	return desc;
 }
 

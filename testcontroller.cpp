@@ -62,7 +62,7 @@ TEST(Controller, sendEvent)
 	Event* e = new Event(eId);
 	string eName = e->getName();
 	string eDesc = e->getDescription();
-	vector<string>* eVacancies = e->getVacancies();
+//	vector<string>* eVacancies = e->getVacancies();
 
 	ASSERT_EQ(false, eId == -1);
 }
