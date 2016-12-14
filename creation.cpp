@@ -333,6 +333,13 @@ int Creation::createEventPosition(int eventid, int posid, int userid) {
 		return eposid;
 	}
 	sqlite3_reset(s);
+	sql = "update vacancies set openings = openings + 1 where eventid = ? and posid = ?)";
+	retval=sqlite3_prepare(db, sql, strlen(sql), &s, NULL);;
+	retval = sqlite3_bind_int(s, 1, eventid); 
+	retval = sqlite3_bind_int(s, 2, posid);
+	if(sqlite3_step(s) != SQLITE_DONE) {
+		cout << "cannnot exec sql stmt in leave event" <<sql;
+	}
 	return eposid;
 }
 
