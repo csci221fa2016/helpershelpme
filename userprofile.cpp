@@ -133,7 +133,7 @@ int main(int /*argc*/, char** /**/) {
     	cout <<"<li class=\"submenu\">" << endl;
     	cout <<"<a href=\"#\">Events</a>" << endl;
     	cout <<"<ul>" << endl;
-    	cout <<"<li><a href=\"#\">See All Events</a></li>" << endl;
+//  	cout <<"<li><a href=\"#\">See All Events</a></li>" << endl;
     	cout <<"<li><a href=\"event_list.cgi\">Upcoming Events</a></li>" << endl;	
     	cout <<"<li><a href=\"my_events.cgi\">My Events</a></li>" << endl;
     	cout <<"<li><a href=\"eventcreation.cgi\">Create Event</a></li>" << endl;
@@ -141,9 +141,9 @@ int main(int /*argc*/, char** /**/) {
     	cout <<"</li>" << endl;
 
     	cout <<"<li><a href=\"userprofile.cgi\">Profile</a></li>" << endl;
-    	cout <<"<li><a href=\"#\">News</a></li>" << endl;
-    	cout <<"<li><a href=\"#\">Contact</a></li>" << endl;
-    	cout <<"<li><a href=\"#\">Donate</a></li>" << endl;
+//  	cout <<"<li><a href=\"#\">News</a></li>" << endl;
+//  	cout <<"<li><a href=\"#\">Contact</a></li>" << endl;
+//  	cout <<"<li><a href=\"#\">Donate</a></li>" << endl;
     	cout <<"</ul>" << endl;
     	cout <<"</li>" << endl;
     	cout <<"<li><a href=\"log_out.cgi\" class=\"button special\">Log Out</a></li>" << endl;
