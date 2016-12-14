@@ -111,7 +111,7 @@ int Controller::sendEvent(vector<vector<string> > v, int userId) {
 			//c->createEventPosition(eventId, i,  v.at(i).at(0), value, userId);
 			c->createVacancy(eventId, i, v.at(i).at(0), value);
 		}
-			c->creatEventPosition(eventId, 1, userId);
+			//c->createEventPosition(eventId, 1, userId);
 		return eventId;
 	}
 }
