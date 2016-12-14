@@ -4,7 +4,6 @@
 
 TEST(creation, login) {
 	Creation* c = new Creation();
-	c->createUser("dman", "4074933565", "password");
 	int l = c->logIn("4074933565","password");
 	//cout<<"the userid is: "<<l<<endl;
 	ASSERT_EQ(true, l != 0);

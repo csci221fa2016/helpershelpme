@@ -8,7 +8,7 @@ GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 all: main user event eventposition creation controller home.cgi login.cgi log_out.cgi my_events.cgi login_info.cgi event_list.cgi eventcreation_info.cgi sign_up_info.cgi userprofile.cgi eventpage.cgi eventcreation.cgi
 
 .PHONY: test
-test: testcontroller user_test
+test: testcontroller user_test creationtest
 
 gtest-all.o: $(GTEST_SRCS)
 	$(CXX) $(CXXFLAGS) -I$(GTEST_DIR) -c $(GTEST_DIR)/src/gtest-all.cc
@@ -24,6 +24,13 @@ user_test.o: user_test.cpp user.h $(GTEST_HEADERS)
 
 user_test: user_test.o gtest_main.a user.o event.o eventposition.o
 	$(CXX) $(CXXFLAGS) -lpthread -lsqlite3 -o user_test user_test.o gtest_main.a user.o event.o eventposition.o
+
+creationtest.o: creationtest.cpp creation.h $(GTEST_HEADERS)
+	$(CXX) $(CXXFLAGS) -lsqlite3 -c creationtest.cpp
+
+creationtest: creationtest.o gtest_main.a user.o event.o eventposition.o creation.o
+	$(CXX) $(CXXFLAGS) -lpthread -lsqlite3 -lcrypto -o creationtest creationtest.o gtest_main.a user.o event.o eventposition.o creation.o
+
 
 testcontroller.o: testcontroller.cpp controller.h event.h user.h eventposition.h creation.h $(GTEST_HEADERS)
 	$(CXX) $(CXXFLAGS) -c testcontroller.cpp
